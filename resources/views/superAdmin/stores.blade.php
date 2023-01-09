@@ -33,7 +33,8 @@
                         Copyright &copy;<script>
                             document.write(new Date().getFullYear());
                         </script> All rights reserved | Amr Hesham
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
                 </div>
 
             </div>
@@ -56,10 +57,18 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="/superAdmin">Home</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a class="nav-link" href="route('logout')" onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </a>
+                                </form>
                             </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" href="/superAdmin/stores">Stores</a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                    {{ __('Profile') }}
+                                </a>
                             </li>
                         </ul>
                     </div>
