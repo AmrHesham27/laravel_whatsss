@@ -10850,6 +10850,19 @@ a[data-toggle="collapse"] {
     color: rgba(255, 255, 255, 0.5);
 }
 
+.delete-store-btn {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: red !important;
+}
+
+.store-btn {
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
 @media screen and (max-width: 576px) {
     #sidebar.active {
         width: 100vw;

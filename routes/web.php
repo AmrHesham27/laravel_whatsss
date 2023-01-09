@@ -42,8 +42,8 @@ Route::group(['middleware' => ['auth', 'isSuperAdmin']], function() {
     Route::get('/superAdmin', function () {
         return view('superAdmin.dashboard');
     });
-    Route::get('/superAdmin/stores/', function () {
-        return view('superAdmin.stores');
-    });
+    Route::get('/superAdmin/stores', [SuperAdminController::class, 'showAllStores'])->name('superAdminStores');
+    Route::post('/superAdmin/stores/suspend/{id}', [SuperAdminController::class, 'suspendStore'])->name('suspendStore');
+    Route::post('/superAdmin/stores/unSuspend/{id}', [SuperAdminController::class, 'unSuspendStore'])->name('unSuspendStore');
     
 });

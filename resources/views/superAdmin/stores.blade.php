@@ -10,6 +10,8 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('assets/dashboard/css/style.css') }}">
+    <script src="https://kit.fontawesome.com/6cc7b35ba8.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -84,35 +86,41 @@
                         <th scope="col">WhatsappNumber</th>
                         <th scope="col">URL</th>
                         <th scope="col">Subdomain</th>
-                        <th scope="col">Products Count</th>
+                        <th scope="col">Is Suspended</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($stores as $store)
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <th scope="row">{{ $store['id'] }}</th>
+                        <td>{{ $store['name'] }}</td>
+                        <td>{{ $store['whatsapp'] }}</td>
+                        <td>{{ $store['url'] }}</td>
+                        <td>{{ $store['subdomain'] }}</td>
+                        <td>{{ $store['is_suspended'] ? 'Suspended' : '' }}</td>
+                        <td class="d-flex">
+                            <a class="btn delete-store-btn">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                            @if ( !$store['is_suspended'] )
+                            <form method="POST" action="{{ route('suspendStore', ['id' => $store['id']]) }}">
+                                @csrf
+                                <button class="btn store-btn">
+                                    <i class="fa-solid fa-ban"></i>
+                                </button>
+                            </form>
+                            @else
+                            <form method="POST" action="{{ route('unSuspendStore', ['id' => $store['id']]) }}">
+                                @csrf
+                                <button class="btn store-btn">
+                                    <i class="fa-solid fa-ban"></i>
+                                </button>
+                            </form>
+                            @endif
+                        </td>
                     </tr>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-
+                    @endforeach
                 </tbody>
             </table>
 

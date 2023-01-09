@@ -6,23 +6,44 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Store;
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
 class SuperAdminController extends Controller
 {
-    public function showRegisterStore()
+    public function showAllStores(Request $request)
     {
-        return view();
+        $stores = Store::paginate(8);
+        return view('superAdmin.stores', ['stores' => $stores]);
     }
 
-    public function isSuperAdmin(Request $request)
+    public function deleteStore($id)
     {
-        //dd(env('SUPER_ADMIN_EMAIL'));
-        //dd(Auth::user()->email);
-        if (env('SUPER_ADMIN_EMAIL') === Auth::user()->email) return true;
-        else return false;
+        $store = Store::findOrFail($id);
+        $store->delete();
+
+        return redirect()->back();
     }
+
+    public function suspendStore($id)
+    {
+        $store = Store::findOrFail($id);
+        $store['is_suspended'] = true;
+        $store->save();
+
+        return redirect()->route('superAdminStores');
+    }
+
+    public function unSuspendStore($id)
+    {
+        $store = Store::findOrFail($id);
+        $store['is_suspended'] = false;
+        $store->save();
+
+        return redirect()->back();
+    }
+
 
     public function registerStoreOwner(Request $request)
     {

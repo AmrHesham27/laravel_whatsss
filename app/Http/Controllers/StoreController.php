@@ -61,6 +61,7 @@ class StoreController extends Controller
     public function show($id)
     {
         $store = Store::where('url', $id)->get()[0];
+        if ($store['is_suspended']) abort(404);;
         return view('customer', ['store' => $store]);
     }
 
