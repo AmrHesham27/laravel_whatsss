@@ -32,18 +32,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::get('/stores/{id}', [StoreController::class, 'show']);
 
 
 // super Admin routes
-Route::group(['middleware' => ['auth', 'isSuperAdmin']], function() {
-    Route::get('/superAdmin', function () {
-        return view('superAdmin.dashboard');
-    });
+Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
+    Route::get('/superAdmin', [SuperAdminController::class, 'showDashboard']);
     Route::get('/superAdmin/stores', [SuperAdminController::class, 'showAllStores'])->name('superAdminStores');
     Route::post('/superAdmin/stores/suspend/{id}', [SuperAdminController::class, 'suspendStore'])->name('suspendStore');
     Route::post('/superAdmin/stores/unSuspend/{id}', [SuperAdminController::class, 'unSuspendStore'])->name('unSuspendStore');
-    
+    Route::post('/superAdmin/stores/deleteStore/{id}', [SuperAdminController::class, 'deleteStore'])->name('deleteStore');
+    Route::get('/superAdmin/stores/add', [SuperAdminController::class, 'addStore'])->name('addStore');
+    Route::post('/superAdmin/stores/create', [SuperAdminController::class, 'createStore'])->name('createStore');
+});
+
+Route::group(['middleware' => ['auth', 'notSuperAdmin']], function () {
+    Route::get('/admin', [SuperAdminController::class, 'showDashboard']);
 });

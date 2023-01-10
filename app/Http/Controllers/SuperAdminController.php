@@ -12,6 +12,11 @@ use Illuminate\Validation\Rules;
 
 class SuperAdminController extends Controller
 {
+    public function showDashboard()
+    {
+        return view('superAdmin.dashboard');
+    }
+
     public function showAllStores(Request $request)
     {
         $stores = Store::paginate(8);
@@ -32,7 +37,7 @@ class SuperAdminController extends Controller
         $store['is_suspended'] = true;
         $store->save();
 
-        return redirect()->route('superAdminStores');
+        return redirect()->back();
     }
 
     public function unSuspendStore($id)
@@ -42,6 +47,48 @@ class SuperAdminController extends Controller
         $store->save();
 
         return redirect()->back();
+    }
+
+    public function addStore()
+    {
+        return view('superAdmin.addStore');
+    }
+
+    public function createStore(Request $request)
+    {
+        try {
+            $data = $this->validate($request,[
+                "name"  => "required|string|max:60",
+                "whatsapp" => "required|string|max:60",
+                "email" => "required|email|max:100",
+                "password" => "required|min:8",
+            ]);
+
+            $user = User::create([
+                'name' => 'admin',
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+
+            Store::create([
+                'user_id' => $user['id'],
+                'whatsapp' => $data['whatsapp'],
+                'name' => $data['name'],
+            ]);
+
+            $this->message('New Store was added successfully', 'alert-success');
+
+            return redirect()->back();
+        }
+        catch(Exception $e) {
+            if($user){$user->delete();};
+            $this->message($e->getMessage(), 'alert-danger');
+            return redirect()->back();
+        }
+            
+        
     }
 
 

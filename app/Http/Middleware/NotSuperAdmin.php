@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsSuperAdmin
+class NotSuperAdmin
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class IsSuperAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (env('SUPER_ADMIN_EMAIL') === Auth::user()->email) {
+        if (env('SUPER_ADMIN_EMAIL') !== Auth::user()->email) {
             return $next($request);
         }
         return response()->json('You are not allowed to do this action.'); 

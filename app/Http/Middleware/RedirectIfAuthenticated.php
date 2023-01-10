@@ -24,9 +24,8 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
 
             if (Auth::guard($guard)->check()) {
-                if (env('SUPER_ADMIN_EMAIL') === $request['email']) return redirect('/superAdmin');
-
-                return redirect(RouteServiceProvider::HOME);
+                if (env('SUPER_ADMIN_EMAIL') == $request['email']) return redirect('/superAdmin');
+                else return redirect('/admin');
             }
         }
 

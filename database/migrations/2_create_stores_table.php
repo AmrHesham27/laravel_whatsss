@@ -27,7 +27,7 @@ return new class extends Migration
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->boolean('is_suspended')->default(false);
-            $table->string('whatsapp', 11);
+            $table->string('whatsapp', 60);
             $table->string('subdomain', 100)->nullable();
             $table->string('currency', '7')->default('E£');
             $table->boolean('displayCards')->default(false);
