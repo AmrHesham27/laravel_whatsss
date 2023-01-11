@@ -6,6 +6,7 @@ use App\Models\ProductCategory;
 use App\Models\Store;
 use Exception;
 use Illuminate\Http\Request;
+use App\Models\View;
 
 class StoreController extends Controller
 {
@@ -58,10 +59,15 @@ class StoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $store = Store::where('url', $id)->get()[0];
-        if ($store['is_suspended']) abort(404);;
+        if ($store['is_suspended']) abort(404);
+
+        $view = new View;
+        $view['store_id'] = $store['id'];
+        $view ->save();
+
         return view('customer', ['store' => $store]);
     }
 
