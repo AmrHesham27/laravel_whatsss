@@ -108,7 +108,7 @@
       </nav>
       <!-- Content -->
       <div class="container">
-        <h2>Stores</h2>
+        <h2>Views</h2>
         <div>
           <canvas id="myChart"></canvas>
         </div>
@@ -117,22 +117,33 @@
   </div>
 
   <script>
+    var views = <?php echo $views[0] ?>;
+    console.log(views);
+
     var ctx = document.getElementById("myChart").getContext("2d");
     var myChart = new Chart(ctx, {
       type: "line",
       data: {
         labels: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
+          new Date(Date.now() - (86400000 * 6)).toJSON().slice(0,10).replace(/-/g,'/'),
+          new Date(Date.now() - (86400000 * 5)).toJSON().slice(0,10).replace(/-/g,'/'),
+          new Date(Date.now() - (86400000 * 4)).toJSON().slice(0,10).replace(/-/g,'/'),
+          new Date(Date.now() - (86400000 * 3)).toJSON().slice(0,10).replace(/-/g,'/'),
+          new Date(Date.now() - (86400000 * 2)).toJSON().slice(0,10).replace(/-/g,'/'),
+          new Date(Date.now() - 86400000).toJSON().slice(0,10).replace(/-/g,'/'),
+          new Date().toJSON().slice(0,10).replace(/-/g,'/'),
         ],
         datasets: [{
-          label: "Stores Count",
-          data: [2, 2, 5, 5, 2, 1, 10],
+          label: "Total Views Count",
+          data: [
+            <?php echo $views[6] ?>, 
+            <?php echo $views[5] ?>, 
+            <?php echo $views[4] ?>, 
+            <?php echo $views[3] ?>, 
+            <?php echo $views[2] ?>, 
+            <?php echo $views[1] ?>, 
+            <?php echo $views[0] ?> 
+          ],
           backgroundColor: "#f8b739",
         }, ],
       },
