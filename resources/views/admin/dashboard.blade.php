@@ -25,14 +25,13 @@
     }
 
     body {
-      text-align: center;
       color: green;
     }
 
     h2 {
       text-align: center;
       font-family: "Verdana", sans-serif;
-      font-size: 30px;
+      font-size: 1rem;
     }
   </style>
 </head>
@@ -48,16 +47,13 @@
         <ul class="list-unstyled components mb-5">
 
           <li class="active">
-            <a href="/superAdmin">Home</a>
+            <a href="/admin">Home</a>
           </li>
 
           <li>
-            <a href="/superAdmin/stores/">Stores</a>
+            <a href="/admin/editStore/">Edit Store</a>
           </li>
 
-          <li>
-            <a href="/superAdmin/stores/add">Add Store</a>
-          </li>
         </ul>
 
         <div class="footer">
@@ -108,7 +104,7 @@
       </nav>
       <!-- Content -->
       <div class="container">
-        <h2>Stores</h2>
+        <h2>Views</h2>
         <div>
           <canvas id="myChart"></canvas>
         </div>
@@ -117,22 +113,33 @@
   </div>
 
   <script>
+    var views = <?php echo $views[0] ?>;
+    console.log(views);
+
     var ctx = document.getElementById("myChart").getContext("2d");
     var myChart = new Chart(ctx, {
       type: "line",
       data: {
         labels: [
-          new Date(Date.now() - (86400000 * 6)).toJSON().slice(0,10).replace(/-/g,'/'),
-          new Date(Date.now() - (86400000 * 5)).toJSON().slice(0,10).replace(/-/g,'/'),
-          new Date(Date.now() - (86400000 * 4)).toJSON().slice(0,10).replace(/-/g,'/'),
-          new Date(Date.now() - (86400000 * 3)).toJSON().slice(0,10).replace(/-/g,'/'),
-          new Date(Date.now() - (86400000 * 2)).toJSON().slice(0,10).replace(/-/g,'/'),
-          new Date(Date.now() - 86400000).toJSON().slice(0,10).replace(/-/g,'/'),
-          new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+          new Date(Date.now() - (86400000 * 6)).toJSON().slice(5, 10).replace(/-/g, '/'),
+          new Date(Date.now() - (86400000 * 5)).toJSON().slice(5, 10).replace(/-/g, '/'),
+          new Date(Date.now() - (86400000 * 4)).toJSON().slice(5, 10).replace(/-/g, '/'),
+          new Date(Date.now() - (86400000 * 3)).toJSON().slice(5, 10).replace(/-/g, '/'),
+          new Date(Date.now() - (86400000 * 2)).toJSON().slice(5, 10).replace(/-/g, '/'),
+          new Date(Date.now() - 86400000).toJSON().slice(5, 10).replace(/-/g, '/'),
+          new Date().toJSON().slice(5, 10).replace(/-/g, '/'),
         ],
         datasets: [{
           label: "Total Views Count",
-          data: [2, 2, 5, 5, 2, 1, 10],
+          data: [
+            <?php echo $views[6] ?>,
+            <?php echo $views[5] ?>,
+            <?php echo $views[4] ?>,
+            <?php echo $views[3] ?>,
+            <?php echo $views[2] ?>,
+            <?php echo $views[1] ?>,
+            <?php echo $views[0] ?>
+          ],
           backgroundColor: "#f8b739",
         }, ],
       },

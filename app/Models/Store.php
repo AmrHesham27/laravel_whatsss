@@ -25,7 +25,13 @@ class Store extends Model
         'delievry_time',
         'delivery_fees',
         'is_susbended',
-        'whatsapp'
+        'whatsapp',
+        'currency',
+        'subdomain',
+        'displayCards',
+        'dinIn',
+        'pickUp',
+        'deliveryPlaces'
     ];
 
     public function kitchens()

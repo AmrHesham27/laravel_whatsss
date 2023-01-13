@@ -15,6 +15,20 @@ use Illuminate\Support\Carbon;
 
 class SuperAdminController extends Controller
 {
+    public function searchStores(Request $request)
+    {
+        $search = $request->input('search');
+
+        $stores = Store::where('id', '=', $search)
+            ->orWhere('name', 'LIKE', "%{$search}%")
+            ->orWhere('url', 'LIKE', "%{$search}%")
+            ->orWhere('subdomain', 'LIKE', "%{$search}%")
+            ->orWhere('whatsapp', 'LIKE', "%{$search}%")
+            ->paginate(8);
+
+        return view('superAdmin.stores', ['stores' => $stores, 'type' => 'search', 'search' => $search]);
+    }
+
     public function showDashboard()
     {
         $views_today = DB::table('views')->count();
@@ -30,7 +44,8 @@ class SuperAdminController extends Controller
             ->count();
         $views_six_days = DB::table('views')->where('created_at', '<=', Carbon::today()->subDays(6))
             ->count();
-        return view('superAdmin.dashboard', [ 'views' =>
+        return view('superAdmin.dashboard', [
+            'views' =>
             [
                 $views_today,
                 $views_one_day,
@@ -46,7 +61,7 @@ class SuperAdminController extends Controller
     public function showAllStores(Request $request)
     {
         $stores = Store::paginate(8);
-        return view('superAdmin.stores', ['stores' => $stores]);
+        return view('superAdmin.stores', ['stores' => $stores, 'type' => 'data', 'search' => '']);
     }
 
     public function deleteStore($id)
@@ -90,16 +105,16 @@ class SuperAdminController extends Controller
                 "password" => "required|min:8",
             ]);
 
-            $user = User::create([
+            $id = User::create([
                 'name' => 'admin',
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'created_at' => now(),
                 'updated_at' => now()
-            ]);
+            ])->id;
 
             Store::create([
-                'user_id' => $user['id'],
+                'user_id' => $id,
                 'whatsapp' => $data['whatsapp'],
                 'name' => $data['name'],
             ]);
@@ -108,7 +123,8 @@ class SuperAdminController extends Controller
 
             return redirect()->back();
         } catch (Exception $e) {
-            if ($user) {
+            if ($id) {
+                $user = User::findOrFail($id);
                 $user->delete();
             };
             $this->message($e->getMessage(), 'alert-danger');

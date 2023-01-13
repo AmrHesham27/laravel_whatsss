@@ -25,14 +25,13 @@
     }
 
     body {
-      text-align: center;
       color: green;
     }
 
     h2 {
       text-align: center;
       font-family: "Verdana", sans-serif;
-      font-size: 30px;
+      font-size: 1rem;
     }
   </style>
 </head>
@@ -125,13 +124,13 @@
       type: "line",
       data: {
         labels: [
-          new Date(Date.now() - (86400000 * 6)).toJSON().slice(0,10).replace(/-/g,'/'),
-          new Date(Date.now() - (86400000 * 5)).toJSON().slice(0,10).replace(/-/g,'/'),
-          new Date(Date.now() - (86400000 * 4)).toJSON().slice(0,10).replace(/-/g,'/'),
-          new Date(Date.now() - (86400000 * 3)).toJSON().slice(0,10).replace(/-/g,'/'),
-          new Date(Date.now() - (86400000 * 2)).toJSON().slice(0,10).replace(/-/g,'/'),
-          new Date(Date.now() - 86400000).toJSON().slice(0,10).replace(/-/g,'/'),
-          new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+          new Date(Date.now() - (86400000 * 6)).toJSON().slice(5,10).replace(/-/g,'/'),
+          new Date(Date.now() - (86400000 * 5)).toJSON().slice(5,10).replace(/-/g,'/'),
+          new Date(Date.now() - (86400000 * 4)).toJSON().slice(5,10).replace(/-/g,'/'),
+          new Date(Date.now() - (86400000 * 3)).toJSON().slice(5,10).replace(/-/g,'/'),
+          new Date(Date.now() - (86400000 * 2)).toJSON().slice(5,10).replace(/-/g,'/'),
+          new Date(Date.now() - 86400000).toJSON().slice(5,10).replace(/-/g,'/'),
+          new Date().toJSON().slice(5,10).replace(/-/g,'/'),
         ],
         datasets: [{
           label: "Total Views Count",

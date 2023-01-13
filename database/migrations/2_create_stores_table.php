@@ -29,11 +29,11 @@ return new class extends Migration
             $table->boolean('is_suspended')->default(false);
             $table->string('whatsapp', 60);
             $table->string('subdomain', 100)->nullable();
-            $table->string('currency', '7')->default('E£');
+            $table->string('currency', 7)->default('E£');
             $table->boolean('displayCards')->default(false);
 
-            $table->boolean('dinInPrice')->default(false);
-            $table->boolean('pickUpPrice')->default(false);
+            $table->boolean('dinIn')->default(false);
+            $table->boolean('pickUp')->default(false);
             $table->json('deliveryPlaces')->nullable();
         });
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SuperAdmin;
@@ -46,8 +47,11 @@ Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
     Route::post('/superAdmin/stores/deleteStore/{id}', [SuperAdminController::class, 'deleteStore'])->name('deleteStore');
     Route::get('/superAdmin/stores/add', [SuperAdminController::class, 'addStore'])->name('addStore');
     Route::post('/superAdmin/stores/create', [SuperAdminController::class, 'createStore'])->name('createStore');
+    Route::get('superAdmin/stores/searchStores', [SuperAdminController::class, 'searchStores'])->name('searchStores');
 });
 
 Route::group(['middleware' => ['auth', 'notSuperAdmin']], function () {
-    Route::get('/admin', [SuperAdminController::class, 'showDashboard']);
+    Route::get('/admin', [AdminController::class, 'showDashboard']);
+    Route::get('/admin/editStore', [AdminController::class, 'editStore'])->name('adminEditStore');
+    Route::post('/admin/updateStore', [AdminController::class, 'updateStore'])->name('adminUpdateStore');
 });

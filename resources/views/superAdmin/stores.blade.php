@@ -13,7 +13,15 @@
     <script src="https://kit.fontawesome.com/6cc7b35ba8.js" crossorigin="anonymous"></script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    
+
+    <style>
+        .close-search {
+            color: white !important;
+            display: flex; 
+            align-items: center; 
+            justify-content: center
+        }
+    </style>
 </head>
 
 <body>
@@ -86,9 +94,26 @@
                 </div>
             </nav>
             <!-- Content -->
-            <a class="my-2 btn my-btn" href="/superAdmin/stores/add">Add Store</a>
+            <div class="d-flex flex-column">
+                <div>
+                    <a class="my-2 btn my-btn" href="/superAdmin/stores/add">Add Store</a>
+                </div>
+
+                <div class="d-flex">
+                    <form method="GET" action="{{ route('searchStores') }}" style="max-width: 300px;">
+                        @csrf
+                        <div class="form-group my-4 d-flex">
+                            <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="Search">
+                            <a class="btn btn-danger mx-2 close-search" href="{{ route('superAdminStores') }}">x</a>
+                        </div>
+                    </form>
+                    
+                </div>
+                
+            </div>
+
             <div class="d-flex">
-                <table class="table table-responsive">
+                <table class="table table-responsive table-bordered">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">#</th>
@@ -110,11 +135,7 @@
                             <td>{{ $store['subdomain'] }}</td>
                             <td>{{ $store['is_suspended'] ? 'Suspended' : '' }}</td>
                             <td class="d-flex">
-                                <a  class="btn delete-store-btn" 
-                                    form-action="{{ route('deleteStore', ['id' => $store['id']]) }}" 
-                                    data-toggle="modal" 
-                                    data-target="#exampleModal"
-                                >
+                                <a class="btn delete-store-btn" form-action="{{ route('deleteStore', ['id' => $store['id']]) }}" data-toggle="modal" data-target="#exampleModal">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                                 @if ( !$store['is_suspended'] )
@@ -139,7 +160,7 @@
                 </table>
             </div>
             <div class="d-flex justify-content-center">
-                {{ $stores->links() }}
+                {{ $stores->appends(['search' => $search])->links() }}
             </div>
 
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -168,7 +189,7 @@
     </div>
 
     <script>
-        $('.delete-store-btn').click(function(){
+        $('.delete-store-btn').click(function() {
             var formAction = this.getAttribute("form-action");
             $('#delete-store-form').attr('action', formAction);
         });
