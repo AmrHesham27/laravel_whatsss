@@ -40,32 +40,25 @@
 
   <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar">
-      <button class="close-btn">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <div class="p-4 pt-5">
-        <ul class="list-unstyled components mb-5">
+      <div class="nav-body">
+        <button class="close-btn">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="p-4 pt-5">
+          <ul class="list-unstyled components mb-5">
 
-          <li class="active">
-            <a href="/admin">Home</a>
-          </li>
+            <li class="active">
+              <a href="/admin">Home</a>
+            </li>
 
-          <li>
-            <a href="/admin/editStore/">Edit Store</a>
-          </li>
+            <li>
+              <a href="/admin/editStore/">Edit Store</a>
+            </li>
 
-        </ul>
-
-        <div class="footer">
-          <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>
-              document.write(new Date().getFullYear());
-            </script> All rights reserved | Amr Hesham
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          </p>
+          </ul>
         </div>
-
       </div>
+
     </nav>
 
     <!-- Page Content  -->

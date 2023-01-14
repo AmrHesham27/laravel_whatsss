@@ -17,8 +17,8 @@
     <style>
         .close-search {
             color: white !important;
-            display: flex; 
-            align-items: center; 
+            display: flex;
+            align-items: center;
             justify-content: center
         }
     </style>
@@ -28,35 +28,28 @@
 
     <div class="wrapper d-flex align-items-stretch">
         <nav id="sidebar">
-            <button class="close-btn">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="p-4 pt-5">
-                <ul class="list-unstyled components mb-5">
+            <div class="nav-body">
+                <button class="close-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="p-4 pt-5 nav-body">
+                    <ul class="list-unstyled components mb-5">
 
-                    <li>
-                        <a href="/superAdmin">Home</a>
-                    </li>
+                        <li>
+                            <a href="/superAdmin">Home</a>
+                        </li>
 
-                    <li class="active">
-                        <a href="/superAdmin/stores/">Stores</a>
-                    </li>
+                        <li class="active">
+                            <a href="/superAdmin/stores/">Stores</a>
+                        </li>
 
-                    <li>
-                        <a href="/superAdmin/stores/add">Add Store</a>
-                    </li>
-                </ul>
-
-                <div class="footer">
-                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>
-                            document.write(new Date().getFullYear());
-                        </script> All rights reserved | Amr Hesham
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
+                        <li>
+                            <a href="/superAdmin/stores/add">Add Store</a>
+                        </li>
+                    </ul>
                 </div>
-
             </div>
+
         </nav>
 
         <!-- Page Content  -->
@@ -107,9 +100,9 @@
                             <a class="btn btn-danger mx-2 close-search" href="{{ route('superAdminStores') }}">x</a>
                         </div>
                     </form>
-                    
+
                 </div>
-                
+
             </div>
 
             <div class="d-flex">

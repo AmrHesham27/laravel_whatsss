@@ -54,4 +54,6 @@ Route::group(['middleware' => ['auth', 'notSuperAdmin']], function () {
     Route::get('/admin', [AdminController::class, 'showDashboard']);
     Route::get('/admin/editStore', [AdminController::class, 'editStore'])->name('adminEditStore');
     Route::post('/admin/updateStore', [AdminController::class, 'updateStore'])->name('adminUpdateStore');
+    Route::post('/admin/addDeliveryPlace', [AdminController::class, 'addDeliveryPlace'])->name('adminAddPlace');
+    Route::post('/admin/deleteDeliveryPlace/{id}', [AdminController::class, 'deleteDeliveryPlace'])->name('adminDeletePlace');
 });

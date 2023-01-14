@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Place;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Models\Store;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -39,7 +41,8 @@ class AdminController extends Controller
             ->where('store_id', '=', $store_id)
             ->where('created_at', '<=', Carbon::today()->subDays(6))
             ->count();
-        return view('admin.dashboard', [ 'views' =>
+        return view('admin.dashboard', [
+            'views' =>
             [
                 $views_today,
                 $views_one_day,
@@ -55,7 +58,8 @@ class AdminController extends Controller
     public function editStore()
     {
         $store = Store::where('user_id', Auth::user()->id)->get()[0];
-        return view('admin/editStore', ['store' => $store]);
+        $places = Place::where('store_id', $store['id'])->get();
+        return view('admin/editStore', ['store' => $store, 'places' => $places]);
     }
 
     public function updateStore(Request $request)
@@ -70,18 +74,55 @@ class AdminController extends Controller
             "end_time" => "required",
             "currency" => "required|string",
             "dinIn" => "nullable",
-            "pickUp" => "nullable"
+            "pickUp" => "nullable",
+            "deliveryPlaces" => "nullable"
         ]);
 
         if (isset($data['dinIn'])) $data['dinIn'] = 1;
         else $data['dinIn'] = 0;
         if (isset($data['pickUp'])) $data['pickUp'] = 1;
         else $data['pickUp'] = 0;
+        if (isset($data['deliveryPlaces'])) $data['deliveryPlaces'] = 1;
+        else $data['deliveryPlaces'] = 0;
 
         $store = Store::where('user_id', Auth::user()->id)->get()[0];
         $store->update($data);
 
+        $places = Place::where('store_id', $store['id'])->get();
+
         $this->message('Your Store was edited successfully', 'alert-success');
-        return redirect()->route('adminEditStore', ['store' => $store]);
+        return redirect()->route('adminEditStore', ['store' => $store, 'places' => $places]);
+    }
+
+    function addDeliveryPlace(Request $request)
+    {
+        $data = $this->validate($request, [
+            "placeName"  => "required|string|max:60",
+            "placePrice" => "required|string|max:60",
+        ]);
+
+        $store = Store::where('user_id', Auth::user()->id)->get()[0];
+
+        $new_place = new Place;
+        $new_place['name'] = $data['placeName'];
+        $new_place['price'] = $data['placePrice'];
+        $new_place['store_id'] = $store['id'];
+
+        $new_place->save();
+
+        $places = Place::where('store_id', $store['id'])->get();
+
+        return redirect()->route('adminEditStore', ['store' => $store, 'places' => $places]);
+    }
+
+    public function deleteDeliveryPlace($id)
+    {
+        $store = Store::where('user_id', Auth::user()->id)->get()[0];
+        $places = Place::where('store_id', $store['id'])->get();
+        $deletedPlace = Place::findOrFail($id);
+
+        $deletedPlace->delete();
+
+        return redirect()->route('adminEditStore', ['store' => $store, 'places' => $places]); 
     }
 }

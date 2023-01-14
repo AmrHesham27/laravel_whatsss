@@ -40,35 +40,28 @@
 
   <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar">
-      <button class="close-btn">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <div class="p-4 pt-5">
-        <ul class="list-unstyled components mb-5">
+      <div class="nav-body">
+        <button class="close-btn">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="p-4 pt-5 nav-body">
+          <ul class="list-unstyled components mb-5">
 
-          <li class="active">
-            <a href="/superAdmin">Home</a>
-          </li>
+            <li class="active">
+              <a href="/superAdmin">Home</a>
+            </li>
 
-          <li>
-            <a href="/superAdmin/stores/">Stores</a>
-          </li>
+            <li>
+              <a href="/superAdmin/stores/">Stores</a>
+            </li>
 
-          <li>
-            <a href="/superAdmin/stores/add">Add Store</a>
-          </li>
-        </ul>
-
-        <div class="footer">
-          <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>
-              document.write(new Date().getFullYear());
-            </script> All rights reserved | Amr Hesham
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          </p>
+            <li>
+              <a href="/superAdmin/stores/add">Add Store</a>
+            </li>
+          </ul>
         </div>
-
       </div>
+
     </nav>
 
     <!-- Page Content  -->
@@ -124,24 +117,24 @@
       type: "line",
       data: {
         labels: [
-          new Date(Date.now() - (86400000 * 6)).toJSON().slice(5,10).replace(/-/g,'/'),
-          new Date(Date.now() - (86400000 * 5)).toJSON().slice(5,10).replace(/-/g,'/'),
-          new Date(Date.now() - (86400000 * 4)).toJSON().slice(5,10).replace(/-/g,'/'),
-          new Date(Date.now() - (86400000 * 3)).toJSON().slice(5,10).replace(/-/g,'/'),
-          new Date(Date.now() - (86400000 * 2)).toJSON().slice(5,10).replace(/-/g,'/'),
-          new Date(Date.now() - 86400000).toJSON().slice(5,10).replace(/-/g,'/'),
-          new Date().toJSON().slice(5,10).replace(/-/g,'/'),
+          new Date(Date.now() - (86400000 * 6)).toJSON().slice(5, 10).replace(/-/g, '/'),
+          new Date(Date.now() - (86400000 * 5)).toJSON().slice(5, 10).replace(/-/g, '/'),
+          new Date(Date.now() - (86400000 * 4)).toJSON().slice(5, 10).replace(/-/g, '/'),
+          new Date(Date.now() - (86400000 * 3)).toJSON().slice(5, 10).replace(/-/g, '/'),
+          new Date(Date.now() - (86400000 * 2)).toJSON().slice(5, 10).replace(/-/g, '/'),
+          new Date(Date.now() - 86400000).toJSON().slice(5, 10).replace(/-/g, '/'),
+          new Date().toJSON().slice(5, 10).replace(/-/g, '/'),
         ],
         datasets: [{
           label: "Total Views Count",
           data: [
-            <?php echo $views[6] ?>, 
-            <?php echo $views[5] ?>, 
-            <?php echo $views[4] ?>, 
-            <?php echo $views[3] ?>, 
-            <?php echo $views[2] ?>, 
-            <?php echo $views[1] ?>, 
-            <?php echo $views[0] ?> 
+            <?php echo $views[6] ?>,
+            <?php echo $views[5] ?>,
+            <?php echo $views[4] ?>,
+            <?php echo $views[3] ?>,
+            <?php echo $views[2] ?>,
+            <?php echo $views[1] ?>,
+            <?php echo $views[0] ?>
           ],
           backgroundColor: "#f8b739",
         }, ],

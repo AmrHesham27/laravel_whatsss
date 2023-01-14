@@ -26,31 +26,24 @@
 
     <div class="wrapper d-flex align-items-stretch">
         <nav id="sidebar">
-            <button class="close-btn">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="p-4 pt-5">
-                <ul class="list-unstyled components mb-5">
+            <div class="nav-body">
+                <button class="close-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="p-4 pt-5">
+                    <ul class="list-unstyled components mb-5">
 
-                    <li>
-                        <a href="/admin">Home</a>
-                    </li>
+                        <li>
+                            <a href="/admin">Home</a>
+                        </li>
 
-                    <li class="active">
-                        <a href="/admin/editStore">Edit Store</a>
-                    </li>
-                </ul>
-
-                <div class="footer">
-                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>
-                            document.write(new Date().getFullYear());
-                        </script> All rights reserved | Amr Hesham
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
+                        <li class="active">
+                            <a href="/admin/editStore">Edit Store</a>
+                        </li>
+                    </ul>
                 </div>
-
             </div>
+
         </nav>
 
         <!-- Page Content  -->
@@ -91,6 +84,7 @@
             @if (session()->get('mssg'))
             <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
             @endif
+            <h6>Edit your store</h6>
             <form method="POST" action="{{ route('adminUpdateStore') }}">
                 @csrf
                 <div class="form-group my-4">
@@ -157,7 +151,7 @@
                 <div class="d-flex flex-column my-4">
                     <label>Delivery Options</label>
                     <div class="d-flex">
-                        <div class="form-check">
+                        <div class="form-check mr-5">
                             <input class="form-check-input" type="checkbox" id="flexCheckChecked" name="dinIn" <?php if ($store['dinIn']) echo "checked" ?>>
                             <label class="form-check-label" for="flexCheckChecked">
                                 Din In
@@ -170,13 +164,65 @@
                                 Pick up
                             </label>
                         </div>
+
+                        <div class="form-check mx-5">
+                            <input class="form-check-input" type="checkbox" id="flexCheckChecked" name="deliveryPlaces" <?php if ($store['deliveryPlaces']) echo "checked" ?>>
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Delivery
+                            </label>
+                        </div>
                     </div>
                 </div>
-
-
-
-                <button type="submit" class="btn my-btn my-4">Edit Store</button>
+                <button type="submit" class="btn my-btn my-5">Edit Store</button>
             </form>
+
+            @if ($store['deliveryPlaces'])
+            <form method="POST" class="my-5" action="{{ route('adminAddPlace') }}">
+                @csrf
+                <h6>Edit OR Add New Delivery Place</h6>
+                <div class="d-flex flex-sm-row flex-column justify-content-between">
+                    <div class="form-group my-4 col-sm-6 input-x" style="padding-left: 0;">
+                        <label for="deliveryPlaceName">Name</label>
+                        <input type="text" id="deliveryPlaceName" name="placeName" class="form-control">
+                    </div>
+                    <div class="form-group my-4 col-sm-6 input-x" style="padding-left: 0;">
+                        <label for="deliveryPlacePrice">Price</label>
+                        <input type="number" id="deliveryPlacePrice" name="placePrice" class="form-control">
+                    </div>
+                </div>
+                <button class="btn btn-secondary">Enter</button>
+            </form>
+            @endif
+
+            @if (count($places))
+            <div class="d-flex">
+                <table class="table table-responsive table-bordered w-auto">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Place Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($places as $place)
+                        <tr>
+                            <td>{{ $place['name'] }}</td>
+                            <td>{{ $place['price'] }}</td>
+                            <td class="d-flex">
+                                <form method="POST" action="{{ route('adminDeletePlace', ['id' => $place['id']]) }}">
+                                    @csrf
+                                    <button class="btn delete-store-btn">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            @endif
 
         </div>
     </div>
