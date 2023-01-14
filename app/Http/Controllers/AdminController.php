@@ -75,7 +75,8 @@ class AdminController extends Controller
             "currency" => "required|string",
             "dinIn" => "nullable",
             "pickUp" => "nullable",
-            "deliveryPlaces" => "nullable"
+            "deliveryPlaces" => "nullable",
+            'logo' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048'
         ]);
 
         if (isset($data['dinIn'])) $data['dinIn'] = 1;
@@ -84,6 +85,12 @@ class AdminController extends Controller
         else $data['pickUp'] = 0;
         if (isset($data['deliveryPlaces'])) $data['deliveryPlaces'] = 1;
         else $data['deliveryPlaces'] = 0;
+
+        if(isset($data['logo'])) {
+            $myimage = time() . $request->logo->getClientOriginalName();
+            $request->logo->move(public_path('images'), $myimage);
+            $data['logo'] = $myimage;
+        }
 
         $store = Store::where('user_id', Auth::user()->id)->get()[0];
         $store->update($data);

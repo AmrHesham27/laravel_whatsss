@@ -85,7 +85,7 @@
             <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
             @endif
             <h6>Edit your store</h6>
-            <form method="POST" action="{{ route('adminUpdateStore') }}">
+            <form enctype="multipart/form-data" method="POST" action="{{ route('adminUpdateStore') }}">
                 @csrf
                 <div class="form-group my-4">
                     <label for="store_name">Store Name</label>
@@ -147,6 +147,21 @@
                     <option value="$" <?php if ($store['currency'] == "$") echo 'selected' ?>>$</option>
                     <option value="€" <?php if ($store['currency'] == "€") echo 'selected' ?>>€</option>
                 </select>
+
+                <div class="d-flex flex-sm-row flex-column justify-content-between">
+                    <div class="form-grou d-flex flex-column my-4 col-sm-6 input-x" style="padding-left: 0;">
+                        <label for="whatsapp">Store Logo</label>
+                        <input type="file" name="logo">
+                        @error('logo')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group my-4 col-sm-6 input-x" style="padding-right: 0;">
+                        @if($store['logo'])
+                        <img style="max-height: 150px;" alt="logo" src="/images/{{ $store['logo'] }}" />
+                        @endif
+                    </div>
+                </div>
 
                 <div class="d-flex flex-column my-4">
                     <label>Delivery Options</label>
