@@ -37,6 +37,8 @@ require __DIR__ . '/auth.php';
 
 Route::get('/stores/{id}', [StoreController::class, 'show']);
 
+Route::get('/stores/checkURL/{url}', [StoreController::class, 'checkURL']);
+
 
 // super Admin routes
 Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {

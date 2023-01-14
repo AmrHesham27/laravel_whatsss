@@ -88,6 +88,13 @@
                     @enderror
                 </div>
                 <div class="form-group my-4">
+                    <label for="store_name">Store URL</label>
+                    <input type="text" name="url" value="{{ old('url') }}" class="@error('url') is-invalid @enderror form-control" id="url" aria-describedby="store url" placeholder="Enter Store URL">
+                    @error('url')
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group my-4">
                     <label for="whatsapp">Whatsapp Number</label>
                     <input type="text" name="whatsapp" value="{{ old('whatsapp') }}" class="@error('whatsapp') is-invalid @enderror form-control" id="whatsapp" aria-describedby="whatsapp" placeholder="Enter Whatsapp Number">
                     @error('whatsapp')

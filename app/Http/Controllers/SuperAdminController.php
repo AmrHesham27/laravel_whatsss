@@ -103,6 +103,7 @@ class SuperAdminController extends Controller
                 "whatsapp" => "required|string|max:60",
                 "email" => "required|email|max:100",
                 "password" => "required|min:8",
+                "url" => "required|string|max:60|unique:stores"
             ]);
 
             $id = User::create([
@@ -117,16 +118,13 @@ class SuperAdminController extends Controller
                 'user_id' => $id,
                 'whatsapp' => $data['whatsapp'],
                 'name' => $data['name'],
+                'url' => $data['url']
             ]);
 
             $this->message('New Store was added successfully', 'alert-success');
 
             return redirect()->back();
         } catch (Exception $e) {
-            if ($id) {
-                $user = User::findOrFail($id);
-                $user->delete();
-            };
             $this->message($e->getMessage(), 'alert-danger');
             return redirect()->back();
         }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')
                 ->onDelete('cascade')->onUpdate('cascade');
             $table->string('name', 60);
-            $table->string('url', 60)->nullable();
+            $table->string('url', 60)->unique();
             $table->string('logo', 200)->nullable();
             $table->string('color_1', 60)->default('rgb(246, 246, 246)');
             $table->string('color_2', 60)->default('rgb(0, 152, 0)');

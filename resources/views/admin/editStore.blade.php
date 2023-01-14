@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset('assets/dashboard/css/style.css') }}">
     <script src="https://kit.fontawesome.com/6cc7b35ba8.js" crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 </head>
 
 <style>
@@ -96,10 +98,12 @@
                 </div>
                 <div class="form-group my-4">
                     <label for="url">URL</label>
-                    <input type="text" name="url" value="{{ $store['url'] }}" class="@error('name') is-invalid @enderror form-control" id="url" aria-describedby="store name" placeholder="Enter Store Name">
+                    <input type="text" name="url" value="{{ $store['url'] }}" class="@error('name') is-invalid @enderror form-control" id="url" aria-describedby="url" placeholder="Enter Store URL">
                     @error('url')
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
+                    <div id="url-message-danger" class="alert alert-danger mt-1 mb-1 d-none"></div>
+                    <div id="url-message-success" class="alert alert-success mt-1 mb-1 d-none"></div>
                 </div>
                 <div class="form-group my-4">
                     <label for="whatsapp">Whatsapp Number</label>
@@ -242,7 +246,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('assets/dashboard/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/dashboard/js/popper.js') }}"></script>
     <script src="{{ asset('assets/dashboard/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/dashboard/js/main.js') }}"></script>
@@ -250,6 +253,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/js/bootstrap-colorpicker.min.js"></script>
     <script>
         $('.colorpicker').colorpicker();
+    </script>
+
+    <script>
+        $(document).ready(function() {
+                    $("#url").change(function(e) {
+                        if(e.target.value == '<?php echo $store['url'] ?>') {
+                            $('#url-message-success').text("This URL is available.").removeClass('d-none');
+                            $('#url-message-danger').addClass('d-none');
+                        } 
+                        else {
+                            $.ajax(`/stores/checkURL/${e.target.value}`, {
+                            success: function(data, status, xhr) {
+                                if(data.result) {
+                                    $('#url-message-success').text("This URL is available.").removeClass('d-none');
+                                    $('#url-message-danger').addClass('d-none');
+                                }
+                                else {
+                                    $('#url-message-danger').text("This URL is not available.").removeClass('d-none');
+                                    $('#url-message-success').addClass('d-none');
+                                }
+                            },
+                        });
+                        }
+                    });
+                })
     </script>
 </body>
 
