@@ -3,7 +3,7 @@ import CollapseCategory from "./collapseCategory";
 import MenuItem from "./menuItem";
 import CardProduct from "./CardProduct";
 
-function menu({ products, categories, currency, displayCards, color }) {
+function menu({ products, categories, currency, displayCards, color_1, color_2 }) {
     const [searchItems, setSearchItems] = useState([]);
     const [showSearch, setShowSearch] = useState(false);
     const [userInput, setUserInput] = useState("");
@@ -36,7 +36,7 @@ function menu({ products, categories, currency, displayCards, color }) {
                 <div className="d-flex flex-coumn jsutify-content-center">
                     <i
                         style={{
-                            color: "rgb(190, 190, 190)",
+                            color_1: "rgb(190, 190, 190)",
                             marginLeft: "5px",
                         }}
                         className="fa fa-search"
@@ -50,7 +50,7 @@ function menu({ products, categories, currency, displayCards, color }) {
                           key={index}
                           product={product}
                           currency={currency}
-                          color={color}
+                          color_1={color_1}
                       />
                   ))
                 : undefined}
@@ -60,6 +60,7 @@ function menu({ products, categories, currency, displayCards, color }) {
                           key={index}
                           product={product}
                           currency={currency}
+                          color_2={color_2}
                       />
                   ))
                 : undefined}
@@ -73,7 +74,8 @@ function menu({ products, categories, currency, displayCards, color }) {
                           category={category}
                           currency={currency}
                           displayCards={displayCards}
-                          color={color}
+                          color_1={color_1}
+                          color_2={color_2}
                       />
                   ))
                 : undefined}
@@ -82,23 +84,3 @@ function menu({ products, categories, currency, displayCards, color }) {
 }
 
 export default menu;
-
-/**.map((product, index) => (
-     <MenuItem
-        key={index}
-        product={product}
-        currency={currency}
-    />
-
-/**
- * 
- * categories.map((category, index) => (
-        <CollapseCategory
-            key={index}
-            category={category}
-            currency={currency}
-            displayCards={displayCards}
-            color={color}
-        />
-    ))
- */

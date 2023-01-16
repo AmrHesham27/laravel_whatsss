@@ -3,32 +3,8 @@ import Cart from "./cart";
 import Info from "./info";
 import Menu from "./menu";
 import CategoriesList from "./categories";
-import { useState, useEffect } from "react";
 
 function pageBody({ store }) {
-    const [categories, setCategories] = useState([]);
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        // fetch product data
-        const getProducts = async () => {
-            const response = await fetch(
-                `http://localhost:8000/api/getProducts/${store["id"]}`
-            );
-            if (response.ok) {
-                const data = await response.json();
-                setCategories(data.data);
-                data["data"].forEach((category) => {
-                    setProducts((products) => [
-                        ...products,
-                        ...category["products"],
-                    ]);
-                });
-            }
-        };
-        getProducts();
-    }, []);
-
     return (
         <div className="d-flex flex-column mb-5">
             <nav className="navbar my-nav d-flex justify-content-end">
@@ -79,7 +55,8 @@ function pageBody({ store }) {
                 <Cart
                     delivery_fees={store["delivery_fees"]}
                     currency={store["currency"]}
-                    color={store['color_1']}
+                    color_1={store['color_1']}
+                    color_2={store['color_2']}
                 />
                 <div className="tab-content" id="nav-tabContent">
                     <div
@@ -100,13 +77,14 @@ function pageBody({ store }) {
                     >
                         <div className="body-container">
                             <Menu
-                                products={products}
-                                categories={categories}
+                                products={store['products']}
+                                categories={store['categories']}
                                 currency={store["currency"]}
                                 displayCards={store['displayCards']}
-                                color={store['color_1']}
+                                color_1={store['color_1']}
+                                color_2={store['color_2']}
                             />
-                            <CategoriesList categories={categories} />
+                            <CategoriesList categories={store['categories']} />
                         </div>
                     </div>
                 </div>

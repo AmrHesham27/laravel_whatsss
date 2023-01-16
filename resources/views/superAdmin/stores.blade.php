@@ -97,7 +97,9 @@
                         @csrf
                         <div class="form-group my-4 d-flex">
                             <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="Search">
+                            @if($type == 'search')
                             <a class="btn btn-danger mx-2 close-search" href="{{ route('superAdminStores') }}">x</a>
+                            @endif
                         </div>
                     </form>
 

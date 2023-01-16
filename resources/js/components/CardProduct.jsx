@@ -4,7 +4,7 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../redux/cart";
 
-const CardProduct = ({ product, currency, color }) => {
+const CardProduct = ({ product, currency, color_1 }) => {
     const dispatch = useDispatch();
 
     const addTocart = () => {
@@ -22,7 +22,7 @@ const CardProduct = ({ product, currency, color }) => {
             <p>{product["desc"]}</p>
             <button
                 className="w-100 p-2 mt-2"
-                style={{ backgroundColor: color }}
+                style={{ backgroundColor: color_1 }}
                 onClick={addTocart}
             >
                 <FontAwesomeIcon icon={faCartShopping} />

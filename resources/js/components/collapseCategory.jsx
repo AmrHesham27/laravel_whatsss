@@ -1,9 +1,8 @@
 import React from "react";
 import MenuItem from "./menuItem";
-import Row from "react-bootstrap/Row";
 import CardProduct from "./CardProduct";
 
-function collapseCategory({ category, currency, displayCards, color }) {
+function collapseCategory({ category, currency, displayCards, color_1, color_2 }) {
     return (
         <div className="collapse-item" id={`category_${category["id"]}`}>
             <button
@@ -33,7 +32,7 @@ function collapseCategory({ category, currency, displayCards, color }) {
                                 key={index}
                                 product={product}
                                 currency={currency}
-                                color={color}
+                                color_1={color_1}
                             />
                         ))}
                     </div>
@@ -44,6 +43,7 @@ function collapseCategory({ category, currency, displayCards, color }) {
                                 key={index}
                                 product={product}
                                 currency={currency}
+                                color_2={color_2}
                             />
                         ))}
                     </div>

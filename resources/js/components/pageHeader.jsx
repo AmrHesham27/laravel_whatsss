@@ -8,9 +8,8 @@ function pageHeader({image}) {
         <div className="my-header">
             <div>
                 <img
-                    src={`/stores_logos/${image}`}
+                    src={`/images/${image}`}
                     alt="store logo"
-                    onClick={() => console.log(cart)}
                 />
             </div>
         </div>

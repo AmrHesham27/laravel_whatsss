@@ -2,17 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductCategory;
-use App\Models\Store;
-use Exception;
 use Illuminate\Http\Request;
+use App\Models\Store;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Exception;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Place;
+use App\Models\ProductCategory;
 use App\Models\View;
-
 class StoreController extends Controller
 {
-    public function test($id)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        dd(count(Store::where('user_id', '==', auth()->user()->id)->get()));
+        $stores = Store::paginate(8);
+        return view('superAdmin.stores', ['stores' => $stores, 'type' => 'data', 'search' => '']);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('superAdmin.addStore');
     }
 
     /**
@@ -23,52 +42,182 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|string',
-            'url' => 'required|string',
-            'logo' => 'required',
-            'color1' => 'required|string',
-            'color_2' => 'required|string',
-            'minimum_order' => 'required|numeric',
-            'start_time' => 'required|time',
-            'end_time' =>  'required|time',
-            'delievry_time' => 'required|numeric',
-            'delivery_fees' => 'required|numeric',
-        ]);
+        try {
+            $data = $this->validate($request, [
+                "name"  => "required|string|max:60",
+                "whatsapp" => "required|string|max:60",
+                "email" => "required|email|max:100|unique:users",
+                "password" => "required|min:8",
+                "url" => "required|string|max:60|unique:stores"
+            ]);
 
-        $data['user_id'] = auth()->user()->id;
+            if (!ctype_alpha($data['url'])) {
+                $this->message('URL must contain only letters', 'alert-danger');
+                return redirect()->back();
+            }
 
-        if (count(Store::where('user_id', '==', auth()->user()->id)->get())) {
-            abort(500, "This account already has a store");
+            $id = User::create([
+                'name' => 'admin',
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'created_at' => now(),
+                'updated_at' => now()
+            ])->id;
+
+            Store::create([
+                'user_id' => $id,
+                'whatsapp' => $data['whatsapp'],
+                'name' => $data['name'],
+                'url' => $data['url']
+            ]);
+
+            $this->message('New Store was added successfully', 'alert-success');
+
+            return redirect()->back();
+        } catch (Exception $e) {
+            $this->message($e->getMessage(), 'alert-danger');
+            return redirect()->back();
         }
-
-        if (count(Store::where('url', '==', $data['url'])->get())) {
-            abort(
-                500,
-                "This URL is already taken, try another URL or use a custome domain."
-            );
-        }
-
-        Store::create($data);
-
-        return redirect();
     }
 
     /**
      * Display the specified resource.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Request $request)
+    public function show($url)
     {
-        $store = Store::where('url', $id)->get()[0];
+        if (!Store::where('url', $url)->count())
+        {
+            dd('THERE IS NO STORE ON THIS URL');
+        };
+        $store = Store::where('url', $url)->get()[0];
         if ($store['is_suspended']) abort(404);
+        $categories = ProductCategory::with('products')
+            ->where('store_id', $store['id'])->get();
+
+        $products = [];
+        foreach($categories as $category)
+        {
+            array_push($products, $category['products']);
+        }
+        
+        $store['products'] = $products;
+        $store['categories'] = $categories;
 
         $view = new View;
         $view['store_id'] = $store['id'];
         $view ->save();
 
         return view('customer', ['store' => $store]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit()
+    {
+        $store = Store::where('user_id', Auth::user()->id)->get()[0];
+        $places = Place::where('store_id', $store['id'])->get();
+        return view('admin/editStore', ['store' => $store, 'places' => $places]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        $data = $this->validate($request, [
+            "name"  => "required|string|max:60",
+            "whatsapp" => "required|string|max:60",
+            "url" => "required|string|max:60",
+            "color_1" => "required",
+            "color_2" => "required",
+            "start_time" => "required",
+            "end_time" => "required",
+            "currency" => "required|string",
+            "dinIn" => "nullable",
+            "pickUp" => "nullable",
+            "deliveryPlaces" => "nullable",
+            'logo' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048'
+        ]);
+
+        if (isset($data['dinIn'])) $data['dinIn'] = 1;
+        else $data['dinIn'] = 0;
+        if (isset($data['pickUp'])) $data['pickUp'] = 1;
+        else $data['pickUp'] = 0;
+        if (isset($data['deliveryPlaces'])) $data['deliveryPlaces'] = 1;
+        else $data['deliveryPlaces'] = 0;
+
+        if(isset($data['logo'])) {
+            $myimage = time() . $request->logo->getClientOriginalName();
+            $request->logo->move(public_path('images'), $myimage);
+            $data['logo'] = $myimage;
+        }
+
+        $store = Store::where('user_id', Auth::user()->id)->get()[0];
+        $store->update($data);
+
+        $places = Place::where('store_id', $store['id'])->get();
+
+        $this->message('Your Store was edited successfully', 'alert-success');
+        return redirect()->route('adminEditStore', ['store' => $store, 'places' => $places]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $store = Store::findOrFail($id);
+        $store->delete();
+
+        return redirect()->back();
+    }
+
+    /** MORE FUNCTIONS */
+    /**********************************************/
+    public function suspendStore($id)
+    {
+        $store = Store::findOrFail($id);
+        $store['is_suspended'] = true;
+        $store->save();
+
+        return redirect()->back();
+    }
+
+    public function unSuspendStore($id)
+    {
+        $store = Store::findOrFail($id);
+        $store['is_suspended'] = false;
+        $store->save();
+
+        return redirect()->back();
+    }
+
+    public function searchStores(Request $request)
+    {
+        $search = $request->input('search');
+
+        $stores = Store::where('id', '=', $search)
+            ->orWhere('name', 'LIKE', "%{$search}%")
+            ->orWhere('url', 'LIKE', "%{$search}%")
+            ->orWhere('subdomain', 'LIKE', "%{$search}%")
+            ->orWhere('whatsapp', 'LIKE', "%{$search}%")
+            ->paginate(8);
+
+        return view('superAdmin.stores', ['stores' => $stores, 'type' => 'search', 'search' => $search]);
     }
 
     /** API to check valid url */
@@ -108,79 +257,5 @@ class StoreController extends Controller
                 "message" => $e->getMessage(),
             ], 500);
         }
-    }
-
-
-    /**
-     * Display the specified resource dashbaord.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showDashboard($name)
-    {
-        $store = Store::where('name', $name);
-        return view('storeAdmin', ['store' => $store]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Store  $store
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Store $store)
-    {
-        $data = $this->validate($request, [
-            'name' => 'nullable|string',
-            'url' => 'nullable|string',
-            'logo' => 'nullable',
-            'color1' => 'nullable|string',
-            'color_2' => 'nullable|string',
-            'minimum_order' => 'nullable |numeric',
-            'start_time' => 'nullable|time',
-            'end_time' =>  'nullable|time',
-            'delievry_time' => 'nullable|numeric',
-            'delivery_fees' => 'nullable|numeric',
-        ]);
-
-        $store = Store::where('name', $data['name'])->get()[0];
-
-        if (auth()->user()->id != $store['user_id'] ) {
-            abort(
-                500,
-                "You do not have this store."
-            );
-        }
-
-        if (count(Store::where('url', '==', $data['url'])->get()) && $data['url']) {
-            abort(
-                500,
-                "This URL is already taken, try another URL or use a custome domain."
-            );
-        }
-
-        $store->update($data);
-
-        return redirect();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Store  $store
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        if (!$this->is_super_admin(auth()->user()->email)) {
-            abort(
-                500,
-                "Only Admin can do that"
-            );
-        }
-
-        $store = Store::findOrFail($id);
-        $store->delete($id);   
     }
 }

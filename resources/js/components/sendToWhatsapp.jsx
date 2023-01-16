@@ -1,6 +1,6 @@
 import React from "react";
 
-function sendToWhatsapp({whatsapp, color}) {
+function sendToWhatsapp({ whatsapp, color_1, color_2 }) {
     return (
         <div
             className="modal fade"
@@ -24,7 +24,7 @@ function sendToWhatsapp({whatsapp, color}) {
                         </button>
                         <div
                             className="modal-cart-header"
-                            style={{ color: color }}
+                            style={{ color: color_1 }}
                         >
                             أدخل بياناتك 
                         </div>
@@ -57,6 +57,7 @@ function sendToWhatsapp({whatsapp, color}) {
                                 <a 
                                     className="btn btn-success px-3 my-2"
                                     href={`https://wa.me/${whatsapp}/?text=${'kkk'}`}
+                                    style={{ backgroundColor: color_2 }}
                                 >
                                     اطلب
                                 </a>

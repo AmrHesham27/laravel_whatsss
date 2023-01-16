@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../redux/cart";
 
-function menuItem({ product, currency }) {
+function menuItem({ product, currency, color_2 }) {
     const dispatch = useDispatch();
 
     const addTocart = () => {
@@ -30,6 +28,7 @@ function menuItem({ product, currency }) {
                     id={`add_buton_${product["id"]}`}
                     className="d-flex flex-column justify-content-center add-button"
                     onClick={addTocart}
+                    style={{ backgroundColor: color_2 }}
                 >
                     <i className="fa fa-plus" style={{ color: "white" }}></i>
                 </div>

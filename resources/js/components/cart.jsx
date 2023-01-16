@@ -3,14 +3,14 @@ import empty_cart_image from "../../../public/assets/img/empty-cart.svg";
 import { useSelector } from "react-redux";
 import CartItem from "./cartItem";
 
-function Cart({ delivery_fees, currency, color }) {
+function Cart({ delivery_fees, currency, color_1, color_2 }) {
     const cart = useSelector((state) => state.cart);
 
     return (
         <div className="cart">
             <div
                 className="header cart-header"
-                style={{ backgroundColor: color }}
+                style={{ backgroundColor: color_1 }}
             >
                 سلة مشترياتك
             </div>
@@ -34,7 +34,7 @@ function Cart({ delivery_fees, currency, color }) {
                 {cart.itemsCount > 0 && (
                     <>
                         {Object.values(cart.items).map((item) => (
-                            <CartItem key={item.name} name={item.name} color={color} />
+                            <CartItem key={item.name} name={item.name} color={color_1} />
                         ))}
                         <div className="cart-info">
                             <div>
@@ -65,7 +65,7 @@ function Cart({ delivery_fees, currency, color }) {
                             data-toggle="modal"
                             data-target="#send-to-whatsapp"
                         >
-                            <button>اطلب الان</button>
+                            <button style={{ backgroundColor: color_2 }}>اطلب الان</button>
                         </div>
                     </>
                 )}

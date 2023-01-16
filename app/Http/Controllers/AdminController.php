@@ -55,52 +55,6 @@ class AdminController extends Controller
         ]);
     }
 
-    public function editStore()
-    {
-        $store = Store::where('user_id', Auth::user()->id)->get()[0];
-        $places = Place::where('store_id', $store['id'])->get();
-        return view('admin/editStore', ['store' => $store, 'places' => $places]);
-    }
-
-    public function updateStore(Request $request)
-    {
-        $data = $this->validate($request, [
-            "name"  => "required|string|max:60",
-            "whatsapp" => "required|string|max:60",
-            "url" => "required|string|max:60",
-            "color_1" => "required",
-            "color_2" => "required",
-            "start_time" => "required",
-            "end_time" => "required",
-            "currency" => "required|string",
-            "dinIn" => "nullable",
-            "pickUp" => "nullable",
-            "deliveryPlaces" => "nullable",
-            'logo' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048'
-        ]);
-
-        if (isset($data['dinIn'])) $data['dinIn'] = 1;
-        else $data['dinIn'] = 0;
-        if (isset($data['pickUp'])) $data['pickUp'] = 1;
-        else $data['pickUp'] = 0;
-        if (isset($data['deliveryPlaces'])) $data['deliveryPlaces'] = 1;
-        else $data['deliveryPlaces'] = 0;
-
-        if(isset($data['logo'])) {
-            $myimage = time() . $request->logo->getClientOriginalName();
-            $request->logo->move(public_path('images'), $myimage);
-            $data['logo'] = $myimage;
-        }
-
-        $store = Store::where('user_id', Auth::user()->id)->get()[0];
-        $store->update($data);
-
-        $places = Place::where('store_id', $store['id'])->get();
-
-        $this->message('Your Store was edited successfully', 'alert-success');
-        return redirect()->route('adminEditStore', ['store' => $store, 'places' => $places]);
-    }
-
     function addDeliveryPlace(Request $request)
     {
         $data = $this->validate($request, [

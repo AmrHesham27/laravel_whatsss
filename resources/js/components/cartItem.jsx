@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { cartActions } from "../redux/cart";
 import React from "react";
 
-const CartItem = ({ name, color }) => {
+const CartItem = ({ name, color_1 }) => {
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
@@ -10,7 +10,7 @@ const CartItem = ({ name, color }) => {
         <div className="cartItem p-2">
             <div className="controls">
                 <button
-                    style={{ color: color }}
+                    style={{ color: color_1 }}
                     onClick={() =>
                         dispatch(cartActions.decreaseProductQty(name))
                     }
@@ -19,7 +19,7 @@ const CartItem = ({ name, color }) => {
                 </button>
                 <span className="p-2">{cart["items"][name]["qty"]}</span>
                 <button
-                    style={{ color: color }}
+                    style={{ color: color_1 }}
                     onClick={() =>
                         dispatch(cartActions.increaseProductQty(name))
                     }

@@ -19,7 +19,7 @@ export default function App({store}) {
             <PageHeader image={store["logo"]} />
             <div className="page-container">
                 <PageBody store={store} />
-                <SendToWhatsapp whatsapp={store['whatsapp']} color={store['color_1']} />
+                <SendToWhatsapp whatsapp={store['whatsapp']} color_1={store['color_1']} color_2={store['color_2']} />
                 <ModalCart delivery_fees={store["delivery_fees"]} color={store['color_1']} />
             </div>
             <ResponsiveCart delivery_fees={store["delivery_fees"]} color={store['color_1']} />

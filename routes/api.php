@@ -19,6 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// guest apis
 Route::get('getProducts/{id}', [StoreController:: class, 'getStoreProducts']);
-
 Route::get('checkURL/{url}', [StoreController:: class, 'checkURL']);

@@ -35,27 +35,26 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::get('/stores/{id}', [StoreController::class, 'show']);
-
-Route::get('/stores/checkURL/{url}', [StoreController::class, 'checkURL']);
+// guest routes
+Route::get('/stores/{url}', [StoreController::class, 'show']);
 
 
 // super Admin routes
 Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
     Route::get('/superAdmin', [SuperAdminController::class, 'showDashboard']);
-    Route::get('/superAdmin/stores', [SuperAdminController::class, 'showAllStores'])->name('superAdminStores');
-    Route::post('/superAdmin/stores/suspend/{id}', [SuperAdminController::class, 'suspendStore'])->name('suspendStore');
-    Route::post('/superAdmin/stores/unSuspend/{id}', [SuperAdminController::class, 'unSuspendStore'])->name('unSuspendStore');
-    Route::post('/superAdmin/stores/deleteStore/{id}', [SuperAdminController::class, 'deleteStore'])->name('deleteStore');
-    Route::get('/superAdmin/stores/add', [SuperAdminController::class, 'addStore'])->name('addStore');
-    Route::post('/superAdmin/stores/create', [SuperAdminController::class, 'createStore'])->name('createStore');
-    Route::get('superAdmin/stores/searchStores', [SuperAdminController::class, 'searchStores'])->name('searchStores');
+    Route::get('/superAdmin/stores', [StoreController::class, 'index'])->name('superAdminStores');
+    Route::post('/superAdmin/stores/suspend/{id}', [StoreController::class, 'suspendStore'])->name('suspendStore');
+    Route::post('/superAdmin/stores/unSuspend/{id}', [StoreController::class, 'unSuspendStore'])->name('unSuspendStore');
+    Route::post('/superAdmin/stores/deleteStore/{id}', [StoreController::class, 'destroy'])->name('deleteStore');
+    Route::get('/superAdmin/stores/add', [StoreController::class, 'create'])->name('addStore');
+    Route::post('/superAdmin/stores/create', [StoreController::class, 'store'])->name('createStore');
+    Route::get('superAdmin/stores/searchStores', [StoreController::class, 'searchStores'])->name('searchStores');
 });
 
 Route::group(['middleware' => ['auth', 'notSuperAdmin']], function () {
     Route::get('/admin', [AdminController::class, 'showDashboard']);
-    Route::get('/admin/editStore', [AdminController::class, 'editStore'])->name('adminEditStore');
-    Route::post('/admin/updateStore', [AdminController::class, 'updateStore'])->name('adminUpdateStore');
+    Route::get('/admin/editStore', [StoreController::class, 'edit'])->name('adminEditStore');
+    Route::post('/admin/updateStore', [StoreController::class, 'update'])->name('adminUpdateStore');
     Route::post('/admin/addDeliveryPlace', [AdminController::class, 'addDeliveryPlace'])->name('adminAddPlace');
     Route::post('/admin/deleteDeliveryPlace/{id}', [AdminController::class, 'deleteDeliveryPlace'])->name('adminDeletePlace');
 });

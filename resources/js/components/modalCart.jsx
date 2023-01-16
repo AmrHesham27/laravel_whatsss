@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CartItem from "./cartItem";
 
-function ModalCart({ delivery_fees, color }) {
+function ModalCart({ delivery_fees, color_1 }) {
     const cart = useSelector((state) => state.cart);
 
     return (
@@ -28,7 +28,7 @@ function ModalCart({ delivery_fees, color }) {
                         </button>
                         <div
                             className="modal-cart-header"
-                            style={{ color: color }}
+                            style={{ color: color_1 }}
                         >
                             سلة مشترياتك
                         </div>
@@ -36,7 +36,7 @@ function ModalCart({ delivery_fees, color }) {
                     <div className="modal-body text-right">
                         {cart["itemsCount"] &&
                             Object.values(cart["items"]).map((item) => (
-                                <CartItem key={item.name} name={item.name} color={color} />
+                                <CartItem key={item.name} name={item.name} color={color_1} />
                             ))}
 
                         <div className="cart-info">
