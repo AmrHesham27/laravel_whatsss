@@ -72,6 +72,7 @@ p {
     img {
         padding: 10px 20px;
         max-height: 70px;
+        margin-top: 10px;
     }
 }
 
@@ -490,6 +491,10 @@ p {
             margin: auto;
             display: flex;
             justify-content: center;
+        }
+
+        img {
+            margin: 0;
         }
     }
 

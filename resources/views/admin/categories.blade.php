@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Sidebar 01</title>
+    <title>Admin Dasboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -27,7 +27,7 @@
 <body>
 
     <div class="wrapper d-flex align-items-stretch">
-        <x-dashboard.super-admin-navbar active='Stores'></x-dashboard.super-admin-navbar>
+        <x-dashboard.admin-navbar active='Categories'></x-admin-navbar>
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
@@ -66,17 +66,28 @@
             <!-- Content -->
             <div class="d-flex flex-column">
                 <div>
-                    <a class="my-2 btn my-btn" href="/superAdmin/stores/add">Add Store</a>
+                    <a class="my-2 btn my-btn" href="/superAdmin/stores/add">Add Category</a>
                 </div>
 
                 <div class="d-flex">
-                    <form method="GET" action="{{ route('searchStores') }}" style="max-width: 300px;">
+                    <form method="POST" action="{{ route('adminSearchCategories') }}" style="max-width: 300px;">
                         @csrf
                         <div class="form-group my-4 d-flex">
-                            <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="Search">
-                            @if($type == 'search')
-                            <a class="btn btn-danger mx-2 close-search" href="{{ route('superAdminStores') }}">x</a>
-                            @endif
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button class="input-group-text" id="basic-addon1" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                                <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="Search">
+                                @if($type == 'search')
+                                <div class="input-group-append">
+                                    <a class="input-group-text close-search" href="{{ route('adminCategories') }}" id="basic-addon2" style="background-color: #dc3545;">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </a>
+                                </div>
+                                @endif
+                            </div>
                         </div>
                     </form>
 
@@ -84,47 +95,28 @@
 
             </div>
 
-            <div class="d-flex">
-                <table class="table table-responsive table-bordered">
+            <div class="d-flex table-responsive">
+                <table class="table table-bordered">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Store Name</th>
-                            <th scope="col">WhatsappNumber</th>
-                            <th scope="col">URL</th>
-                            <th scope="col">Subdomain</th>
-                            <th scope="col">Is Suspended</th>
+                            <th scope="col">Category Name</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($stores as $store)
+                        @foreach ($categories as $category)
                         <tr>
-                            <th scope="row">{{ $store['id'] }}</th>
-                            <td>{{ $store['name'] }}</td>
-                            <td>{{ $store['whatsapp'] }}</td>
-                            <td>{{ $store['url'] }}</td>
-                            <td>{{ $store['subdomain'] }}</td>
-                            <td>{{ $store['is_suspended'] ? 'Suspended' : '' }}</td>
+                            <th scope="row">{{ $category['id'] }}</th>
+                            <td>{{ $category['name'] }}</td>
+
                             <td class="d-flex">
-                                <a class="btn delete-store-btn" form-action="{{ route('deleteStore', ['id' => $store['id']]) }}" data-toggle="modal" data-target="#exampleModal">
+                                <button class="btn delete-btn" data-toggle="modal" data-target="#deleteModal" form-action="{{ route('deleteCategory', [ 'id' => $category['id'] ]) }}">
                                     <i class="fa-solid fa-trash"></i>
-                                </a>
-                                @if ( !$store['is_suspended'] )
-                                <form method="POST" action="{{ route('suspendStore', ['id' => $store['id']]) }}">
-                                    @csrf
-                                    <button class="btn store-btn">
-                                        <i class="fa-solid fa-ban"></i>
-                                    </button>
-                                </form>
-                                @else
-                                <form method="POST" action="{{ route('unSuspendStore', ['id' => $store['id']]) }}">
-                                    @csrf
-                                    <button class="btn store-btn">
-                                        <i class="fa-solid fa-ban"></i>
-                                    </button>
-                                </form>
-                                @endif
+                                </button>
+                                <button class="btn edit-btn" data-toggle="modal" data-target="#editModal" form-action="{{ route('adminUpdateCategory', [ 'id' => $category['id'] ]) }}">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
                             </td>
                         </tr>
                         @endforeach
@@ -132,10 +124,10 @@
                 </table>
             </div>
             <div class="d-flex justify-content-center">
-                {{ $stores->appends(['search' => $search])->links() }}
+                {{ $categories->appends(['search' => $search])->links() }}
             </div>
 
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -144,9 +136,12 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+                        <div class="modal-body">
+                            <p>All the products in this category will be deleted.</p>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <form id='delete-store-form' method="POST" action="">
+                            <form id='delete-category-form' method="POST" action="">
                                 @csrf
                                 <button class="btn btn-danger">
                                     Delete
@@ -157,14 +152,51 @@
                 </div>
             </div>
 
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="" id="edit-category-form">
+                                @csrf
+                                <div class="form-group my-4">
+                                    <label for="store_name">Category Name</label>
+                                    <input type="text" name="name" value="{{ old('name') }}" class="@error('name') is-invalid @enderror form-control" id="store_name" aria-describedby="store name" placeholder="Enter Store Name">
+                                    @error('name')
+                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button class="btn my-btn" type="submit" form="edit-category-form">
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 
     <script>
         $(document).ready(function() {
-            $('.delete-store-btn').click(function() {
+            $('.delete-btn').click(function() {
                 var formAction = this.getAttribute("form-action");
-                $('#delete-store-form').attr('action', formAction);
+                $('#delete-category-form').attr('action', formAction);
+            });
+
+            $('.edit-btn').click(function() {
+                var formAction = this.getAttribute("form-action");
+                $('#edit-category-form').attr('action', formAction);
             });
         });
     </script>

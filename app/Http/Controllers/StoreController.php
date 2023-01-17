@@ -147,15 +147,15 @@ class StoreController extends Controller
             "dinIn" => "nullable",
             "pickUp" => "nullable",
             "deliveryPlaces" => "nullable",
-            'logo' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048'
+            'logo' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
+            "displayCards" => "nullable"
         ]);
 
-        if (isset($data['dinIn'])) $data['dinIn'] = 1;
-        else $data['dinIn'] = 0;
-        if (isset($data['pickUp'])) $data['pickUp'] = 1;
-        else $data['pickUp'] = 0;
-        if (isset($data['deliveryPlaces'])) $data['deliveryPlaces'] = 1;
-        else $data['deliveryPlaces'] = 0;
+        foreach(['dinIn', 'pickUp', 'deliveryPlaces', 'displayCards'] as $variable)
+        {
+            if(isset($data[$variable])) $data[$variable] = 1;
+            else $data[$variable] = 0;
+        }
 
         if(isset($data['logo'])) {
             $myimage = time() . $request->logo->getClientOriginalName();

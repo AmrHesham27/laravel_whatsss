@@ -27,26 +27,7 @@
 <body>
 
     <div class="wrapper d-flex align-items-stretch">
-        <nav id="sidebar">
-            <div class="nav-body">
-                <button class="close-btn">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-                <div class="p-4 pt-5">
-                    <ul class="list-unstyled components mb-5">
-
-                        <li>
-                            <a href="/admin">Home</a>
-                        </li>
-
-                        <li class="active">
-                            <a href="/admin/editStore">Edit Store</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-        </nav>
+        <x-dashboard.admin-navbar active='Edit Store'></x-admin-navbar>
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
@@ -192,7 +173,17 @@
                         </div>
                     </div>
                 </div>
+
+
+                <label>Check this input if you want to display products as cards.</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="flexCheckChecked" name="displayCards" <?php if ($store['displayCards']) echo "checked" ?>>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Display cards
+                    </label>
+                </div>
                 <button type="submit" class="btn my-btn my-5">Edit Store</button>
+
             </form>
 
             @if ($store['deliveryPlaces'])
@@ -257,27 +248,25 @@
 
     <script>
         $(document).ready(function() {
-                    $("#url").change(function(e) {
-                        if(e.target.value == '<?php echo $store['url'] ?>') {
-                            $('#url-message-success').text("This URL is available.").removeClass('d-none');
-                            $('#url-message-danger').addClass('d-none');
-                        } 
-                        else {
-                            $.ajax(`/stores/checkURL/${e.target.value}`, {
-                            success: function(data, status, xhr) {
-                                if(data.result) {
-                                    $('#url-message-success').text("This URL is available.").removeClass('d-none');
-                                    $('#url-message-danger').addClass('d-none');
-                                }
-                                else {
-                                    $('#url-message-danger').text("This URL is not available.").removeClass('d-none');
-                                    $('#url-message-success').addClass('d-none');
-                                }
-                            },
-                        });
-                        }
+            $("#url").change(function(e) {
+                if (e.target.value == '<?php echo $store['url'] ?>') {
+                    $('#url-message-success').text("This URL is available.").removeClass('d-none');
+                    $('#url-message-danger').addClass('d-none');
+                } else {
+                    $.ajax(`/stores/checkURL/${e.target.value}`, {
+                        success: function(data, status, xhr) {
+                            if (data.result) {
+                                $('#url-message-success').text("This URL is available.").removeClass('d-none');
+                                $('#url-message-danger').addClass('d-none');
+                            } else {
+                                $('#url-message-danger').text("This URL is not available.").removeClass('d-none');
+                                $('#url-message-success').addClass('d-none');
+                            }
+                        },
                     });
-                })
+                }
+            });
+        })
     </script>
 </body>
 

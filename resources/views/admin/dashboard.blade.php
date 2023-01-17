@@ -39,27 +39,7 @@
 <body>
 
   <div class="wrapper d-flex align-items-stretch">
-    <nav id="sidebar">
-      <div class="nav-body">
-        <button class="close-btn">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-        <div class="p-4 pt-5">
-          <ul class="list-unstyled components mb-5">
-
-            <li class="active">
-              <a href="/admin">Home</a>
-            </li>
-
-            <li>
-              <a href="/admin/editStore/">Edit Store</a>
-            </li>
-
-          </ul>
-        </div>
-      </div>
-
-    </nav>
+    <x-dashboard.admin-navbar active='Home'></x-admin-navbar>
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">

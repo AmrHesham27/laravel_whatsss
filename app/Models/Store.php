@@ -31,7 +31,8 @@ class Store extends Model
         'displayCards',
         'dinIn',
         'pickUp',
-        'deliveryPlaces'
+        'deliveryPlaces',
+        'displayCards'
     ];
 
     public function kitchens()

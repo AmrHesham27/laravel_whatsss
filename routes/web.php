@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SuperAdmin;
@@ -57,4 +58,8 @@ Route::group(['middleware' => ['auth', 'notSuperAdmin']], function () {
     Route::post('/admin/updateStore', [StoreController::class, 'update'])->name('adminUpdateStore');
     Route::post('/admin/addDeliveryPlace', [AdminController::class, 'addDeliveryPlace'])->name('adminAddPlace');
     Route::post('/admin/deleteDeliveryPlace/{id}', [AdminController::class, 'deleteDeliveryPlace'])->name('adminDeletePlace');
+    Route::get('/admin/categories', [ProductCategoryController::class, 'index'])->name('adminCategories');
+    Route::post('/admin/categories/searchCategories', [ProductCategoryController::class, 'searchCategories'])->name('adminSearchCategories');
+    Route::post('/admin/categories/deleteCategory/{id}', [ProductCategoryController::class, 'destroy'])->name('deleteCategory');
+    Route::post('/admin/categories/updateCategory/{id}', [ProductCategoryController::class, 'update'])->name('adminUpdateCategory');
 });

@@ -69,6 +69,7 @@ p {
 .my-header img {
   padding: 10px 20px;
   max-height: 70px;
+  margin-top: 10px;
 }
 
 .my-nav {
@@ -433,6 +434,9 @@ p {
     margin: auto;
     display: flex;
     justify-content: center;
+  }
+  .my-header img {
+    margin: 0;
   }
   .modal-dialog {
     min-width: 100vw !important;

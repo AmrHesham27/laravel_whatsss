@@ -45,20 +45,6 @@ function Cart({ delivery_fees, currency, color_1, color_2 }) {
                                     <span>{cart.total}</span>
                                 </div>
                             </div>
-                            <div>
-                                <span>رسوم التوصيل</span>
-                                <div className="d-flex flex-row-reverse">
-                                    <span className="mx-1">{currency}</span>
-                                    <span>{delivery_fees}</span>
-                                </div>
-                            </div>
-                            <div className="fw-bold">
-                                <span>الاجمالي</span>
-                                <div className="d-flex flex-row-reverse">
-                                    <span className="mx-1">{currency}</span>
-                                    <span>{cart?.total + delivery_fees}</span>
-                                </div>
-                            </div>
                         </div>
                         <div
                             className="order-now"

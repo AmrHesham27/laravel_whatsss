@@ -16,7 +16,29 @@
 <body>
 
     <div class="wrapper d-flex align-items-stretch">
-        <x-dashboard.super-admin-navbar active='Add Store'></x-dashboard.super-admin-navbar>
+        <nav id="sidebar">
+            <div class="nav-body">
+                <button class="close-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="p-4 pt-5 nav-body">
+                    <ul class="list-unstyled components mb-5">
+
+                        <li>
+                            <a href="/superAdmin">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="/superAdmin/stores/">Stores</a>
+                        </li>
+
+                        <li class="active">
+                            <a href="/superAdmin/stores/add">Add Store</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
