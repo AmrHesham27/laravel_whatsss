@@ -20,8 +20,8 @@ class ProductCategoryController extends Controller
         $store = Store::where('user_id', Auth::user()->id)->get()[0];
         $categories = ProductCategory::where('store_id', $store['id'])->paginate(8);
         return view('admin.categories', [
-            'categories' => $categories, 
-            'type' => 'data', 
+            'categories' => $categories,
+            'type' => 'data',
             'search' => ''
         ]);
     }
@@ -50,6 +50,11 @@ class ProductCategoryController extends Controller
             ]);
 
             $store = Store::where('user_id', Auth::user()->id)->get()[0];
+
+            if (ProductCategory::where('store_id', $store['id'])->count() > 49) {
+                $this->message('Sorry, You have reached the maximum of 50 categories', 'alert-danger');
+                return redirect()->back(); 
+            };
 
             ProductCategory::create([
                 'name' => $data['name'],
@@ -108,8 +113,8 @@ class ProductCategoryController extends Controller
         $categories = ProductCategory::where('store_id', $store['id'])->paginate(8);
 
         return redirect()->route('adminCategories', [
-            'categories' => $categories, 
-            'type' => 'data', 
+            'categories' => $categories,
+            'type' => 'data',
             'search' => ''
         ]);
     }
@@ -145,24 +150,19 @@ class ProductCategoryController extends Controller
         try {
             $category = ProductCategory::findOrFail($id);
             $store = Store::where('user_id', Auth::user()->id)->get()[0];
-            if($category['store_id'] != $store['id']){
+            if ($category['store_id'] != $store['id']) {
                 return abort(401);
             };
 
-            if ($category['active'])
-            {
-                $category->update([ 'active' => 0 ]);
+            if ($category['active']) {
+                $category->update(['active' => 0]);
                 $this->message("Category was disabled successfully", 'alert-success');
-            }
-            else 
-            {
-                $category->update([ 'active' => 1 ]);
+            } else {
+                $category->update(['active' => 1]);
                 $this->message("Category was activated successfully", 'alert-success');
-            }    
+            }
             return redirect()->back();
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $this->message($e->getMessage(), 'alert-danger');
         }
     }

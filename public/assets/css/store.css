@@ -300,6 +300,7 @@ p {
   max-height: 60px;
   -o-object-fit: cover;
      object-fit: cover;
+  cursor: pointer;
 }
 .menu-item .add-button {
   border-radius: 50%;

@@ -67,6 +67,11 @@ class ProductController extends Controller
             $store = Store::where('user_id', Auth::user()->id)->get()[0];
             $data['store_id'] = $store['id'];
 
+            if (Product::where('store_id', $store['id'])->count() > 200) {
+                $this->message('Sorry, You have reached the maximum of 200 products', 'alert-danger');
+                return redirect()->back(); 
+            };
+
             Product::create($data);
             
             $this->message('New Product was added successfully', 'alert-success');

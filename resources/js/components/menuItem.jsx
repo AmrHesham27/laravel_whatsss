@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../redux/cart";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 function menuItem({ product, currency, color_2 }) {
     const dispatch = useDispatch();
@@ -8,6 +10,26 @@ function menuItem({ product, currency, color_2 }) {
     const addTocart = () => {
         dispatch(cartActions.addProduct(product));
     };
+
+    const [modalShow, setModalShow] = useState(false);
+
+    function ImageModal(props) {
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Body style={{padding: '0'}}>
+                    <img style={{maxWidth: '100vw'}} src={`/images/${product["image"]}`} alt="product" />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button style={{backgroundColor: color_2}} onClick={props.onHide}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
 
     return (
         <div className="menu-item">
@@ -17,10 +39,7 @@ function menuItem({ product, currency, color_2 }) {
                     <p className="f-12">{product["desc"]}</p>
                 </div>
 
-                <img
-                    src={`/images/${product["image"]}`}
-                    alt="product"
-                />
+                <img src={`/images/${product["image"]}`} alt="product" onClick={() => setModalShow(true)} />
             </div>
 
             <div className="d-flex">
@@ -37,6 +56,11 @@ function menuItem({ product, currency, color_2 }) {
                     <span>{product["price"]}</span>
                 </div>
             </div>
+
+            <ImageModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
         </div>
     );
 }

@@ -12,23 +12,41 @@ import ModalCart from "./components/modalCart";
 import { Provider } from "react-redux";
 import reduxStore from "./redux/store";
 
-export default function App({store}) {
-    console.log(store)
+export default function App({ store }) {
+    console.log(store);
     return (
         <Provider store={reduxStore}>
             <PageHeader image={store["logo"]} />
             <div className="page-container">
                 <PageBody store={store} />
-                <SendToWhatsapp whatsapp={store['whatsapp']} color_1={store['color_1']} color_2={store['color_2']} />
-                <ModalCart delivery_fees={store["delivery_fees"]} color={store['color_1']} />
+
+                <ModalCart
+                    delivery_fees={store["delivery_fees"]}
+                    color_1={store["color_1"]}
+                    color_2={store["color_2"]}
+                />
             </div>
-            <ResponsiveCart delivery_fees={store["delivery_fees"]} color={store['color_1']} />
+            <ResponsiveCart
+                delivery_fees={store["delivery_fees"]}
+                color_1={store["color_1"]}
+            />
+            <SendToWhatsapp
+                whatsapp={store["whatsapp"]}
+                color_1={store["color_1"]}
+                color_2={store["color_2"]}
+                dinIn={store["dinIn"]}
+                pickUp={store["pickUp"]}
+                deliveryPlaces={store["deliveryPlaces"]}
+                places={store["places"]}
+                currency={store["currency"]}
+            />
         </Provider>
     );
 }
 
 if (document.getElementById("root")) {
     var data = document.getElementById("root").getAttribute("data");
-    createRoot(document.getElementById("root"))
-        .render(<App store={JSON.parse(data)} />);
+    createRoot(document.getElementById("root")).render(
+        <App store={JSON.parse(data)} />
+    );
 }

@@ -70,22 +70,32 @@
                 </div>
 
                 <div class="d-flex">
-                    <form method="GET" action="{{ route('searchStores') }}" style="max-width: 300px;">
-                        @csrf
-                        <div class="form-group my-4 d-flex">
-                            <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="Search">
-                            @if($type == 'search')
-                            <a class="btn btn-danger mx-2 close-search" href="{{ route('superAdminStores') }}">x</a>
-                            @endif
-                        </div>
-                    </form>
-
-                </div>
+                        <form method="GET" action="{{ route('searchStores') }}" style="max-width: 300px;">
+                            @csrf
+                            <div class="form-group my-4 d-flex">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <button class="input-group-text" id="basic-addon1" type="submit">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                    <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="Search">
+                                    @if($type == 'search')
+                                    <div class="input-group-append">
+                                        <a class="input-group-text close-search" href="{{ route('superAdminStores') }}" id="basic-addon2" style="background-color: #dc3545;">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </a>
+                                    </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </form>
+                    </div>
 
             </div>
 
-            <div class="d-flex">
-                <table class="table table-responsive table-bordered">
+            <div class="d-flex table-responsive">
+                <table class="table table-bordered">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">#</th>

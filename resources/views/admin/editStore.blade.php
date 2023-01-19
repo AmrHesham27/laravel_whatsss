@@ -205,8 +205,8 @@
             @endif
 
             @if (count($places))
-            <div class="d-flex">
-                <table class="table table-responsive table-bordered w-auto">
+            <div class="d-flex table-responsive">
+                <table class="table table-bordered ">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Place Name</th>

@@ -111,7 +111,8 @@ class StoreController extends Controller
         $view['store_id'] = $store['id'];
         $view ->save();
 
-        //dd($store);
+        $places = Place::where('store_id', $store['id'])->get();
+        $store['places'] = $places;
 
         return view('customer', ['store' => $store]);
     }
