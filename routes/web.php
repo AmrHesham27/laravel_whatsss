@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SuperAdmin;
@@ -58,8 +59,22 @@ Route::group(['middleware' => ['auth', 'notSuperAdmin']], function () {
     Route::post('/admin/updateStore', [StoreController::class, 'update'])->name('adminUpdateStore');
     Route::post('/admin/addDeliveryPlace', [AdminController::class, 'addDeliveryPlace'])->name('adminAddPlace');
     Route::post('/admin/deleteDeliveryPlace/{id}', [AdminController::class, 'deleteDeliveryPlace'])->name('adminDeletePlace');
+
     Route::get('/admin/categories', [ProductCategoryController::class, 'index'])->name('adminCategories');
     Route::post('/admin/categories/searchCategories', [ProductCategoryController::class, 'searchCategories'])->name('adminSearchCategories');
     Route::post('/admin/categories/deleteCategory/{id}', [ProductCategoryController::class, 'destroy'])->name('deleteCategory');
     Route::post('/admin/categories/updateCategory/{id}', [ProductCategoryController::class, 'update'])->name('adminUpdateCategory');
+    Route::get('/admin/categories/createCategory', [ProductCategoryController::class, 'create'])->name('adminCreateCategory');
+    Route::post('/admin/categories/storeCategory', [ProductCategoryController::class, 'store'])->name('adminStoreCategory');
+    Route::get('/admin/categories/toggleActivation/{id}', [ProductCategoryController::class, 'toggleActivation'])->name('toggleActivationCategory');
+
+    Route::get('admin/products', [ProductController::class, 'index'])->name('adminProducts');
+    Route::post('admin/products/searchProducts', [ProductController::class, 'searchProducts'])->name('adminSearchProducts');
+    Route::post('admin/products/deleteProduct/{id}', [ProductController::class, 'destroy'])->name('adminDeleteProduct');
+    Route::get('admin/products/editProduct/{id}', [ProductController::class, 'edit'])->name('adminEditProduct');
+    Route::post('admin/products/updateProduct/{id}', [ProductController::class, 'update'])->name('adminUpdateProduct');
+    Route::get('/admin/products/createProduct', [ProductController::class, 'create'])->name('adminCreateProduct');
+    Route::post('/admin/products/storeProduct', [ProductController::class, 'store'])->name('adminStoreProduct');
+    Route::get('/admin/products/toggleActivation/{id}', [ProductController::class, 'toggleActivation'])->name('toggleActivationProduct');
+
 });

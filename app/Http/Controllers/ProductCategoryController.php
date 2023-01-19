@@ -6,6 +6,7 @@ use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Store;
+use Exception;
 
 class ProductCategoryController extends Controller
 {
@@ -32,7 +33,7 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.addCategory');
     }
 
     /**
@@ -43,7 +44,25 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $data = $this->validate($request, [
+                "name"  => "required|string|max:60",
+            ]);
+
+            $store = Store::where('user_id', Auth::user()->id)->get()[0];
+
+            ProductCategory::create([
+                'name' => $data['name'],
+                'store_id' => $store['id'],
+            ]);
+
+            $this->message('New Category was added successfully', 'alert-success');
+
+            return redirect()->back();
+        } catch (Exception $e) {
+            $this->message($e->getMessage(), 'alert-danger');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -119,5 +138,32 @@ class ProductCategoryController extends Controller
             ->paginate(8);
 
         return view('admin.categories', ['categories' => $categories, 'type' => 'search', 'search' => $search]);
+    }
+
+    public function toggleActivation($id)
+    {
+        try {
+            $category = ProductCategory::findOrFail($id);
+            $store = Store::where('user_id', Auth::user()->id)->get()[0];
+            if($category['store_id'] != $store['id']){
+                return abort(401);
+            };
+
+            if ($category['active'])
+            {
+                $category->update([ 'active' => 0 ]);
+                $this->message("Category was disabled successfully", 'alert-success');
+            }
+            else 
+            {
+                $category->update([ 'active' => 1 ]);
+                $this->message("Category was activated successfully", 'alert-success');
+            }    
+            return redirect()->back();
+        }
+        catch (Exception $e)
+        {
+            $this->message($e->getMessage(), 'alert-danger');
+        }
     }
 }

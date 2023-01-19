@@ -22,10 +22,10 @@ return new class extends Migration
             $table->string('name', 60);
             $table->string('desc', 300)->nullable();
             $table->integer('price');
-            $table->string('image', 120);
+            $table->string('image', 200);
             $table->foreignId('category_id')->references('id')->on('products_categories')
                 ->onDelete('cascade')->onUpdate('cascade');
-            $table->tinyInteger('discount');
+            $table->boolean('active')->default(true);
         });
     }
 

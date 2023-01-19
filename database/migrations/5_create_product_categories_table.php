@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('name', 60);
             $table->foreignId('store_id')->references('id')->on('stores')
                 ->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean('active')->default(true);
         });
     }
 

@@ -16,29 +16,7 @@
 <body>
 
     <div class="wrapper d-flex align-items-stretch">
-        <nav id="sidebar">
-            <div class="nav-body">
-                <button class="close-btn">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-                <div class="p-4 pt-5 nav-body">
-                    <ul class="list-unstyled components mb-5">
-
-                        <li>
-                            <a href="/superAdmin">Home</a>
-                        </li>
-
-                        <li>
-                            <a href="/superAdmin/stores/">Stores</a>
-                        </li>
-
-                        <li class="active">
-                            <a href="/superAdmin/stores/add">Add Store</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <x-dashboard.admin-navbar active='Add Category'></x-admin-navbar>
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
@@ -78,44 +56,16 @@
             @if (session()->get('mssg'))
             <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
             @endif
-            <form method="POST" action="{{ route('createStore') }}">
+            <form method="POST" action="{{ route('adminStoreCategory') }}">
                 @csrf
                 <div class="form-group my-4">
-                    <label for="store_name">Store Name</label>
-                    <input type="text" name="name" value="{{ old('name') }}" class="@error('name') is-invalid @enderror form-control" id="store_name" aria-describedby="store name" placeholder="Enter Store Name">
+                    <label for="store_name">Category Name</label>
+                    <input type="text" name="name" value="{{ old('name') }}" class="@error('name') is-invalid @enderror form-control" id="store_name" aria-describedby="store name" placeholder="Enter Category Name">
                     @error('name')
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="form-group my-4">
-                    <label for="store_name">Store URL</label>
-                    <input type="text" name="url" value="{{ old('url') }}" class="@error('url') is-invalid @enderror form-control" id="url" aria-describedby="store url" placeholder="Enter Store URL">
-                    @error('url')
-                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="form-group my-4">
-                    <label for="whatsapp">Whatsapp Number</label>
-                    <input type="text" name="whatsapp" value="{{ old('whatsapp') }}" class="@error('whatsapp') is-invalid @enderror form-control" id="whatsapp" aria-describedby="whatsapp" placeholder="Enter Whatsapp Number">
-                    @error('whatsapp')
-                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="form-group my-4">
-                    <label for="email">User Email address</label>
-                    <input type="email" name="email" value="{{ old('email') }}" class="@error('email') is-invalid @enderror form-control" id="email" aria-describedby="email" placeholder="Enter email">
-                    @error('email')
-                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="form-group my-4">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" class="@error('password') is-invalid @enderror form-control" id="password" placeholder="Password">
-                    @error('password')
-                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                    @enderror
-                </div>
-                <button type="submit" class="btn my-btn">Add Store</button>
+                <button type="submit" class="btn my-btn">Add Category</button>
             </form>
 
         </div>

@@ -95,6 +95,7 @@ class StoreController extends Controller
         $store = Store::where('url', $url)->get()[0];
         if ($store['is_suspended']) abort(404);
         $categories = ProductCategory::with('products')
+            ->where('active', true)
             ->where('store_id', $store['id'])->get();
 
         $products = [];
@@ -109,6 +110,8 @@ class StoreController extends Controller
         $view = new View;
         $view['store_id'] = $store['id'];
         $view ->save();
+
+        //dd($store);
 
         return view('customer', ['store' => $store]);
     }

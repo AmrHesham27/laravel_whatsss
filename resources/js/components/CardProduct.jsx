@@ -14,7 +14,7 @@ const CardProduct = ({ product, currency, color_1 }) => {
     return (
         <div className="d-flex flex-column card-product">
             <img
-                src={`/products_images/${product["image"]}`}
+                src={`/images/${product["image"]}`}
                 className="w-100"
             />
             <h5 className="mt-2">{product["name"]}</h5>

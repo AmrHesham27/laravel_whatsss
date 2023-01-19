@@ -18,7 +18,7 @@ function menuItem({ product, currency, color_2 }) {
                 </div>
 
                 <img
-                    src={`/products_images/${product["image"]}`}
+                    src={`/images/${product["image"]}`}
                     alt="product"
                 />
             </div>

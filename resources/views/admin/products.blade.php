@@ -14,7 +14,6 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-
     <style>
         .close-search {
             color: white !important;
@@ -28,7 +27,7 @@
 <body>
 
     <div class="wrapper d-flex align-items-stretch">
-        <x-dashboard.admin-navbar active='Categories'></x-admin-navbar>
+        <x-dashboard.admin-navbar active='Products'></x-admin-navbar>
 
             <!-- Page Content  -->
             <div id="content" class="p-4 p-md-5">
@@ -66,12 +65,15 @@
                 </nav>
                 <!-- Content -->
                 <div class="d-flex flex-column">
+                    @if (session()->get('mssg'))
+                    <div class="alert {{session()->get('alert')}}" role="alert">{{session()->get('mssg')}}</div>
+                    @endif
                     <div>
-                        <a class="my-2 btn my-btn" href="{{ route('adminCreateCategory') }}">Add Category</a>
+                        <a class="my-2 btn my-btn" href="{{ route('adminCreateProduct') }}">Add Product</a>
                     </div>
 
                     <div class="d-flex">
-                        <form method="POST" action="{{ route('adminSearchCategories') }}" style="max-width: 300px;">
+                        <form method="POST" action="{{ route('adminSearchProducts') }}" style="max-width: 300px;">
                             @csrf
                             <div class="form-group my-4 d-flex">
                                 <div class="input-group mb-3">
@@ -83,7 +85,7 @@
                                     <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="Search">
                                     @if($type == 'search')
                                     <div class="input-group-append">
-                                        <a class="input-group-text close-search" href="{{ route('adminCategories') }}" id="basic-addon2" style="background-color: #dc3545;">
+                                        <a class="input-group-text close-search" href="{{ route('adminProducts') }}" id="basic-addon2" style="background-color: #dc3545;">
                                             <i class="fa-solid fa-xmark"></i>
                                         </a>
                                     </div>
@@ -101,28 +103,41 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Category Name</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Product Description</th>
+                                <th scope="col">Product Price</th>
+                                <th scope="col">Product Image</th>
+                                <th scope="col">Category</th>
                                 <th scope="col">Actions</th>
                                 <th scope="col">Activate</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categories as $category)
+                            @foreach ($products as $product)
                             <tr>
-                                <th scope="row">{{ $category['id'] }}</th>
-                                <td>{{ $category['name'] }}</td>
+                                <th scope="row">{{ $product['id'] }}</th>
+                                <td>{{ $product['name'] }}</td>
+                                <td>{{ $product['desc'] }}</td>
+                                <td>{{ $product['price'] }}</td>
+                                <td>
+                                    <img style="max-height: 100px;" src="{{ asset('images/' . $product['image'] ) }}" alt="product" />
+                                </td>
+                                <td>{{ $product['category']['name'] }}</td>
 
                                 <td>
-                                    <button class="btn delete-btn" data-toggle="modal" data-target="#deleteModal" form-action="{{ route('deleteCategory', [ 'id' => $category['id'] ]) }}">
+                                    <button class="btn delete-btn" data-toggle="modal" data-target="#deleteModal" form-action="{{ route('adminDeleteProduct', [ 'id' => $product['id'] ]) }}">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
-                                    <button class="btn edit-btn" data-toggle="modal" data-target="#editModal" form-action="{{ route('adminUpdateCategory', [ 'id' => $category['id'] ]) }}">
+                                    <a class="btn edit-btn" href="{{ route('adminEditProduct', [ 'id' => $product['id'] ]) }}">
                                         <i class="fa-solid fa-pen"></i>
-                                    </button>
+                                    </a>
                                 </td>
                                 <td>
-                                    <form id="toggle-{{ $category['id'] }}" action="{{ route('toggleActivationCategory', ['id' => $category['id']]) }}">
-                                        <input class="toggle-event" data="{{ $category['id'] }}" type="checkbox" data-toggle="toggle" data-on="Active" data-off="Disabled" <?php if ($category['active']) echo 'checked'; ?>>
+                                    <form id="toggle-{{ $product['id'] }}" action="{{ route('toggleActivationProduct', ['id' => $product['id']]) }}">
+                                        <input class="toggle-event" data="{{ $product['id'] }}" type="checkbox" 
+                                            data-toggle="toggle" data-on="Active" data-off="Disabled"
+                                            <?php if($product['active']) echo 'checked'; ?>
+                                        >
                                     </form>
                                 </td>
                             </tr>
@@ -131,7 +146,7 @@
                     </table>
                 </div>
                 <div class="d-flex justify-content-center">
-                    {{ $categories->appends(['search' => $search])->links() }}
+                    {{ $products->appends(['search' => $search])->links() }}
                 </div>
 
                 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -143,12 +158,9 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <p>All the products in this category will be deleted.</p>
-                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <form id='delete-category-form' method="POST" action="">
+                                <form id='delete-product-form' method="POST" action="">
                                     @csrf
                                     <button class="btn btn-danger">
                                         Delete
@@ -158,39 +170,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form method="POST" action="" id="edit-category-form">
-                                    @csrf
-                                    <div class="form-group my-4">
-                                        <label for="edit_category_name">Category Name</label>
-                                        <input type="text" name="name" value="{{ old('name') }}" class="@error('name') is-invalid @enderror form-control" id="edit_category_name" aria-describedby="category name" placeholder="Enter New Category Name">
-                                        @error('name')
-                                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button class="btn my-btn" type="submit" form="edit-category-form">
-                                    Edit
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
     </div>
 
@@ -198,12 +177,7 @@
         $(document).ready(function() {
             $('.delete-btn').click(function() {
                 var formAction = this.getAttribute("form-action");
-                $('#delete-category-form').attr('action', formAction);
-            });
-
-            $('.edit-btn').click(function() {
-                var formAction = this.getAttribute("form-action");
-                $('#edit-category-form').attr('action', formAction);
+                $('#delete-product-form').attr('action', formAction);
             });
 
             $('.toggle-event').change(function() {

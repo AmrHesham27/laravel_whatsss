@@ -23,7 +23,6 @@ class ProductsSeeder extends Seeder
                 'price' => 90,
                 'image' => 'product_1.jpg',
                 'category_id' => 1,
-                'discount' => 30,
             ],
             [
                 'store_id' => 1,
@@ -32,7 +31,6 @@ class ProductsSeeder extends Seeder
                 'price' => 90,
                 'image' => 'product_2.jpg',
                 'category_id' => 1,
-                'discount' => 30,
             ],
             [
                 'store_id' => 1,
@@ -41,7 +39,6 @@ class ProductsSeeder extends Seeder
                 'price' => 90,
                 'image' => 'product_3.webp',
                 'category_id' => 1,
-                'discount' => 30,
             ],
             [
                 'store_id' => 1,
@@ -50,7 +47,6 @@ class ProductsSeeder extends Seeder
                 'price' => 90,
                 'image' => 'product_4.jpg',
                 'category_id' => 1,
-                'discount' => 30,
             ],
             [
                 'store_id' => 1,
@@ -59,7 +55,6 @@ class ProductsSeeder extends Seeder
                 'price' => 90,
                 'image' => 'product_1.jpg',
                 'category_id' => 2,
-                'discount' => 30,
             ]
         ]);
     }
