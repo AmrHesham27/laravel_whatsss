@@ -19,19 +19,7 @@ function sendToWhatsapp({
 
     const [total, setTotal] = useState(cart.total);
 
-    const message = `
-        #####\n
-        New Order\n
-        #####\n
-        Name: ${name}\n
-        #####\n
-        Deliver Method\n
-        ${deliveryMethod}\n
-        #####\n
-        Total\n
-        ${total}\n
-        ######\n
-    `
+    const message = `#####\nNew Order\n#####\nName: ${name}\n#####\nDeliver Method\n${deliveryMethod}\n#####\nTotal\n${total}\n######`
 
     return (
         <div
