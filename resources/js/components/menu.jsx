@@ -4,14 +4,18 @@ import MenuItem from "./menuItem";
 import CardProduct from "./CardProduct";
 
 function menu({ products, categories, currency, displayCards, color_1, color_2 }) {
+
     const [searchItems, setSearchItems] = useState([]);
     const [showSearch, setShowSearch] = useState(false);
     const [userInput, setUserInput] = useState("");
 
+    let allProducts = []
+    products.forEach((i) => {allProducts.push(...i)})
+
     const search = () => {
         setSearchItems([]);
         setShowSearch(true);
-        products.filter((product) => {
+        allProducts.forEach((product) => {
             if (product["name"].indexOf(userInput) > -1) {
                 setSearchItems((state) => [...state, product]);
             } else setSearchItems([]);

@@ -166,7 +166,7 @@
                         </div>
 
                         <div class="form-check mx-5">
-                            <input class="form-check-input" type="checkbox" id="flexCheckChecked" name="deliveryPlaces" <?php if ($store['deliveryPlaces']) echo "checked" ?>>
+                            <input class="form-check-input" type="checkbox" id="flexCheckChecked" name="delivery" <?php if ($store['delivery']) echo "checked" ?>>
                             <label class="form-check-label" for="flexCheckChecked">
                                 Delivery
                             </label>
@@ -186,7 +186,7 @@
 
             </form>
 
-            @if ($store['deliveryPlaces'])
+            @if ($store['delivery'])
             <form method="POST" class="my-5" action="{{ route('adminAddPlace') }}">
                 @csrf
                 <h6>Edit OR Add New Delivery Place</h6>

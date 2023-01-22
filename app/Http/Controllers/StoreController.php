@@ -150,12 +150,12 @@ class StoreController extends Controller
             "currency" => "required|string",
             "dinIn" => "nullable",
             "pickUp" => "nullable",
-            "deliveryPlaces" => "nullable",
+            "delivery" => "nullable",
             'logo' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
             "displayCards" => "nullable"
         ]);
 
-        foreach(['dinIn', 'pickUp', 'deliveryPlaces', 'displayCards'] as $variable)
+        foreach(['dinIn', 'pickUp', 'delivery', 'displayCards'] as $variable)
         {
             if(isset($data[$variable])) $data[$variable] = 1;
             else $data[$variable] = 0;

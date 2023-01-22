@@ -31,7 +31,7 @@ class Store extends Model
         'displayCards',
         'dinIn',
         'pickUp',
-        'deliveryPlaces',
+        'delivery',
         'displayCards'
     ];
 

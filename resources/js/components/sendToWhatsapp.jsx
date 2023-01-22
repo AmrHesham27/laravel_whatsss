@@ -7,20 +7,28 @@ function sendToWhatsapp({
     color_2,
     dinIn,
     pickUp,
-    deliveryPlaces,
+    delivery,
     places,
     currency,
 }) {
     const [deliveryMethod, setDeliveryMethod] = useState(false);
     const [placeIndex, setPlaceIndex] = useState();
     const [name, setName] = useState();
-    
+
     const cart = useSelector((state) => state.cart);
 
-    const [total, setTotal] = useState(cart.total);
+    // %20 => space ,, line break => %0a
 
-    const message = `#####\nNew Order\n#####\nName: ${name}\n#####\nDeliver Method\n${deliveryMethod}\n#####\nTotal\n${total}\n######`
-
+    let items = "";
+    Object.values(cart["items"]).forEach((item) => {
+        items += `${item["name"]}%20X%20${item["qty"]}%0a`;
+    });
+    const href = `https://wa.me/${whatsapp}/?text=${`New%20Order%0aName:%20${name}%0aItems:%0a${items}Delivery%20Method%0a${deliveryMethod}%0a${
+        placeIndex && deliveryMethod == "delivery"
+            ? places[placeIndex]["name"]
+            : ""
+        }
+    `}`;
     return (
         <div
             className="modal fade"
@@ -52,18 +60,18 @@ function sendToWhatsapp({
                     <div className="modal-body text-right">
                         <form>
                             <div className="form-group">
-                                    <label htmlFor="exampleInputEmail1">
-                                        الاسم
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control text-right"
-                                        id="exampleInputEmail1"
-                                        aria-describedby="emailHelp"
-                                        placeholder="ادخل اسمك"
-                                        onChange={(e) => setName(e.target.value)}
-                                    />
-                                </div>
+                                <label htmlFor="exampleInputEmail1">
+                                    الاسم
+                                </label>
+                                <input
+                                    type="text"
+                                    className="form-control text-right"
+                                    id="exampleInputEmail1"
+                                    aria-describedby="emailHelp"
+                                    placeholder="ادخل اسمك"
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                            </div>
                             <div className="form-group mt-4">
                                 <label htmlFor="exampleInputPassword1">
                                     اختر طريقة الاستلام
@@ -99,18 +107,18 @@ function sendToWhatsapp({
                                             استلام من المكان
                                         </option>
                                     ) : undefined}
-                                    {deliveryPlaces ? (
+                                    {delivery ? (
                                         <option
                                             className="d-flex justify-content-end"
-                                            value="deliveryPlaces"
+                                            value="delivery"
                                         >
                                             توصيل
                                         </option>
                                     ) : undefined}
                                 </select>
 
-                                {deliveryPlaces &&
-                                deliveryMethod == "deliveryPlaces" ? (
+                                {delivery &&
+                                deliveryMethod == "delivery" ? (
                                     <>
                                         <label htmlFor="exampleInputPassword1">
                                             اختر مكان التوصيل
@@ -118,12 +126,9 @@ function sendToWhatsapp({
                                         <select
                                             class="form-control form-select"
                                             aria-label="Default select example"
-                                            onChange={(e) =>
-                                                {
-                                                    setPlaceIndex(e.target.value);
-                                                    setTotal(cart.total + [places][e.target.value]['price'])
-                                                }
-                                            }
+                                            onChange={(e) => {
+                                                setPlaceIndex(e.target.value);
+                                            }}
                                         >
                                             <option value="">
                                                 مكان التوصيل
@@ -151,8 +156,8 @@ function sendToWhatsapp({
                                     <span>{cart.total}</span>
                                 </div>
                             </div>
-                            {deliveryPlaces &&
-                            deliveryMethod == "deliveryPlaces" &&
+                            {delivery &&
+                            deliveryMethod == "delivery" &&
                             placeIndex ? (
                                 <>
                                     <div className="my-3">
@@ -184,7 +189,7 @@ function sendToWhatsapp({
                             <div className="d-flex justify-content-center">
                                 <a
                                     className="btn btn-success px-3 my-2"
-                                    href={`https://wa.me/${whatsapp}/?text=${message}`}
+                                    href={href}
                                     style={{ backgroundColor: color_2 }}
                                 >
                                     اطلب

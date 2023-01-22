@@ -13,7 +13,6 @@ import { Provider } from "react-redux";
 import reduxStore from "./redux/store";
 
 export default function App({ store }) {
-    console.log(store);
     return (
         <Provider store={reduxStore}>
             <PageHeader image={store["logo"]} />
@@ -36,7 +35,7 @@ export default function App({ store }) {
                 color_2={store["color_2"]}
                 dinIn={store["dinIn"]}
                 pickUp={store["pickUp"]}
-                deliveryPlaces={store["deliveryPlaces"]}
+                delivery={store["delivery"]}
                 places={store["places"]}
                 currency={store["currency"]}
             />

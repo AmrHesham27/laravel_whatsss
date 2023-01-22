@@ -87,7 +87,6 @@
 
   <script>
     var views = <?php echo $views[0] ?>;
-    console.log(views);
 
     var ctx = document.getElementById("myChart").getContext("2d");
     var myChart = new Chart(ctx, {

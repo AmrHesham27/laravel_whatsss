@@ -34,7 +34,7 @@ return new class extends Migration
 
             $table->boolean('dinIn')->default(false);
             $table->boolean('pickUp')->default(false);
-            $table->json('deliveryPlaces')->nullable();
+            $table->json('delivery')->nullable();
         });
     }
 
