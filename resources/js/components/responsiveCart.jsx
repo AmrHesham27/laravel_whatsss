@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-function responsiveCart() {
+function ResponsiveCart() {
     const { total } = useSelector((state) => state.cart);
 
     const color_1 = localStorage.getItem('color_1');
@@ -30,4 +30,4 @@ function responsiveCart() {
     );
 }
 
-export default responsiveCart;
+export default ResponsiveCart;

@@ -1,6 +1,6 @@
 import React from "react";
 
-function categories({ categories }) {
+function Categories({ categories }) {
     const scroll = (id) => {
       document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
@@ -14,4 +14,4 @@ function categories({ categories }) {
     );
 }
 
-export default categories;
+export default Categories;

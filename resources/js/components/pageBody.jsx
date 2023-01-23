@@ -1,10 +1,7 @@
 import React from "react";
-import Cart from "./cart";
-import Info from "./info";
-import Menu from "./menu";
-import CategoriesList from "./categories";
+import { Cart, Info, Menu, Categories as CategoriesList } from "./index";
 
-function pageBody({ store }) {
+function PageBody({ store }) {
     const color_1 = localStorage.getItem("color_1");
 
     return (
@@ -86,4 +83,4 @@ function pageBody({ store }) {
     );
 }
 
-export default pageBody;
+export default PageBody;

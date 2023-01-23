@@ -1,6 +1,6 @@
 import React from "react";
 
-function info() {    
+function Info() {    
     const store_name = localStorage.getItem('name');
     const store_start_time = localStorage.getItem('start_time');
     const store_end_time = localStorage.getItem('end_time');
@@ -18,4 +18,4 @@ function info() {
     );
 }
 
-export default info;
+export default Info;

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import CartItem from "./cartItem";
+import { CartItem } from './index';
 
 function ModalCart() {
     const cart = useSelector((state) => state.cart);

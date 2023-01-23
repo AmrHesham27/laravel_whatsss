@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import CollapseCategory from "./collapseCategory";
-import CardProduct from "./CardProduct";
-import { MenuItem } from '../index';
+import { CollapseCategory, CardProduct, MenuItem } from './index';
 
-function menu({ products, categories }) {
+function Menu({ products, categories }) {
 
     const [searchItems, setSearchItems] = useState([]);
     const [showSearch, setShowSearch] = useState(false);
@@ -81,4 +79,4 @@ function menu({ products, categories }) {
     );
 }
 
-export default menu;
+export default Menu;

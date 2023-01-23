@@ -2,11 +2,13 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 
 // components
-import PageHeader from "./components/pageHeader";
-import PageBody from "./components/pageBody";
-import SendToWhatsapp from "./components/sendToWhatsapp";
-import ResponsiveCart from "./components/responsiveCart";
-import ModalCart from "./components/modalCart";
+import {
+    PageHeader,
+    PageBody,
+    SendToWhatsapp,
+    ResponsiveCart,
+    ModalCart,
+} from "./components/index";
 
 // redux
 import { Provider } from "react-redux";

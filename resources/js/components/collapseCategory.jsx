@@ -1,8 +1,7 @@
 import React from "react";
-import MenuItem from "./menuItem";
-import CardProduct from "./CardProduct";
+import {MenuItem, CardProduct} from './index'
 
-function collapseCategory({ category }) {
+function CollapseCategory({ category }) {
     const displayCards = localStorage.getItem("displayCards");
     return (
         <div className="collapse-item" id={`category_${category["id"]}`}>
@@ -50,4 +49,4 @@ function collapseCategory({ category }) {
     );
 }
 
-export default collapseCategory;
+export default CollapseCategory;

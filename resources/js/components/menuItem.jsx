@@ -4,7 +4,7 @@ import { cartActions } from "../redux/cart";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-function menuItem({ product }) {
+function MenuItem({ product }) {
     const dispatch = useDispatch();
 
     const addTocart = () => {
@@ -72,4 +72,4 @@ function menuItem({ product }) {
     );
 }
 
-export default menuItem;
+export default MenuItem;

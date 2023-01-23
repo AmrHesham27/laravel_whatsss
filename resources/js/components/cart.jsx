@@ -1,7 +1,7 @@
 import React from "react";
 import empty_cart_image from "../../../public/assets/img/empty-cart.svg";
 import { useSelector } from "react-redux";
-import CartItem from "./cartItem";
+import { CartItem } from './index';
 
 function Cart() {
     const cart = useSelector((state) => state.cart);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-function sendToWhatsapp({ places }) {
+function SendToWhatsapp({ places }) {
     const color_1 = localStorage.getItem("color_1");
     const color_2 = localStorage.getItem("color_2");
     const currency = localStorage.getItem("currency");
@@ -196,4 +196,4 @@ function sendToWhatsapp({ places }) {
     );
 }
 
-export default sendToWhatsapp;
+export default SendToWhatsapp;

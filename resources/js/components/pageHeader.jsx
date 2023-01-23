@@ -1,9 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
-function pageHeader({image}) {
+function PageHeader({image}) {
 
-    const cart = useSelector(state => state)
     return (
         <div className="my-header">
             <div>
@@ -16,4 +14,4 @@ function pageHeader({image}) {
     );
 }
 
-export default pageHeader;
+export default PageHeader;
