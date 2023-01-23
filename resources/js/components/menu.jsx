@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import CollapseCategory from "./collapseCategory";
-import MenuItem from "./menuItem";
 import CardProduct from "./CardProduct";
+import { MenuItem } from '../index';
 
-function menu({ products, categories, displayCards }) {
+function menu({ products, categories }) {
 
     const [searchItems, setSearchItems] = useState([]);
     const [showSearch, setShowSearch] = useState(false);
@@ -29,7 +29,7 @@ function menu({ products, categories, displayCards }) {
         } else search();
     }, [userInput]);
 
-    const color_1 = localStorage.getItem('color_1');
+    const displayCards = localStorage.getItem('displayCards');
 
     return (
         <div className="menu">
@@ -50,7 +50,7 @@ function menu({ products, categories, displayCards }) {
                     ></i>
                 </div>
             </div>
-            {searchItems.length && showSearch && displayCards
+            {searchItems.length && showSearch && displayCards == '1'
                 ? searchItems.map((product, index) => (
                       <CardProduct
                           key={index}
@@ -58,7 +58,7 @@ function menu({ products, categories, displayCards }) {
                       />
                   ))
                 : undefined}
-            {searchItems.length && showSearch && !displayCards
+            {searchItems.length && showSearch && displayCards != '1'
                 ? searchItems.map((product, index) => (
                       <MenuItem
                           key={index}
@@ -74,7 +74,6 @@ function menu({ products, categories, displayCards }) {
                       <CollapseCategory
                           key={index}
                           category={category}
-                          displayCards={displayCards}
                       />
                   ))
                 : undefined}

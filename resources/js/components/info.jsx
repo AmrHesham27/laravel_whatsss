@@ -1,12 +1,16 @@
 import React from "react";
 
-function info({ store }) {    
+function info() {    
+    const store_name = localStorage.getItem('name');
+    const store_start_time = localStorage.getItem('start_time');
+    const store_end_time = localStorage.getItem('end_time');
+
     return (
         <div className="info col">
-            <div className="info-header">{ store['name'] }</div>
+            <div className="info-header">{store_name}</div>
             <div className="info-item row">
                 <div className="col">
-                    { store['end_time'] } - { store['start_time'] } 
+                    {store_end_time} - {store_start_time} 
                 </div>
                 <div className="col">ساعات العمل</div>
             </div>

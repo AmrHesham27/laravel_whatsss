@@ -20,22 +20,20 @@ export default function App({ store }) {
     localStorage.setItem("dinIn", store["dinIn"]);
     localStorage.setItem("pickUp", store["pickUp"]);
     localStorage.setItem("delivery", store["delivery"]);
+    localStorage.setItem("displayCards", store["displayCards"]);
+    localStorage.setItem("name", store["name"]);
+    localStorage.setItem("start_time", store["start_time"]);
+    localStorage.setItem("end_time", store["end_time"]);
 
     return (
         <Provider store={reduxStore}>
             <PageHeader image={store["logo"]} />
             <div className="page-container">
                 <PageBody store={store} />
-
                 <ModalCart />
             </div>
             <ResponsiveCart />
-            <SendToWhatsapp
-                dinIn={store["dinIn"]}
-                pickUp={store["pickUp"]}
-                delivery={store["delivery"]}
-                places={store["places"]}
-            />
+            <SendToWhatsapp places={store["places"]} />
         </Provider>
     );
 }

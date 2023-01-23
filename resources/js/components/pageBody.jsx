@@ -63,7 +63,7 @@ function pageBody({ store }) {
                         aria-labelledby="nav-profile-tab"
                     >
                         <div className="body-container">
-                            <Info store={store} />
+                            <Info />
                         </div>
                     </div>
                     <div
@@ -76,7 +76,6 @@ function pageBody({ store }) {
                             <Menu
                                 products={store["products"]}
                                 categories={store["categories"]}
-                                displayCards={store["displayCards"]}
                             />
                             <CategoriesList categories={store["categories"]} />
                         </div>

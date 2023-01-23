@@ -2,9 +2,8 @@ import React from "react";
 import MenuItem from "./menuItem";
 import CardProduct from "./CardProduct";
 
-function collapseCategory({ category, displayCards }) {
-    const color_1 = localStorage.getItem('color_1');
-
+function collapseCategory({ category }) {
+    const displayCards = localStorage.getItem("displayCards");
     return (
         <div className="collapse-item" id={`category_${category["id"]}`}>
             <button
@@ -27,7 +26,7 @@ function collapseCategory({ category, displayCards }) {
             </button>
 
             <div className="collapse show" id={`menu-items_${category["id"]}`}>
-                {displayCards ? (
+                {displayCards == '1' ? (
                     <div className="d-flex" style={{ flexWrap: "wrap" }}>
                         {category["products"].map((product, index) => (
                             <CardProduct

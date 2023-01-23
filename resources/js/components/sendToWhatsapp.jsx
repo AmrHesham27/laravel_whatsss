@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-function sendToWhatsapp({ dinIn, pickUp, delivery, places }) {
+function sendToWhatsapp({ places }) {
+    const color_1 = localStorage.getItem("color_1");
+    const color_2 = localStorage.getItem("color_2");
+    const currency = localStorage.getItem("currency");
+    const whatsapp = localStorage.getItem("whatsapp");
+    const delivery = localStorage.getItem("delivery");
+    const pickUp = localStorage.getItem("pickUp");
+    const dinIn = localStorage.getItem("dinIn");
+
     const [deliveryMethod, setDeliveryMethod] = useState(false);
     const [placeIndex, setPlaceIndex] = useState();
     const [name, setName] = useState();
-    const whatsapp = localStorage.getItem("whatsapp");
-
+    
     const cart = useSelector((state) => state.cart);
 
     // %20 => space ,, line break => %0a
@@ -22,9 +29,7 @@ function sendToWhatsapp({ dinIn, pickUp, delivery, places }) {
     }
     `}`;
 
-    const color_1 = localStorage.getItem("color_1");
-    const color_2 = localStorage.getItem("color_2");
-    const currency = localStorage.getItem("currency");
+    
 
     return (
         <div
@@ -88,7 +93,7 @@ function sendToWhatsapp({ dinIn, pickUp, delivery, places }) {
                                     >
                                         طريقة الاستلام
                                     </option>
-                                    {dinIn ? (
+                                    {dinIn == '1' ? (
                                         <option
                                             className="d-flex justify-content-end"
                                             value="dinIn"
@@ -96,7 +101,7 @@ function sendToWhatsapp({ dinIn, pickUp, delivery, places }) {
                                             حجز طاولة
                                         </option>
                                     ) : undefined}
-                                    {pickUp ? (
+                                    {pickUp == '1' ? (
                                         <option
                                             className="d-flex justify-content-end"
                                             value="pickUp"
@@ -104,7 +109,7 @@ function sendToWhatsapp({ dinIn, pickUp, delivery, places }) {
                                             استلام من المكان
                                         </option>
                                     ) : undefined}
-                                    {delivery ? (
+                                    {delivery == '1' ? (
                                         <option
                                             className="d-flex justify-content-end"
                                             value="delivery"
@@ -114,7 +119,7 @@ function sendToWhatsapp({ dinIn, pickUp, delivery, places }) {
                                     ) : undefined}
                                 </select>
 
-                                {delivery && deliveryMethod == "delivery" ? (
+                                {delivery == '1' && deliveryMethod == "delivery" ? (
                                     <>
                                         <label htmlFor="exampleInputPassword1" className="mt-4">
                                             اختر مكان التوصيل
@@ -148,9 +153,9 @@ function sendToWhatsapp({ dinIn, pickUp, delivery, places }) {
                             <div className="mt-3">
                                 <span>{cart.total}</span>
                                 <span className="mx-1">{currency}</span>
-                                <span>السعر</span>
+                                <span className="mx-1">السعر</span>
                             </div>
-                            {delivery &&
+                            {delivery == '1' &&
                             deliveryMethod == "delivery" &&
                             placeIndex ? (
                                 <>

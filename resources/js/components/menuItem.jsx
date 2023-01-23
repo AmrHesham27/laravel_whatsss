@@ -23,10 +23,13 @@ function menuItem({ product }) {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <Modal.Body style={{padding: '0', display: 'flex'}}>
-                    <img style={{maxWidth: '100vw'}} src={`/images/${product["image"]}`} alt="product" />
+                <Modal.Body style={{padding: '0', display: 'flex', justifyContent: 'center'}}>
+                    <img 
+                        style={{maxWidth: '100vw', maxHeight: 'calc(100vh - 71px)'}} 
+                        src={`/images/${product["image"]}`} alt="product" 
+                    />
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer style={{display: 'flex', justifyContent: 'center'}}>
                     <Button style={{backgroundColor: color_2}} onClick={props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
