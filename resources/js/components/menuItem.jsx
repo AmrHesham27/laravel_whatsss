@@ -4,7 +4,7 @@ import { cartActions } from "../redux/cart";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-function menuItem({ product, currency, color_2 }) {
+function menuItem({ product }) {
     const dispatch = useDispatch();
 
     const addTocart = () => {
@@ -12,6 +12,8 @@ function menuItem({ product, currency, color_2 }) {
     };
 
     const [modalShow, setModalShow] = useState(false);
+
+    const color_2 = localStorage.getItem('color_2');
 
     function ImageModal(props) {
         return (
@@ -21,7 +23,7 @@ function menuItem({ product, currency, color_2 }) {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <Modal.Body style={{padding: '0'}}>
+                <Modal.Body style={{padding: '0', display: 'flex'}}>
                     <img style={{maxWidth: '100vw'}} src={`/images/${product["image"]}`} alt="product" />
                 </Modal.Body>
                 <Modal.Footer>
@@ -30,6 +32,8 @@ function menuItem({ product, currency, color_2 }) {
             </Modal>
         );
     }
+
+    const currency = localStorage.getItem('currency');
 
     return (
         <div className="menu-item">

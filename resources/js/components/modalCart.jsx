@@ -2,9 +2,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CartItem from "./cartItem";
 
-function ModalCart({ delivery_fees, color_1, color_2 }) {
+function ModalCart() {
     const cart = useSelector((state) => state.cart);
 
+    const color_1 = localStorage.getItem('color_1');
+    const color_2 = localStorage.getItem('color_2');
+    const currency = localStorage.getItem('currency');
+    
     return (
         <div
             className="modal fade modal-cart"
@@ -36,7 +40,7 @@ function ModalCart({ delivery_fees, color_1, color_2 }) {
                     <div className="modal-body text-right">
                         {cart["itemsCount"] &&
                             Object.values(cart["items"]).map((item) => (
-                                <CartItem key={item.name} name={item.name} color={color_1} />
+                                <CartItem key={item.name} name={item.name} />
                             ))}
 
                         <div className="cart-info">
@@ -44,7 +48,7 @@ function ModalCart({ delivery_fees, color_1, color_2 }) {
                                 <span>السعر</span>
                                 <div className="d-flex flex-row-reverse">
                                     <span>{cart.total}</span>
-                                    <span className="mx-1">ج.م</span>
+                                    <span className="mx-1">{currency}</span>
                                 </div>
                             </div>
                         </div>

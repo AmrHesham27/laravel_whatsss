@@ -2,7 +2,9 @@ import React from "react";
 import MenuItem from "./menuItem";
 import CardProduct from "./CardProduct";
 
-function collapseCategory({ category, currency, displayCards, color_1, color_2 }) {
+function collapseCategory({ category, displayCards }) {
+    const color_1 = localStorage.getItem('color_1');
+
     return (
         <div className="collapse-item" id={`category_${category["id"]}`}>
             <button
@@ -31,8 +33,6 @@ function collapseCategory({ category, currency, displayCards, color_1, color_2 }
                             <CardProduct
                                 key={index}
                                 product={product}
-                                currency={currency}
-                                color_1={color_1}
                             />
                         ))}
                     </div>
@@ -42,8 +42,6 @@ function collapseCategory({ category, currency, displayCards, color_1, color_2 }
                             <MenuItem
                                 key={index}
                                 product={product}
-                                currency={currency}
-                                color_2={color_2}
                             />
                         ))}
                     </div>

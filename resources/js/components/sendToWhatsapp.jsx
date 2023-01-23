@@ -1,19 +1,11 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-function sendToWhatsapp({
-    whatsapp,
-    color_1,
-    color_2,
-    dinIn,
-    pickUp,
-    delivery,
-    places,
-    currency,
-}) {
+function sendToWhatsapp({ dinIn, pickUp, delivery, places }) {
     const [deliveryMethod, setDeliveryMethod] = useState(false);
     const [placeIndex, setPlaceIndex] = useState();
     const [name, setName] = useState();
+    const whatsapp = localStorage.getItem("whatsapp");
 
     const cart = useSelector((state) => state.cart);
 
@@ -27,8 +19,13 @@ function sendToWhatsapp({
         placeIndex && deliveryMethod == "delivery"
             ? places[placeIndex]["name"]
             : ""
-        }
+    }
     `}`;
+
+    const color_1 = localStorage.getItem("color_1");
+    const color_2 = localStorage.getItem("color_2");
+    const currency = localStorage.getItem("currency");
+
     return (
         <div
             className="modal fade"
@@ -117,10 +114,9 @@ function sendToWhatsapp({
                                     ) : undefined}
                                 </select>
 
-                                {delivery &&
-                                deliveryMethod == "delivery" ? (
+                                {delivery && deliveryMethod == "delivery" ? (
                                     <>
-                                        <label htmlFor="exampleInputPassword1">
+                                        <label htmlFor="exampleInputPassword1" className="mt-4">
                                             اختر مكان التوصيل
                                         </label>
                                         <select
@@ -149,39 +145,31 @@ function sendToWhatsapp({
                                 ) : undefined}
                             </div>
 
-                            <div className="my-3">
+                            <div className="mt-3">
+                                <span>{cart.total}</span>
+                                <span className="mx-1">{currency}</span>
                                 <span>السعر</span>
-                                <div className="d-flex flex-row-reverse">
-                                    <span className="mx-1">{currency}</span>
-                                    <span>{cart.total}</span>
-                                </div>
                             </div>
                             {delivery &&
                             deliveryMethod == "delivery" &&
                             placeIndex ? (
                                 <>
-                                    <div className="my-3">
-                                        <span>رسوم التوصيل</span>
-                                        <div className="d-flex flex-row-reverse">
-                                            <span className="mx-1">
-                                                {currency}
-                                            </span>
-                                            <span>
-                                                {places[placeIndex]["price"]}
-                                            </span>
-                                        </div>
+                                    <div>
+                                        <span>
+                                            {places[placeIndex]["price"]}
+                                        </span>
+                                        <span className="mx-1">{currency}</span>
+                                        <span className="mx-1">
+                                            رسوم التوصيل
+                                        </span>
                                     </div>
-                                    <div className="fw-bold my-3">
-                                        <span>الاجمالي</span>
-                                        <div className="d-flex flex-row-reverse">
-                                            <span className="mx-1">
-                                                {currency}
-                                            </span>
-                                            <span>
-                                                {places[placeIndex]["price"] +
-                                                    cart.total}
-                                            </span>
-                                        </div>
+                                    <div className="font-weight-bold">
+                                        <span>
+                                            {places[placeIndex]["price"] +
+                                                cart.total}
+                                        </span>
+                                        <span className="mx-1">{currency}</span>
+                                        <span className="mx-1">الاجمالي</span>
                                     </div>
                                 </>
                             ) : undefined}

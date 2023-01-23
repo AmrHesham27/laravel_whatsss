@@ -3,7 +3,7 @@ import CollapseCategory from "./collapseCategory";
 import MenuItem from "./menuItem";
 import CardProduct from "./CardProduct";
 
-function menu({ products, categories, currency, displayCards, color_1, color_2 }) {
+function menu({ products, categories, displayCards }) {
 
     const [searchItems, setSearchItems] = useState([]);
     const [showSearch, setShowSearch] = useState(false);
@@ -29,6 +29,8 @@ function menu({ products, categories, currency, displayCards, color_1, color_2 }
         } else search();
     }, [userInput]);
 
+    const color_1 = localStorage.getItem('color_1');
+
     return (
         <div className="menu">
             <div className="search-bar">
@@ -53,8 +55,6 @@ function menu({ products, categories, currency, displayCards, color_1, color_2 }
                       <CardProduct
                           key={index}
                           product={product}
-                          currency={currency}
-                          color_1={color_1}
                       />
                   ))
                 : undefined}
@@ -63,8 +63,6 @@ function menu({ products, categories, currency, displayCards, color_1, color_2 }
                       <MenuItem
                           key={index}
                           product={product}
-                          currency={currency}
-                          color_2={color_2}
                       />
                   ))
                 : undefined}
@@ -76,10 +74,7 @@ function menu({ products, categories, currency, displayCards, color_1, color_2 }
                       <CollapseCategory
                           key={index}
                           category={category}
-                          currency={currency}
                           displayCards={displayCards}
-                          color_1={color_1}
-                          color_2={color_2}
                       />
                   ))
                 : undefined}

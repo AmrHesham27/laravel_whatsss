@@ -4,12 +4,15 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../redux/cart";
 
-const CardProduct = ({ product, currency, color_1 }) => {
+const CardProduct = () => {
     const dispatch = useDispatch();
 
     const addTocart = () => {
         dispatch(cartActions.addProduct(product));
     };
+
+    const color_1 = localStorage.getItem('color_1');
+    const currency = localStorage.getItem('currency');
 
     return (
         <div className="d-flex flex-column card-product">

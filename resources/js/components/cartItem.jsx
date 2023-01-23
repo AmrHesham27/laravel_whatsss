@@ -2,9 +2,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { cartActions } from "../redux/cart";
 import React from "react";
 
-const CartItem = ({ name, color_1 }) => {
+const CartItem = ({ name }) => {
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
+
+    const color_1 = localStorage.getItem('color_1');
 
     return (
         <div className="cartItem p-2">

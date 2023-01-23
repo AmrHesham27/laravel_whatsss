@@ -5,6 +5,8 @@ import Menu from "./menu";
 import CategoriesList from "./categories";
 
 function pageBody({ store }) {
+    const color_1 = localStorage.getItem("color_1");
+
     return (
         <div className="d-flex flex-column mb-5">
             <nav className="navbar my-nav d-flex justify-content-end">
@@ -21,7 +23,7 @@ function pageBody({ store }) {
                         قائمة الطعام
                         <i
                             style={{
-                                color: store['color_1'],
+                                color: color_1,
                                 marginLeft: "5px",
                             }}
                             className="fa fa-utensils menu-icon"
@@ -41,7 +43,7 @@ function pageBody({ store }) {
                         معلومات المطعم
                         <i
                             style={{
-                                color: store['color_1'],
+                                color: color_1,
                                 marginLeft: "5px",
                             }}
                             className="fa fa-info-circle menu-icon"
@@ -52,12 +54,7 @@ function pageBody({ store }) {
             </nav>
 
             <div className="d-flex">
-                <Cart
-                    delivery_fees={store["delivery_fees"]}
-                    currency={store["currency"]}
-                    color_1={store['color_1']}
-                    color_2={store['color_2']}
-                />
+                <Cart />
                 <div className="tab-content" id="nav-tabContent">
                     <div
                         className="tab-pane fade"
@@ -77,14 +74,11 @@ function pageBody({ store }) {
                     >
                         <div className="body-container">
                             <Menu
-                                products={store['products']}
-                                categories={store['categories']}
-                                currency={store["currency"]}
-                                displayCards={store['displayCards']}
-                                color_1={store['color_1']}
-                                color_2={store['color_2']}
+                                products={store["products"]}
+                                categories={store["categories"]}
+                                displayCards={store["displayCards"]}
                             />
-                            <CategoriesList categories={store['categories']} />
+                            <CategoriesList categories={store["categories"]} />
                         </div>
                     </div>
                 </div>

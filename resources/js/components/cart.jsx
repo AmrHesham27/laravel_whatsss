@@ -3,9 +3,13 @@ import empty_cart_image from "../../../public/assets/img/empty-cart.svg";
 import { useSelector } from "react-redux";
 import CartItem from "./cartItem";
 
-function Cart({ delivery_fees, currency, color_1, color_2 }) {
+function Cart() {
     const cart = useSelector((state) => state.cart);
 
+    const color_1 = localStorage.getItem('color_1');
+    const color_2 = localStorage.getItem('color_2');
+    const currency = localStorage.getItem('currency');
+    
     return (
         <div className="cart">
             <div
@@ -34,7 +38,7 @@ function Cart({ delivery_fees, currency, color_1, color_2 }) {
                 {cart.itemsCount > 0 && (
                     <>
                         {Object.values(cart.items).map((item) => (
-                            <CartItem key={item.name} name={item.name} color={color_1} />
+                            <CartItem key={item.name} name={item.name} />
                         ))}
                         <div className="cart-info">
                             <div>
