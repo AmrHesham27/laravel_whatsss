@@ -103,10 +103,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $store = Store::with('categories')->where('user_id', Auth::user()->id)->get()[0];
-
         $product = Product::findOrFail($id);
 
-        if ($product['store_id'] != $store['id']) return abort(401);
+        $this->checkAdminOwnProduct($product, $store);
         return view('admin.editProduct', ['product' => $product, 'categories' => $store['categories']]);
     }
 
@@ -121,9 +120,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $store = Store::where('user_id', Auth::user()->id)->get()[0];
-        if($product['store_id'] != $store['id']){
-            return abort(401);
-        };
+        $this->checkAdminOwnProduct($product, $store);
 
         $data = $this->validate($request, [
             "name"  => "required|string|max:60",
@@ -161,20 +158,33 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
+        $store = Store::where('user_id', Auth::user()->id)->get()[0];
+
+        $this->checkAdminOwnProduct($product, $store);
+
         $product->delete();
 
         return redirect()->back();
     }
 
     /** MORE FUNCTIONS */
+    public function checkAdminOwnProduct ($product, $store)
+    {
+        if($product['store_id'] != $store['id']){
+            return abort(401);
+        };
+    }
+
     public function searchProducts(Request $request)
     {
         $search = $request->input('search');
+        $store = Store::where('user_id', Auth::user()->id)->get()[0];
 
-        $products = Product::where('id', '=', $search)
-            ->orWhere('name', 'LIKE', "%{$search}%")
-            ->paginate(8);
-
+        $products = Product::where('store_id', $store['id'])->where(function ($query) use ($search) {
+            $query->where('id', '=', $search)
+            ->orWhere('name', 'LIKE', "%{$search}%");
+        })->paginate(8);
+            
         return view('admin.products', ['products' => $products, 'type' => 'search', 'search' => $search]);
     }
 

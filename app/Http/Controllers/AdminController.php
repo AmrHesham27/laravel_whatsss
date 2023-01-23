@@ -80,7 +80,8 @@ class AdminController extends Controller
     {
         $store = Store::where('user_id', Auth::user()->id)->get()[0];
         $places = Place::where('store_id', $store['id'])->get();
-        $deletedPlace = Place::findOrFail($id);
+
+        $deletedPlace = Place::where('store_id', $store['id'])->where('id', $id)->get()[0];
 
         $deletedPlace->delete();
 

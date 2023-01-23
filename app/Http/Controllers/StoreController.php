@@ -168,6 +168,7 @@ class StoreController extends Controller
         }
 
         $store = Store::where('user_id', Auth::user()->id)->get()[0];
+        $this->checkAdminOwnStore($store);
         $store->update($data);
 
         $places = Place::where('store_id', $store['id'])->get();
@@ -185,6 +186,7 @@ class StoreController extends Controller
     public function destroy($id)
     {
         $store = Store::findOrFail($id);
+        $this->checkAdminOwnStore($store);
         $store->delete();
 
         return redirect()->back();
@@ -192,6 +194,13 @@ class StoreController extends Controller
 
     /** MORE FUNCTIONS */
     /**********************************************/
+    public function checkAdminOwnStore($store)
+    {
+        if(Auth::user()->id != $store['id']){
+            return abort(401);
+        };
+    }
+
     public function suspendStore($id)
     {
         $store = Store::findOrFail($id);
@@ -242,24 +251,5 @@ class StoreController extends Controller
                 "message" => $e->getMessage()
             ], 500); 
         } 
-    }
-
-    /** API to get categories and products */
-    public function getStoreProducts($id)
-    {
-        try {
-            $products = ProductCategory::with('products')
-                ->where('store_id', $id)->get();
-            return response()->json([
-                "status" => true,
-                "data" => $products,
-            ], 200);
-        }
-        catch (Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage(),
-            ], 500);
-        }
     }
 }

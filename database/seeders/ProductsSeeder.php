@@ -55,6 +55,14 @@ class ProductsSeeder extends Seeder
                 'price' => 90,
                 'image' => 'product_1.jpg',
                 'category_id' => 2,
+            ],
+            [
+                'store_id' => 2,
+                'name' => 'تي شيرت',
+                'desc' => 'اطلاله قويه',
+                'price' => 1000,
+                'image' => 'product_1.jpg',
+                'category_id' => 2,
             ]
         ]);
     }

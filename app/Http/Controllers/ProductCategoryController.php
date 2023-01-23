@@ -106,6 +106,9 @@ class ProductCategoryController extends Controller
         ]);
 
         $category = ProductCategory::findOrFail($id);
+        $store = Store::where('user_id', Auth::user()->id)->get()[0];
+
+        $this->checkAdminOwnCategory($category, $store);
 
         $category->update($data);
 
@@ -128,19 +131,32 @@ class ProductCategoryController extends Controller
     public function destroy($id)
     {
         $category = ProductCategory::findOrFail($id);
+        $store = Store::where('user_id', Auth::user()->id)->get()[0];
+
+        $this->checkAdminOwnCategory($category, $store);
+
         $category->delete();
 
         return redirect()->back();
     }
 
     /** MORE FUNCTIONS */
+    public function checkAdminOwnCategory ($category, $store)
+    {
+        if($category['store_id'] != $store['id']){
+            return abort(401);
+        };
+    }
+
     public function searchCategories(Request $request)
     {
         $search = $request->input('search');
+        $store = Store::where('user_id', Auth::user()->id)->get()[0];
 
-        $categories = ProductCategory::where('id', '=', $search)
-            ->orWhere('name', 'LIKE', "%{$search}%")
-            ->paginate(8);
+        $categories = ProductCategory::where('store_id', $store['id'])->where(function ($query) use ($search) {
+            $query->where('id', '=', $search)
+            ->orWhere('name', 'LIKE', "%{$search}%");
+        })->paginate(8);
 
         return view('admin.categories', ['categories' => $categories, 'type' => 'search', 'search' => $search]);
     }
@@ -150,9 +166,7 @@ class ProductCategoryController extends Controller
         try {
             $category = ProductCategory::findOrFail($id);
             $store = Store::where('user_id', Auth::user()->id)->get()[0];
-            if ($category['store_id'] != $store['id']) {
-                return abort(401);
-            };
+            $this->checkAdminOwnCategory($category, $store);
 
             if ($category['active']) {
                 $category->update(['active' => 0]);

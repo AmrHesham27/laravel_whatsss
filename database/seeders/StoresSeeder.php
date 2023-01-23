@@ -28,5 +28,18 @@ class StoresSeeder extends Seeder
             'is_suspended' => false,
             'whatsapp' => '01551694277'
         ]);
+
+        DB::table('stores')->insert([
+            'name' => '2 كوك دوور',
+            'user_id' => 2, 
+            'url' => 'cook_door_2',
+            'logo' => 'woodmart-building-supplies-logo.svg',  
+            'color_1' => 'red',  
+            'color_2' => 'blue',  
+            'start_time' => Carbon::parse('10:00'),
+            'end_time' =>  Carbon::parse('23:00'),
+            'is_suspended' => false,
+            'whatsapp' => '01551694277'
+        ]);
     }
 }
