@@ -1,7 +1,13 @@
+@font-face {
+  font-family: "Tajwal-Regular";
+  src: url("../../fonts/Tajawal-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 body {
   margin: 0;
   box-sizing: border-box;
-  font-family: "Tajawal", sans-serif !important;
+  font-family: "Tajwal-Regular", sans-serif !important;
   font-size: 0.8125rem;
   overflow-x: hidden;
 }
