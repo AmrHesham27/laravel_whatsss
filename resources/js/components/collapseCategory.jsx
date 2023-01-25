@@ -1,5 +1,7 @@
 import React from "react";
 import {MenuItem, CardProduct} from './index'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 function CollapseCategory({ category }) {
     const displayCards = localStorage.getItem("displayCards");
@@ -15,10 +17,7 @@ function CollapseCategory({ category }) {
             >
                 <div className="w-100 d-flex justify-content-between align-content-center">
                     <span className="d-flex flex-column justify-content-center">
-                        <i
-                            className="fa fa-chevron-down"
-                            aria-hidden="true"
-                        ></i>
+                        <FontAwesomeIcon icon={faChevronDown} size={"1x"} />
                     </span>
                     <span>{category["name"]}</span>
                 </div>

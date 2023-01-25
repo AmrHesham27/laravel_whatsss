@@ -1,6 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { cartActions } from "../redux/cart";
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const CartItem = ({ name }) => {
     const cart = useSelector((state) => state.cart);
@@ -17,7 +19,7 @@ const CartItem = ({ name }) => {
                         dispatch(cartActions.decreaseProductQty(name))
                     }
                 >
-                    <i className="fa fa-minus"></i>
+                    <FontAwesomeIcon icon={faMinus} size={"1x"} />
                 </button>
                 <span className="p-2">{cart["items"][name]["qty"]}</span>
                 <button
@@ -26,7 +28,7 @@ const CartItem = ({ name }) => {
                         dispatch(cartActions.increaseProductQty(name))
                     }
                 >
-                    <i className="fa fa-plus"></i>
+                    <FontAwesomeIcon icon={faPlus} size={"1x"} />
                 </button>
             </div>
             <span className="item-name">{cart["items"][name]["name"]}</span>
@@ -37,7 +39,7 @@ const CartItem = ({ name }) => {
                 className="remove-item"
                 onClick={() => dispatch(cartActions.removeProduct(name))}
             >
-                <i className="fa fa-minus"></i>
+                <FontAwesomeIcon icon={faMinus} size={"1x"} />
             </span>
         </div>
     );

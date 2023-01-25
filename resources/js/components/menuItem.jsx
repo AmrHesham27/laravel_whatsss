@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { cartActions } from "../redux/cart";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 function MenuItem({ product }) {
     const dispatch = useDispatch();
@@ -56,7 +58,11 @@ function MenuItem({ product }) {
                     onClick={addTocart}
                     style={{ backgroundColor: color_2 }}
                 >
-                    <i className="fa fa-plus" style={{ color: "white" }}></i>
+                    <FontAwesomeIcon
+                        icon={faPlus}
+                        size={"1x"}
+                        style={{ color: "white" }}
+                    />
                 </div>
                 <div className="d-flex flex-row align-items-center mx-4">
                     <span className="mx-1">{currency}</span>

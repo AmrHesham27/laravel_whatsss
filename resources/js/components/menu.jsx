@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { CollapseCategory, CardProduct, MenuItem } from './index';
+import { CollapseCategory, CardProduct, MenuItem } from "./index";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 function Menu({ products, categories }) {
-
     const [searchItems, setSearchItems] = useState([]);
     const [showSearch, setShowSearch] = useState(false);
     const [userInput, setUserInput] = useState("");
 
-    let allProducts = []
-    products.forEach((i) => {allProducts.push(...i)})
+    let allProducts = [];
+    products.forEach((i) => {
+        allProducts.push(...i);
+    });
 
     const search = () => {
         setSearchItems([]);
@@ -27,7 +30,7 @@ function Menu({ products, categories }) {
         } else search();
     }, [userInput]);
 
-    const displayCards = localStorage.getItem('displayCards');
+    const displayCards = localStorage.getItem("displayCards");
 
     return (
         <div className="menu">
@@ -38,30 +41,24 @@ function Menu({ products, categories }) {
                     placeholder="البحث عن أصناف"
                 ></input>
                 <div className="d-flex flex-coumn jsutify-content-center">
-                    <i
+                    <FontAwesomeIcon
+                        icon={faSearch}
+                        size={"1x"}
                         style={{
-                            color_1: "rgb(190, 190, 190)",
-                            marginLeft: "5px",
+                            color: "rgb(190, 190, 190)",
+                            margin: "5px",
                         }}
-                        className="fa fa-search"
-                        aria-hidden="true"
-                    ></i>
+                    />
                 </div>
             </div>
-            {searchItems.length && showSearch && displayCards == '1'
+            {searchItems.length && showSearch && displayCards == "1"
                 ? searchItems.map((product, index) => (
-                      <CardProduct
-                          key={index}
-                          product={product}
-                      />
+                      <CardProduct key={index} product={product} />
                   ))
                 : undefined}
-            {searchItems.length && showSearch && displayCards != '1'
+            {searchItems.length && showSearch && displayCards != "1"
                 ? searchItems.map((product, index) => (
-                      <MenuItem
-                          key={index}
-                          product={product}
-                      />
+                      <MenuItem key={index} product={product} />
                   ))
                 : undefined}
             {!searchItems.length && showSearch ? (
@@ -69,10 +66,7 @@ function Menu({ products, categories }) {
             ) : undefined}
             {!showSearch
                 ? categories.map((category, index) => (
-                      <CollapseCategory
-                          key={index}
-                          category={category}
-                      />
+                      <CollapseCategory key={index} category={category} />
                   ))
                 : undefined}
         </div>

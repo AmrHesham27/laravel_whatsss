@@ -1,5 +1,7 @@
 import React from "react";
 import { Cart, Info, Menu, Categories as CategoriesList } from "./index";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUtensils, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 function PageBody({ store }) {
     const color_1 = localStorage.getItem("color_1");
@@ -18,14 +20,15 @@ function PageBody({ store }) {
                         aria-selected="true"
                     >
                         قائمة الطعام
-                        <i
-                            style={{
+                        <FontAwesomeIcon
+                            icon={faUtensils}
+                            size={"1x"}
+                            style={{ 
                                 color: color_1,
-                                marginLeft: "5px",
+                                marginLeft: "5px" 
                             }}
-                            className="fa fa-utensils menu-icon"
-                            aria-hidden="true"
-                        ></i>
+                            className='menu-icon'
+                        />
                     </a>
 
                     <a
@@ -38,14 +41,15 @@ function PageBody({ store }) {
                         aria-selected="false"
                     >
                         معلومات المطعم
-                        <i
-                            style={{
+                        <FontAwesomeIcon
+                            icon={faInfoCircle}
+                            size={"1x"}
+                            style={{ 
                                 color: color_1,
-                                marginLeft: "5px",
+                                marginLeft: "5px" 
                             }}
-                            className="fa fa-info-circle menu-icon"
-                            aria-hidden="true"
-                        ></i>
+                            className='menu-icon'
+                        />
                     </a>
                 </div>
             </nav>
