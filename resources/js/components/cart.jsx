@@ -1,9 +1,11 @@
 import React from "react";
 import empty_cart_image from "../../../public/assets/img/empty-cart.svg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { CartItem } from './index';
+import { modalsActions } from "../redux/modals";
 
 function Cart() {
+    const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
 
     const color_1 = localStorage.getItem('color_1');
@@ -43,7 +45,7 @@ function Cart() {
                         <div className="cart-info">
                             <div>
                                 <span>السعر</span>
-                                <div className="d-flex flex-row-reverse">
+                                <div className="d-flex flex-row">
                                     <span className="mx-1">{currency}</span>
 
                                     <span>{cart.total}</span>
@@ -52,8 +54,7 @@ function Cart() {
                         </div>
                         <div
                             className="order-now"
-                            data-toggle="modal"
-                            data-target="#send-to-whatsapp"
+                            onClick={() => dispatch(modalsActions.toggleSendToWhatsapp())}
                         >
                             <button style={{ backgroundColor: color_2 }}>اطلب الان</button>
                         </div>

@@ -16,7 +16,7 @@ function Menu({ products, categories }) {
         allProducts.forEach((product) => {
             if (product["name"].indexOf(userInput) > -1) {
                 setSearchItems((state) => [...state, product]);
-            } else setSearchItems([]);
+            }
         });
     };
 
@@ -65,7 +65,7 @@ function Menu({ products, categories }) {
                   ))
                 : undefined}
             {!searchItems.length && showSearch ? (
-                <p>لا يوجد عناصر تطابق بحثك</p>
+                <p className="text-right">لا يوجد عناصر تطابق بحثك</p>
             ) : undefined}
             {!showSearch
                 ? categories.map((category, index) => (

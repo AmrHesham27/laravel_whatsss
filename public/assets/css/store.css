@@ -10,6 +10,10 @@ body {
   box-sizing: border-box;
 }
 
+.fade.modal.show {
+  padding: 0 !important;
+}
+
 p {
   margin-bottom: 0 !important;
 }
@@ -161,10 +165,11 @@ p {
 .order-now {
   width: 80%;
   margin: 20px auto;
+  display: flex;
+  justify-content: center;
 }
 .order-now button {
   padding: 10px;
-  width: 100%;
   border-radius: 5px;
   border: none;
   outline: none;
@@ -419,6 +424,11 @@ p {
   flex-direction: row;
   width: 100%;
   justify-content: space-evenly;
+}
+
+.send-whatsapp-header .btn-close {
+  margin-right: auto !important;
+  margin-left: 0 !important;
 }
 
 @media screen and (max-width: 1000px) {

@@ -1,5 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { modalsActions } from "../redux/modals";
 
 function ResponsiveCart() {
     const { total } = useSelector((state) => state.cart);
@@ -7,18 +8,19 @@ function ResponsiveCart() {
     const color_1 = localStorage.getItem('color_1');
     const currency = localStorage.getItem('currency');
 
+    const dispatch = useDispatch();
+
     return (
         <>
             {
             total ?
             <div
                 className="responsive-cart"
-                data-toggle="modal"
-                data-target="#modal-cart"
                 style={{ backgroundColor: color_1 }}
+                onClick={ () => dispatch(modalsActions.toggleCartModal()) }
             >
                 <div className="d-flex">
-                    <span className="d-flex flex-row-reverse mx-2">
+                    <span className="d-flex flex-row mx-2">
                         <span>{currency}</span>
                         <span className="mx-1">{total}</span>
                     </span>

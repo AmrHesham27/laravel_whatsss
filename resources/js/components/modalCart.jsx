@@ -1,70 +1,68 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { CartItem } from './index';
+import { useSelector, useDispatch } from "react-redux";
+import { CartItem } from "./index";
+import { modalsActions } from "../redux/modals";
+import Modal from "react-bootstrap/Modal";
+import { useEffect } from "react";
 
 function ModalCart() {
     const cart = useSelector((state) => state.cart);
 
-    const color_1 = localStorage.getItem('color_1');
-    const color_2 = localStorage.getItem('color_2');
-    const currency = localStorage.getItem('currency');
-    
-    return (
-        <div
-            className="modal fade modal-cart"
-            id="modal-cart"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-        >
-            <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                    <div className="modal-header d-flex justify-content-between w-100">
-                        <button
-                            type="button"
-                            className="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                            style={{ padding: "0", margin: "0" }}
-                        >
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <div
-                            className="modal-cart-header"
-                            style={{ color: color_1 }}
-                        >
-                            سلة مشترياتك
-                        </div>
-                    </div>
-                    <div className="modal-body text-right">
-                        {cart["itemsCount"] &&
-                            Object.values(cart["items"]).map((item) => (
-                                <CartItem key={item.name} name={item.name} />
-                            ))}
+    const color_1 = localStorage.getItem("color_1");
+    const color_2 = localStorage.getItem("color_2");
+    const currency = localStorage.getItem("currency");
 
-                        <div className="cart-info">
-                            <div>
-                                <span>السعر</span>
-                                <div className="d-flex flex-row-reverse">
-                                    <span>{cart.total}</span>
-                                    <span className="mx-1">{currency}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            className="order-now"
-                            data-toggle="modal"
-                            data-target="#send-to-whatsapp"
-                            data-dismiss="modal"
-                            
-                        >
-                            <button style={{backgroundColor: color_2}}>اطلب الان</button>
+    const dispatch = useDispatch();
+    const modals = useSelector((state) => state.modals);
+
+    useEffect(() => {
+        if(modals.cartModal && !cart.itemsCount) dispatch(modalsActions.toggleCartModal())
+    }, [modals, cart, dispatch])
+
+    return (
+        <Modal
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={modals.cartModal}
+            onHide={() => dispatch(modalsActions.toggleCartModal())}
+        >
+            <Modal.Header
+                closeButton
+                className="d-flex flex-row-reverse justify-content-between send-whatsapp-header"
+            >
+                <div className="modal-cart-header" style={{ color: color_1 }}>
+                    سلة مشترياتك
+                </div>
+            </Modal.Header>
+
+            <Modal.Body className="tex-right">
+                {cart["itemsCount"] &&
+                    Object.values(cart["items"]).map((item) => (
+                        <CartItem key={item.name} name={item.name} />
+                    ))}
+
+                <div className="cart-info">
+                    <div>
+                        <span>السعر</span>
+                        <div className="d-flex flex-row-reverse">
+                            <span>{cart.total}</span>
+                            <span className="mx-1">{currency}</span>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                <div
+                    className="order-now"
+                    onClick={() =>
+                        dispatch(modalsActions.toggleSendToWhatsapp())
+                    }
+                >
+                    <button style={{ backgroundColor: color_2 }}>
+                        اطلب الان
+                    </button>
+                </div>
+            </Modal.Body>
+        </Modal>
     );
 }
 

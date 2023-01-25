@@ -34,7 +34,7 @@ const CardProduct = ({ product }) => {
                     />
                 </Modal.Body>
                 <Modal.Footer style={{display: 'flex', justifyContent: 'center'}}>
-                    <Button style={{backgroundColor: color_2}} onClick={props.onHide}>Close</Button>
+                    <Button style={{backgroundColor: color_2}} onClick={props.onHide}>إغلاق</Button>
                 </Modal.Footer>
             </Modal>
         );
@@ -49,7 +49,10 @@ const CardProduct = ({ product }) => {
                 style={{ cursor: 'pointer' }}
             />
             <h5 className="mt-2">{product["name"]}</h5>
-            <h6>{`${product["price"]} ${currency}`}</h6>
+            <div className="d-flex fw-bold justify-content-center">
+                <div className="mx-1">{currency}</div>
+                <div>{product['price']}</div>
+            </div>
             <p>{product["desc"]}</p>
             <button
                 className="w-100 p-2 mt-2"

@@ -128,7 +128,7 @@
                 </div>
                 <label for="currency">Currency</label>
                 <select id="currency" name="currency" class="form-select form-control" aria-label="Choose currency">
-                    <option value="E£" <?php if ($store['currency'] == "E£") echo 'selected' ?>>E£</option>
+                    <option value="ج.م" <?php if ($store['currency'] == "ج.م") echo 'selected' ?>>ج.م</option>
                     <option value="$" <?php if ($store['currency'] == "$") echo 'selected' ?>>$</option>
                     <option value="€" <?php if ($store['currency'] == "€") echo 'selected' ?>>€</option>
                 </select>

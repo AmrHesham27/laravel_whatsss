@@ -30,7 +30,7 @@ function MenuItem({ product }) {
                     />
                 </Modal.Body>
                 <Modal.Footer style={{display: 'flex', justifyContent: 'center'}}>
-                    <Button style={{backgroundColor: color_2}} onClick={props.onHide}>Close</Button>
+                    <Button style={{backgroundColor: color_2}} onClick={props.onHide}>إغلاق</Button>
                 </Modal.Footer>
             </Modal>
         );
@@ -58,7 +58,7 @@ function MenuItem({ product }) {
                 >
                     <i className="fa fa-plus" style={{ color: "white" }}></i>
                 </div>
-                <div className="d-flex flex-row-reverse align-items-center mx-4">
+                <div className="d-flex flex-row align-items-center mx-4">
                     <span className="mx-1">{currency}</span>
                     <span>{product["price"]}</span>
                 </div>
