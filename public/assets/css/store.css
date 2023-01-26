@@ -1,3 +1,4 @@
+@import './bootstrap.min.css';
 @font-face {
   font-family: "Tajwal-Regular";
   src: url("../../fonts/Tajawal-Regular.ttf") format("truetype");
@@ -79,6 +80,19 @@ p {
 .my-header img {
   max-height: 70px;
   margin-top: 10px;
+}
+
+.my-nav .nav-item {
+  border-bottom: 3px solid transparent !important;
+}
+
+.nav-item > button {
+  border: none !important;
+  color: black !important;
+}
+.nav-item > button:active, .nav-item > button:hover {
+  border: none !important;
+  color: black !important;
 }
 
 .my-nav {
@@ -453,7 +467,7 @@ p {
   }
   .my-header img {
     margin: 0;
-    max-height: 50px;
+    max-height: 60px;
   }
   .modal-dialog {
     min-width: 100vw !important;

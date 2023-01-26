@@ -14,6 +14,10 @@ import {
 import { Provider } from "react-redux";
 import reduxStore from "./redux/store";
 
+// bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 export default function App({ store }) {
     localStorage.setItem("color_1", store["color_1"]);
     localStorage.setItem("color_2", store["color_2"]);
