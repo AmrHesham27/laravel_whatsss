@@ -9,12 +9,15 @@ use Illuminate\Support\Carbon;
 use App\Models\Store;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 
 class AdminController extends Controller
 {
     public function showDashboard()
     {
-        $store_id = Store::where('user_id', Auth::user()->id)->get()[0]['id'];
+        $store = Store::where('user_id', Auth::user()->id)->get()[0];
+        $store_id = $store['id'];
+        $store_url = $store['url'];
 
         $views_today = DB::table('views')->where('store_id', '=', $store_id)->count();
         $views_one_day = DB::table('views')
@@ -51,7 +54,8 @@ class AdminController extends Controller
                 $views_four_days,
                 $views_five_days,
                 $views_six_days
-            ]
+            ],
+            'store_url' => URL::to('/') . '/stores/' .$store_url
         ]);
     }
 

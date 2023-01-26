@@ -76,13 +76,25 @@
         </div>
       </nav>
       <!-- Content -->
-      <div class="container">
-        <h2>Views</h2>
-        <div>
+      <div class="card">
+            <div class="card-header">
+                <h2>Store Qr</h2>
+            </div>
+            <div class="card-body d-flex justify-content-center">
+                {!! QrCode::size(300)->generate($store_url) !!}
+            </div>
+        </div>
+      
+      <div class="card mt-5">
+        <div class="card-header">
+          <h2>Store Views</h2>
+        </div>
+        
+        <div class="card-body">
           <canvas id="myChart"></canvas>
         </div>
       </div>
-    </div>
+
   </div>
 
   <script>
