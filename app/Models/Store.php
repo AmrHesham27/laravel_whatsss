@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Kitchen;
 use App\Models\Product;
 use App\Models\ProductCategory;
 
@@ -35,19 +34,19 @@ class Store extends Model
         'displayCards'
     ];
 
-    public function kitchens()
-    {
-        return $this->belongsToMany(Kitchen::class, 'stores_kitchens');
-    }
-
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class)->where('active', true);
     }
 
     public function categories()
     {
-        return $this->hasMany(ProductCategory::class);
+        return $this->hasMany(ProductCategory::class)->where('active', true)->with('products');
+    }
+
+    public function places()
+    {
+        return $this->hasMany(Place::class);
     }
 
     

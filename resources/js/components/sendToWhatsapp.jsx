@@ -20,21 +20,27 @@ function SendToWhatsapp(props) {
 
     const cart = useSelector((state) => state.cart);
 
-    // %20 => space ,, line break => %0a
-
+    const Enter = `%0a`
+    const Space = `%20`
     let items = "";
     Object.values(cart["items"]).forEach((item) => {
-        items += `${item["name"]}%20X%20${item["qty"]}%0a`;
+        items += `${item["name"]}${Space}*${Space}${item["qty"]}${Enter}`;
     });
-    const href = `https://wa.me/${whatsapp}/?text=${`New%20Order%0aName:%20${name}%0aItems:%0a${items}Delivery%20Method%0a${deliveryMethod}%0a${
-        placeIndex && deliveryMethod == "delivery"
-            ? props["places"][placeIndex]["name"]
-            : ""
-    }
-    `}`;
+    const placeName = placeIndex && deliveryMethod == "delivery" ? props["places"][placeIndex]["name"] : "";
+    const exactAdressWhatsapp = exactAddress && deliveryMethod == "delivery" ? `${Enter}العنوان${Space}بالتفصيل:${Enter}${exactAddress}` : "";
+    const notesWhatsapp = notes ? `${Enter}📝${Space}ملاحظات:${Enter}${notes}` : '';
+    const methodsObject = {'dinIn': 'صالة', 'delivery': `توصيل`, 'pickUp': `استلام${Space}من${Space}المكان`}
+    const deliveryMethodWhatsapp = methodsObject[deliveryMethod];
+
+    const href = `https://wa.me/${whatsapp}/?text=${`✅${Space}*طلب${Space}جديد*${Enter}${Enter}الإسم:${Enter}${name}${Enter}${Enter}📜${Space}الطلبات:${Enter}${items}${Enter}طريقة${Space}التوصيل:${Enter}${deliveryMethodWhatsapp}${Enter}${placeName}${Enter}${exactAdressWhatsapp}${Enter}${notesWhatsapp}`}`;
 
     const modals = useSelector((state) => state.modals);
     const dispatch = useDispatch();
+
+    const handleForm = (e) => {
+        e.preventDefault();
+        window.location.href = href;
+    }
 
     return (
         <Modal
@@ -62,7 +68,7 @@ function SendToWhatsapp(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="tex-right">
-                <form style={{textAlign: 'end'}}>
+                <form style={{textAlign: 'end'}} onSubmit={handleForm}>
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">الاسم</label>
                         <input
@@ -73,6 +79,7 @@ function SendToWhatsapp(props) {
                             placeholder="ادخل اسمك"
                             onChange={(e) => setName(e.target.value)}
                             style={{textAlign: 'end'}}
+                            required
                         />
                     </div>
                     <div className="form-group mt-4">
@@ -85,6 +92,7 @@ function SendToWhatsapp(props) {
                             name="category_id"
                             onChange={(e) => setDeliveryMethod(e.target.value)}
                             style={{textAlign: 'end'}}
+                            required
                         >
                             <option
                                 className="d-flex justify-content-end"
@@ -134,6 +142,7 @@ function SendToWhatsapp(props) {
                                         setPlaceIndex(e.target.value);
                                     }}
                                     style={{textAlign: 'end'}}
+                                    required
                                 >
                                     <option value="">مكان التوصيل</option>
                                     {props["places"].map((place, index) => {
@@ -161,6 +170,7 @@ function SendToWhatsapp(props) {
                                     setExactAddress(e.target.value)
                                 }
                                 style={{textAlign: 'end'}}
+                                required
                             />
                         </div>
                     ) : undefined}
@@ -204,13 +214,13 @@ function SendToWhatsapp(props) {
                     ) : undefined}
 
                     <div className="d-flex justify-content-center">
-                        <a
+                        <button
                             className="btn btn-success px-3 my-3"
-                            href={href}
                             style={{ backgroundColor: color_2 }}
+                            type='submit'
                         >
                             اطلب
-                        </a>
+                        </button>
                     </div>
                 </form>
             </Modal.Body>
@@ -219,34 +229,3 @@ function SendToWhatsapp(props) {
 }
 
 export default SendToWhatsapp;
-
-/* import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-
-function MyVerticallyCenteredModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-} */

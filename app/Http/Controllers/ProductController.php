@@ -8,6 +8,7 @@ use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -134,9 +135,15 @@ class ProductController extends Controller
             $myimage = time() . $request->image->getClientOriginalName();
             $request->image->move(public_path('images'), $myimage);
             $data['image'] = $myimage;
-        }
 
-        $product->update($data);
+            // update first then delete old image
+            $file_path = public_path('images/' . $product['image']);
+            $product->update($data);
+            File::delete($file_path);
+        }
+        else {
+            $product->update($data);
+        }
 
         $products = Product::where('store_id', $store['id'])->paginate(8);
 

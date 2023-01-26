@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Place;
 use App\Models\ProductCategory;
 use App\Models\View;
+use Illuminate\Support\Facades\File;
+
 class StoreController extends Controller
 {
     /**
@@ -88,33 +90,21 @@ class StoreController extends Controller
      */
     public function show($url)
     {
-        if (!Store::where('url', $url)->count())
-        {
-            dd('THERE IS NO STORE ON THIS URL');
-        };
-        $store = Store::where('url', $url)->get()[0];
-        if ($store['is_suspended']) abort(404);
-        $categories = ProductCategory::with('products')
-            ->where('active', true)
-            ->where('store_id', $store['id'])->get();
+        try{
+            $store = Store::with('places')->with('products')->with('categories')
+            ->where('url', $url)->get()[0];
+            if ($store['is_suspended']) abort(404);
 
-        $products = [];
-        foreach($categories as $category)
-        {
-            array_push($products, $category['products']);
+            $view = new View;
+            $view['store_id'] = $store['id'];
+            $view ->save();
+
+            return view('customer', ['store' => $store]);
+        }
+        catch(Exception $e) {
+            return abort(500);
         }
         
-        $store['products'] = $products;
-        $store['categories'] = $categories;
-
-        $view = new View;
-        $view['store_id'] = $store['id'];
-        $view ->save();
-
-        $places = Place::where('store_id', $store['id'])->get();
-        $store['places'] = $places;
-
-        return view('customer', ['store' => $store]);
     }
 
     /**
@@ -139,6 +129,9 @@ class StoreController extends Controller
      */
     public function update(Request $request)
     {
+        $store = Store::where('user_id', Auth::user()->id)->get()[0];
+        $this->checkAdminOwnStore($store);
+
         $data = $this->validate($request, [
             "name"  => "required|string|max:60",
             "whatsapp" => "required|string|max:60",
@@ -165,11 +158,15 @@ class StoreController extends Controller
             $myimage = time() . $request->logo->getClientOriginalName();
             $request->logo->move(public_path('images'), $myimage);
             $data['logo'] = $myimage;
-        }
 
-        $store = Store::where('user_id', Auth::user()->id)->get()[0];
-        $this->checkAdminOwnStore($store);
-        $store->update($data);
+            // update first then delete old image
+            $file_path = public_path('images/' . $store['logo']);
+            $store->update($data);
+            File::delete($file_path);
+        }
+        else {
+            $store->update($data);
+        }
 
         $places = Place::where('store_id', $store['id'])->get();
 
@@ -196,7 +193,7 @@ class StoreController extends Controller
     /**********************************************/
     public function checkAdminOwnStore($store)
     {
-        if(Auth::user()->id != $store['id']){
+        if(Auth::user()->id != $store['user_id']){
             return abort(401);
         };
     }

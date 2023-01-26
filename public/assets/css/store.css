@@ -77,7 +77,6 @@ p {
   justify-content: center;
 }
 .my-header img {
-  padding: 10px 20px;
   max-height: 70px;
   margin-top: 10px;
 }
@@ -454,6 +453,7 @@ p {
   }
   .my-header img {
     margin: 0;
+    max-height: 50px;
   }
   .modal-dialog {
     min-width: 100vw !important;

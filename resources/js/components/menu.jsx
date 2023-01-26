@@ -8,15 +8,10 @@ function Menu({ products, categories }) {
     const [showSearch, setShowSearch] = useState(false);
     const [userInput, setUserInput] = useState("");
 
-    let allProducts = [];
-    products.forEach((i) => {
-        allProducts.push(...i);
-    });
-
     const search = () => {
         setSearchItems([]);
         setShowSearch(true);
-        allProducts.forEach((product) => {
+        products.forEach((product) => {
             if (product["name"].indexOf(userInput) > -1) {
                 setSearchItems((state) => [...state, product]);
             }
