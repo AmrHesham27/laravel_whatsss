@@ -1,4 +1,4 @@
-@import './bootstrap.min.css';
+@import "./bootstrap.min.css";
 @font-face {
   font-family: "Tajwal-Regular";
   src: url("../../fonts/Tajawal-Regular.ttf") format("truetype");
@@ -93,6 +93,7 @@ p {
 .nav-item > button:active, .nav-item > button:hover {
   border: none !important;
   color: black !important;
+  font-weight: bolder !important;
 }
 
 .my-nav {

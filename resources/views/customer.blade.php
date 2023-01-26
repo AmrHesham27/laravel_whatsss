@@ -12,8 +12,5 @@
 </head>
 <body>
     <div id="root" data='{{ $store }}'></div>
-    <script>
-        let navItem = document.getElementById
-    </script>
 </body>
 </html>

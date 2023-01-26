@@ -1,14 +1,13 @@
 // FONTS
 @font-face {
-    font-family: 'Tajwal-Regular';
-    src: url('../../fonts/Tajawal-Regular.ttf') format('truetype');
+    font-family: "Tajwal-Regular";
+    src: url("../../fonts/Tajawal-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 // BOOTSTRAP
-@import './bootstrap.min.css';
-
+@import "./bootstrap.min.css";
 
 // GENERAL STYLES
 body {
@@ -98,9 +97,11 @@ p {
 .nav-item > button {
     border: none !important;
     color: black !important;
-    &:active, &:hover {
+    &:active,
+    &:hover {
         border: none !important;
         color: black !important;
+        font-weight: bolder !important;
     }
 }
 
