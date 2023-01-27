@@ -7,7 +7,7 @@ function Info() {
 
     return (
         <div className="info col">
-            <div className="info-header">{store_name}</div>
+            <div className="info-header px-3">{store_name}</div>
             <div className="info-item row">
                 <div className="col">
                     {store_end_time} - {store_start_time} 

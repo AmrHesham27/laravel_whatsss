@@ -1,7 +1,7 @@
 import React from "react";
 import { Cart, Info, Menu, Categories as CategoriesList } from "./index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUtensils, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faListSquares, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
@@ -19,7 +19,7 @@ function PageBody({ store }) {
                     eventKey="info"
                     title={
                         <>
-                            معلومات المطعم
+                            معلومات
                             <FontAwesomeIcon
                                 icon={faInfoCircle}
                                 size={"1x"}
@@ -42,9 +42,9 @@ function PageBody({ store }) {
                     eventKey="menu"
                     title={
                         <>
-                            قائمة الطعام
+                            القائمة
                             <FontAwesomeIcon
-                                icon={faUtensils}
+                                icon={faListSquares}
                                 size={"1x"}
                                 style={{
                                     color: color_1,

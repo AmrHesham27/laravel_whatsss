@@ -57,7 +57,7 @@ function Menu({ products, categories }) {
                   ))
                 : undefined}
             {!searchItems.length && showSearch ? (
-                <p className="text-right">لا يوجد عناصر تطابق بحثك</p>
+                <p className="text-end">لا يوجد عناصر تطابق بحثك</p>
             ) : undefined}
             {!showSearch
                 ? categories.map((category, index) => (

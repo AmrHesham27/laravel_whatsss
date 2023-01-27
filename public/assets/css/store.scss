@@ -90,10 +90,6 @@ p {
     }
 }
 
-.my-nav .nav-item {
-    border-bottom: 3px solid transparent !important;
-}
-
 .nav-item > button {
     border: none !important;
     color: black !important;
@@ -126,6 +122,9 @@ p {
         border: none !important;
         outline: none !important;
         font-size: 18px;
+        display: flex !important;
+        justify-content: end !important;
+        max-width: 50% !important;
 
         &:hover {
             font-weight: bolder;
@@ -301,7 +300,6 @@ p {
     position: sticky;
     top: 110px;
     align-self: flex-start;
-    overflow-y: scroll;
     max-height: calc(100vh - 40px);
 
     .categories-header {
@@ -610,12 +608,12 @@ p {
 }
 
 @media screen and (max-width: 767px) {
-    .navbar {
+    .my-nav {
         .nav-item:first-child {
-            width: 45%;
+            width: 55%;
         }
         .nav-item:nth-child(2) {
-            width: 55%;
+            width: 45%;
         }
     }
 }
@@ -629,5 +627,9 @@ p {
         img {
             max-height: 225px;
         }
+    }
+
+    .nav-tabs .nav-link {
+        font-size: 16px !important;
     }
 }
