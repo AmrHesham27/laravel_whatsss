@@ -10769,7 +10769,6 @@ h5,
     transition: all 0.3s;
     display: flex;
     flex-direction: column;
-    
 }
 
 #sidebar .close-btn {
@@ -10890,7 +10889,8 @@ a[data-toggle="collapse"] {
     color: white;
 }
 
-.my-btn:hover, .my-btn:focus {
+.my-btn:hover,
+.my-btn:focus {
     color: white;
 }
 
@@ -10917,11 +10917,22 @@ a[data-toggle="collapse"] {
     }
 }
 
-/* @media screen and (min-width: 576px) {
-    #sidebar {
-        position: sticky;
-        height: 100vh;
-        top: 0;
+.responsive-page {
+    width: calc(100vw - 300px) !important;
+}
+
+@media screen and (max-width: 991.5px) {
+    #content.responsive-page {
+        width: 100vw !important;
+    }
+
+    #content {
+        width: calc(100vw - 300px) !important;
     }
 }
- */
+
+@media screen and (max-width: 576px) {
+    #content, .responsive-page {
+        width: 100vw !important;
+    }
+}

@@ -1,6 +1,6 @@
 <nav id="sidebar">
     <div class="nav-body">
-        <button class="close-btn">
+        <button class="close-btn toggle-view">
             <i class="fa-solid fa-xmark"></i>
         </button>
         <div class="p-4 pt-5 nav-body">

@@ -33,6 +33,31 @@
       font-family: "Verdana", sans-serif;
       font-size: 1rem;
     }
+
+    .cards-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .cards-container>.card {
+      width: 30%;
+    }
+
+    @media screen and (max-width: 576px) {
+      .cards-container {
+        flex-direction: column;
+      }
+
+      .cards-container>.card {
+        width: 100%;
+        margin-bottom: 30px;
+      }
+
+      .cards-container:first-child {
+        margin-top: 0 !important;
+      }
+    }
   </style>
 </head>
 
@@ -41,99 +66,142 @@
   <div class="wrapper d-flex align-items-stretch">
     <x-dashboard.admin-navbar active='Home'></x-admin-navbar>
 
-    <!-- Page Content  -->
-    <div id="content" class="p-4 p-md-5">
+      <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5 responsive-page">
 
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
 
-          <button type="button" id="sidebarCollapse" class="btn btn-primary">
-            <i class="fa fa-bars"></i>
-            <span class="sr-only">Toggle Menu</span>
-          </button>
-          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fa fa-bars"></i>
-          </button>
+            <button type="button" id="sidebarCollapse" class="btn btn-primary toggle-view">
+              <i class="fa fa-bars"></i>
+              <span class="sr-only">Toggle Menu</span>
+            </button>
+            <button class="btn btn-dark d-inline-block d-lg-none ml-auto toggle-view" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="fa fa-bars"></i>
+            </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="nav navbar-nav ml-auto">
-              <li class="nav-item">
-                <form method="POST" action="{{ route('logout') }}">
-                  @csrf
-                  <a class="nav-link" href="route('logout')" onclick="event.preventDefault();
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item">
+                  <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <a class="nav-link" href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                    {{ __('Log Out') }}
+                      {{ __('Log Out') }}
+                    </a>
+                  </form>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('profile.edit') }}">
+                    {{ __('Profile') }}
                   </a>
-                </form>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ route('profile.edit') }}">
-                  {{ __('Profile') }}
-                </a>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </nav>
-      <!-- Content -->
-      <div class="card">
+        </nav>
+        <!-- Content -->
+        <div>
+          <div class="cards-container">
+            <div class="card">
+              <div class="card-header">
+                <h2>Products</h2>
+              </div>
+              <div class="card-body d-flex flex-column align-items-center">
+                <i class="fa-solid fa-box" style="color: #f8b739; font-size: 40px;"></i>
+                <span class="my-2">12</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h2>Categories</h2>
+              </div>
+              <div class="card-body d-flex flex-column align-items-center">
+                <i class="fa-solid fa-boxes-stacked" style="color: #f8b739; font-size: 40px;"></i>
+                <span class="my-2">12</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h2>Views</h2>
+              </div>
+              <div class="card-body d-flex flex-column align-items-center">
+                <i class="fa-solid fa-eye" style="color: #f8b739; font-size: 40px;"></i>
+                <span class="my-2">12</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mt-5">
             <div class="card-header">
-                <h2>Store Qr</h2>
+              <h2>Store Views</h2>
+            </div>
+
+            <div class="card-body">
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card mt-5">
+            <div class="card-header">
+              <h2>Store Qr</h2>
             </div>
             <div class="card-body d-flex justify-content-center">
-                {!! QrCode::size(300)->generate($store_url) !!}
+              {!! QrCode::size(300)->generate($store_url) !!}
             </div>
-        </div>
-      
-      <div class="card mt-5">
-        <div class="card-header">
-          <h2>Store Views</h2>
-        </div>
-        
-        <div class="card-body">
-          <canvas id="myChart"></canvas>
+          </div>
         </div>
       </div>
 
-  </div>
+      <script>
+        var views = <?php echo $views[0] ?>;
 
-  <script>
-    var views = <?php echo $views[0] ?>;
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: [
+              new Date(Date.now() - (86400000 * 6)).toJSON().slice(5, 10).replace(/-/g, '/'),
+              new Date(Date.now() - (86400000 * 5)).toJSON().slice(5, 10).replace(/-/g, '/'),
+              new Date(Date.now() - (86400000 * 4)).toJSON().slice(5, 10).replace(/-/g, '/'),
+              new Date(Date.now() - (86400000 * 3)).toJSON().slice(5, 10).replace(/-/g, '/'),
+              new Date(Date.now() - (86400000 * 2)).toJSON().slice(5, 10).replace(/-/g, '/'),
+              new Date(Date.now() - 86400000).toJSON().slice(5, 10).replace(/-/g, '/'),
+              new Date().toJSON().slice(5, 10).replace(/-/g, '/'),
+            ],
+            datasets: [{
+              label: "Total Views Count",
+              data: [
+                <?php echo $views[6] ?>,
+                <?php echo $views[5] ?>,
+                <?php echo $views[4] ?>,
+                <?php echo $views[3] ?>,
+                <?php echo $views[2] ?>,
+                <?php echo $views[1] ?>,
+                <?php echo $views[0] ?>
+              ],
+              backgroundColor: "#f8b739",
+            }, ],
+          },
+        });
+      </script>
 
-    var ctx = document.getElementById("myChart").getContext("2d");
-    var myChart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: [
-          new Date(Date.now() - (86400000 * 6)).toJSON().slice(5, 10).replace(/-/g, '/'),
-          new Date(Date.now() - (86400000 * 5)).toJSON().slice(5, 10).replace(/-/g, '/'),
-          new Date(Date.now() - (86400000 * 4)).toJSON().slice(5, 10).replace(/-/g, '/'),
-          new Date(Date.now() - (86400000 * 3)).toJSON().slice(5, 10).replace(/-/g, '/'),
-          new Date(Date.now() - (86400000 * 2)).toJSON().slice(5, 10).replace(/-/g, '/'),
-          new Date(Date.now() - 86400000).toJSON().slice(5, 10).replace(/-/g, '/'),
-          new Date().toJSON().slice(5, 10).replace(/-/g, '/'),
-        ],
-        datasets: [{
-          label: "Total Views Count",
-          data: [
-            <?php echo $views[6] ?>,
-            <?php echo $views[5] ?>,
-            <?php echo $views[4] ?>,
-            <?php echo $views[3] ?>,
-            <?php echo $views[2] ?>,
-            <?php echo $views[1] ?>,
-            <?php echo $views[0] ?>
-          ],
-          backgroundColor: "#f8b739",
-        }, ],
-      },
-    });
-  </script>
+      <script>
+        $(document).ready(function() {
+          // css
+          $(".toggle-view").click(function() {
+            console.log(444);
+            $("#content").toggleClass("responsive-page");
+          });
+        })
+      </script>
 
-  <script src="{{ asset('assets/dashboard/js/jquery.min.js') }}"></script>
-  <script src="{{ asset('assets/dashboard/js/popper.js') }}"></script>
-  <script src="{{ asset('assets/dashboard/js/bootstrap.min.js') }}"></script>
-  <script src="{{ asset('assets/dashboard/js/main.js') }}"></script>
+      <script src="{{ asset('assets/dashboard/js/jquery.min.js') }}"></script>
+      <script src="{{ asset('assets/dashboard/js/popper.js') }}"></script>
+      <script src="{{ asset('assets/dashboard/js/bootstrap.min.js') }}"></script>
+      <script src="{{ asset('assets/dashboard/js/main.js') }}"></script>
 </body>
 
 </html>
