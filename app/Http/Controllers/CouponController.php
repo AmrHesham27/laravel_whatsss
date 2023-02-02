@@ -53,6 +53,12 @@ class CouponController extends Controller
                 "code" => "required|max:30"
             ]);
             $data['store_id'] = $store['id'];
+
+            if (Coupon::where('store_id', $store['id'])->where('code', $data['code'])->count() > 0){
+                $this->message('You already has a coupon with this name', 'alert-danger');
+                return redirect()->back();
+            }
+
             Coupon::create($data);
             $this->message('New Coupon was added successfully', 'alert-success');
             return redirect()->back();
@@ -122,12 +128,17 @@ class CouponController extends Controller
             "code" => "required|max:30"
         ]);
 
+        if (Coupon::where('store_id', $store['id'])->where('code', $data['code'])->count() > 0){
+            $this->message('You already has a coupon with this name', 'alert-danger');
+            return redirect()->back();
+        }
+
         $coupon->update($data);
 
         $this->message('Your Coupon was edited successfully', 'alert-success');
         $coupons = Coupon::where('store_id', $store['id'])->paginate(8);
 
-        return redirect()->route('adminCoupons', [
+        return redirect()->route('admin.coupons.index', [
             'coupons' => $coupons, 
             'type' => 'data',
             'search' => ''
@@ -142,7 +153,6 @@ class CouponController extends Controller
      */
     public function destroy($id)
     {
-        dd(55);
         $coupon = Coupon::findOrFail($id);
         $store = Store::where('user_id', Auth::user()->id)->get()[0];
         $this->checkAdminOwnCoupon($coupon, $store);

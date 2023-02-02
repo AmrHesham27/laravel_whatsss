@@ -56,8 +56,9 @@
                 @if (session()->get('mssg'))
                 <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
                 @endif
-                <form method="POST" action="{{ route('adminUpdateProduct', ['id' => $product['id']]) }}">
+                <form method="POST" action="{{ route('admin.coupons.update', ['coupon' => $coupon['id']]) }}">
                     @csrf
+                    @method('PATCH')
                     <div class="form-group my-4">
                         <label for="code">Coupon Code</label>
                         <input value="{{ $coupon['code'] }}" type="text" name="code" class="@error('code') is-invalid @enderror form-control" id="code" aria-describedby="coupon code">
@@ -67,7 +68,7 @@
                     </div>
 
                     <label for="type">Coupon Type</label>
-                    <select class="form-control form-select" id="type" aria-label="Default select example" name="coupon_type" required> 
+                    <select class="form-control form-select" id="type" aria-label="Default select example" name="type" required> 
                         <option <?php if($coupon['type'] == 'percent') echo 'selected' ?> value="percent">Percent</option>
                         <option <?php if($coupon['type'] == 'flat') echo 'selected' ?> value="flat">Flat</option>
                     </select>

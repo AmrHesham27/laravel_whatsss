@@ -16,7 +16,7 @@
 <body>
 
     <div class="wrapper d-flex align-items-stretch">
-        <x-dashboard.admin-navbar active='Add Product'></x-admin-navbar>
+        <x-dashboard.admin-navbar active='Add Coupon'></x-admin-navbar>
 
             <!-- Page Content  -->
             <div id="content" class="p-4 p-md-5">
@@ -56,31 +56,32 @@
                 @if (session()->get('mssg'))
                 <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
                 @endif
-                <form method="POST" action="{{ route('adminStoreProduct') }}">
+                <form method="POST" action="{{ route('admin.coupons.store') }}">
                     @csrf
                     <div class="form-group my-4">
                         <label for="code">Coupon Code</label>
-                        <input value="{{ $coupon['code'] }}" type="text" name="code" class="@error('code') is-invalid @enderror form-control" id="code" aria-describedby="coupon code">
+                        <input type="text" name="code" value="{{ old('code') }}"  class="@error('code') is-invalid @enderror form-control" id="code" aria-describedby="coupon code">
                         @error('code')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <label for="type">Coupon Type</label>
-                    <select class="form-control form-select" id="type" aria-label="Default select example" name="coupon_type" required>
-                        <option <?php if ($coupon['type'] == 'percent') echo 'selected' ?> value="percent">Percent</option>
-                        <option <?php if ($coupon['type'] == 'flat') echo 'selected' ?> value="flat">Flat</option>
+                    <select class="form-control form-select" id="type" aria-label="Default select example" name="type" required>
+                        <option value="">-- Choose Type</option>
+                        <option value="percent">Percent</option>
+                        <option value="flat">Flat</option>
                     </select>
 
                     <div class="form-group my-4">
                         <label for="amount">Coupon Amount</label>
-                        <input value="{{ $coupon['amount'] }}" type="number" name="amount" class="@error('amount') is-invalid @enderror form-control" id="amount" aria-describedby="coupon amount">
+                        <input value="{{ old('amount') }}" type="number" name="amount" class="@error('amount') is-invalid @enderror form-control" id="amount" aria-describedby="coupon amount">
                         @error('amount')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn my-btn my-5">Add Product</button>
+                    <button type="submit" class="btn my-btn my-5">Add Coupon</button>
                 </form>
             </div>
     </div>
