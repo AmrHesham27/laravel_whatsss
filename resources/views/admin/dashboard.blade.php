@@ -207,6 +207,14 @@
         });
       </script>
 
+      <script>
+        $(document).ready(function() {
+          $(".toggle-view").click(function() {
+            $("#content").toggleClass("responsive-page");
+          });
+        })
+      </script>
+
       <script src="{{ asset('assets/dashboard/js/jquery.min.js') }}"></script>
       <script src="{{ asset('assets/dashboard/js/popper.js') }}"></script>
       <script src="{{ asset('assets/dashboard/js/bootstrap.min.js') }}"></script>
