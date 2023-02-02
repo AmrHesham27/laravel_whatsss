@@ -27,7 +27,7 @@
 <body>
 
     <div class="wrapper d-flex align-items-stretch">
-        <x-dashboard.admin-navbar active='Products'></x-admin-navbar>
+        <x-dashboard.admin-navbar active='Coupons'></x-admin-navbar>
 
             <!-- Page Content  -->
             <div id="content" class="p-4 p-md-5">
@@ -69,11 +69,11 @@
                     <div class="alert {{session()->get('alert')}}" role="alert">{{session()->get('mssg')}}</div>
                     @endif
                     <div>
-                        <a class="my-2 btn my-btn" href="{{ route('adminCreateProduct') }}">Add Product</a>
+                        <a class="my-2 btn my-btn" href="{{ route('admin.coupons.create') }}">Add Coupon</a>
                     </div>
 
                     <div class="d-flex">
-                        <form method="POST" action="{{ route('adminSearchProducts') }}" style="max-width: 300px;">
+                        <form method="POST" action="{{ route('searchCoupons') }}" style="max-width: 300px;">
                             @csrf
                             <div class="form-group my-4 d-flex">
                                 <div class="input-group mb-3">
@@ -85,7 +85,7 @@
                                     <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="Search">
                                     @if($type == 'search')
                                     <div class="input-group-append">
-                                        <a class="input-group-text close-search" href="{{ route('adminProducts') }}" id="basic-addon2" style="background-color: #dc3545;">
+                                        <a class="input-group-text close-search" href="{{ route('admin.coupons.index') }}" id="basic-addon2" style="background-color: #dc3545;">
                                             <i class="fa-solid fa-xmark"></i>
                                         </a>
                                     </div>
@@ -93,9 +93,7 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
-
                 </div>
 
                 <div class="d-flex table-responsive">
@@ -103,39 +101,26 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Product Name</th>
-                                <th scope="col">Product Description</th>
-                                <th scope="col">Product Price</th>
-                                <th scope="col">Product Image</th>
-                                <th scope="col">Category</th>
+                                <th scope="col">Coupon Code</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Amount/Percent</th>
                                 <th scope="col">Actions</th>
-                                <th scope="col">Activate</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $product)
+                            @foreach ($coupons as $coupon)
                             <tr>
-                                <th scope="row">{{ $product['id'] }}</th>
-                                <td>{{ $product['name'] }}</td>
-                                <td>{{ $product['desc'] }}</td>
-                                <td>{{ $product['price'] }}</td>
+                                <th scope="row">{{ $coupon['id'] }}</th>
+                                <td>{{ $coupon['code'] }}</td>
+                                <td>{{ $coupon['type'] }}</td>
+                                <td>{{ $coupon['amount'] }}</td>
                                 <td>
-                                    <img style="max-height: 100px;" src="{{ asset('images/' . $product['image'] ) }}" alt="product" />
-                                </td>
-                                <td>{{ $product['category']['name'] }}</td>
-
-                                <td>
-                                    <button class="btn delete-btn" data-toggle="modal" data-target="#deleteModal" form-action="{{ route('adminDeleteProduct', [ 'id' => $product['id'] ]) }}">
+                                    <button class="btn delete-btn" data-toggle="modal" data-target="#deleteModal" form-action="{{ route('admin.coupons.destroy', [ 'coupon' => $coupon['id'] ]) }}">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
-                                    <a class="btn edit-btn" href="{{ route('adminEditProduct', [ 'id' => $product['id'] ]) }}">
+                                    <a class="btn edit-btn" href="{{ route('admin.coupons.edit', [ 'coupon' => $coupon['id'] ]) }}">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
-                                </td>
-                                <td>
-                                    <form id="toggle-{{ $product['id'] }}" action="{{ route('toggleActivationProduct', ['id' => $product['id']]) }}">
-                                        <input class="toggle-event" data="{{ $product['id'] }}" type="checkbox" data-toggle="toggle" data-on="Active" data-off="Disabled" <?php if ($product['active']) echo 'checked'; ?>>
-                                    </form>
                                 </td>
                             </tr>
                             @endforeach
@@ -143,7 +128,7 @@
                     </table>
                 </div>
                 <div class="d-flex justify-content-center">
-                    {{ $products->appends(['search' => $search])->links() }}
+                    {{ $coupons->appends(['search' => $search])->links() }}
                 </div>
 
                 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -157,8 +142,9 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <form id='delete-product-form' method="POST" action="">
-                                    @csrf
+                                <form id='delete-coupon-form' method="POST" action="">
+                                    @method('DELETE')
+                                    @csrf 
                                     <button class="btn btn-danger">
                                         Delete
                                     </button>
@@ -174,7 +160,7 @@
         $(document).ready(function() {
             $('.delete-btn').click(function() {
                 var formAction = this.getAttribute("form-action");
-                $('#delete-product-form').attr('action', formAction);
+                $('#delete-coupon-form').attr('action', formAction);
             });
 
             $('.toggle-event').change(function() {

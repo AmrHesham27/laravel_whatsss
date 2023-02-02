@@ -28,6 +28,10 @@
                 <li class="<?php if($active == 'Add Product') echo 'active'; ?>">
                     <a href="/admin/products/createProduct">Add Product</a>
                 </li>
+
+                <li class="<?php if($active == 'Coupons') echo 'active'; ?>">
+                    <a href="/admin/coupons/">Coupons</a>
+                </li>
             </ul>
         </div>
     </div>

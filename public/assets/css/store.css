@@ -150,7 +150,7 @@ p {
 
 .cart {
   margin-right: 10px;
-  width: 290px;
+  width: 500px;
   float: left;
   position: -webkit-sticky;
   position: sticky;
@@ -447,6 +447,11 @@ p {
 .send-whatsapp-header .btn-close {
   margin-right: auto !important;
   margin-left: 0 !important;
+}
+
+.main-body {
+  width: 100%;
+  justify-content: end;
 }
 
 @media screen and (max-width: 1000px) {

@@ -56,56 +56,31 @@
                 @if (session()->get('mssg'))
                 <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
                 @endif
-                <form method="POST" enctype="multipart/form-data" action="{{ route('adminUpdateProduct', ['id' => $product['id']]) }}">
+                <form method="POST" action="{{ route('adminUpdateProduct', ['id' => $product['id']]) }}">
                     @csrf
                     <div class="form-group my-4">
-                        <label for="product_name">Product Name</label>
-                        <input value="{{ $product['name'] }}" type="text" name="name" class="@error('name') is-invalid @enderror form-control" id="product_name" aria-describedby="product name" placeholder="Enter Product Name">
-                        @error('name')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group my-4">
-                        <label for="product_description">Product Description</label>
-                        <input value="{{ $product['desc'] }}" type="text" name="desc" class="@error('desc') is-invalid @enderror form-control" id="product_description" aria-describedby="product description" placeholder="Enter Product Description">
-                        @error('desc')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group my-4">
-                        <label for="product_price">Product Price</label>
-                        <input value="{{ $product['price'] }}" type="number" name="price" class="@error('price') is-invalid @enderror form-control" id="product_price" aria-describedby="product price" placeholder="Enter Product Price">
-                        @error('price')
+                        <label for="code">Coupon Code</label>
+                        <input value="{{ $coupon['code'] }}" type="text" name="code" class="@error('code') is-invalid @enderror form-control" id="code" aria-describedby="coupon code">
+                        @error('code')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <div class="d-flex flex-sm-row flex-column justify-content-between">
-                        <div class="form-grou d-flex flex-column my-4 col-sm-6 input-x" style="padding-left: 0;">
-                            <label for="image">Product Image</label>
-                            <input type="file" name="image">
-                            @error('image')
-                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group my-4 col-sm-6 input-x" style="padding-right: 0;">
-                            <img style="max-height: 150px;" alt="logo" src="/images/{{ $product['image'] }}" />
-                        </div>
-                    </div>
-
-                    <label for="product_description">Product Category</label>
-                    <select class="form-control form-select" aria-label="Default select example" name="category_id">
-                        @foreach($categories as $category)
-                        @if ($category['id'] == $product['category_id'])
-                        <option selected value="{{ $category['id'] }}">{{ $category['name'] }}</option>
-                        @else
-                        <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
-                        @endif
-                        @endforeach
+                    <label for="type">Coupon Type</label>
+                    <select class="form-control form-select" id="type" aria-label="Default select example" name="coupon_type" required> 
+                        <option <?php if($coupon['type'] == 'percent') echo 'selected' ?> value="percent">Percent</option>
+                        <option <?php if($coupon['type'] == 'flat') echo 'selected' ?> value="flat">Flat</option>
                     </select>
 
+                    <div class="form-group my-4">
+                        <label for="amount">Coupon Amount</label>
+                        <input value="{{ $coupon['amount'] }}" type="number" name="amount" class="@error('amount') is-invalid @enderror form-control" id="amount" aria-describedby="coupon amount">
+                        @error('amount')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                    <button type="submit" class="btn my-btn my-5">Edit Product</button>
+                    <button type="submit" class="btn my-btn my-5">Edit Coupon</button>
                 </form>
 
             </div>

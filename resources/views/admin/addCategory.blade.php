@@ -18,57 +18,57 @@
     <div class="wrapper d-flex align-items-stretch">
         <x-dashboard.admin-navbar active='Add Category'></x-admin-navbar>
 
-        <!-- Page Content  -->
-        <div id="content" class="p-4 p-md-5">
+            <!-- Page Content  -->
+            <div id="content" class="p-4 p-md-5">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
 
-                    <button type="button" id="sidebarCollapse" class="btn btn-primary ">
-                        <i class="fa fa-bars"></i>
-                        <span class="sr-only">Toggle Menu</span>
-                    </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                        <button type="button" id="sidebarCollapse" class="btn btn-primary ">
+                            <i class="fa fa-bars"></i>
+                            <span class="sr-only">Toggle Menu</span>
+                        </button>
+                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fa fa-bars"></i>
+                        </button>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <a class="nav-link" href="route('logout')" onclick="event.preventDefault();
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="nav navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <a class="nav-link" href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                        {{ __('Log Out') }}
+                                            {{ __('Log Out') }}
+                                        </a>
+                                    </form>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('profile.edit') }}">
+                                        {{ __('Profile') }}
                                     </a>
-                                </form>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    {{ __('Profile') }}
-                                </a>
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            </nav>
-            <!-- Content -->
-            @if (session()->get('mssg'))
-            <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
-            @endif
-            <form method="POST" action="{{ route('adminStoreCategory') }}">
-                @csrf
-                <div class="form-group my-4">
-                    <label for="store_name">Category Name</label>
-                    <input type="text" name="name" value="{{ old('name') }}" class="@error('name') is-invalid @enderror form-control" id="store_name" aria-describedby="store name" placeholder="Enter Category Name">
-                    @error('name')
-                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                    @enderror
-                </div>
-                <button type="submit" class="btn my-btn">Add Category</button>
-            </form>
+                </nav>
+                <!-- Content -->
+                @if (session()->get('mssg'))
+                <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
+                @endif
+                <form method="POST" action="{{ route('adminStoreCategory') }}">
+                    @csrf
+                    <div class="form-group my-4">
+                        <label for="store_name">Category Name</label>
+                        <input type="text" name="name" value="{{ old('name') }}" class="@error('name') is-invalid @enderror form-control" id="store_name" aria-describedby="store name" placeholder="Enter Category Name">
+                        @error('name')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn my-btn">Add Category</button>
+                </form>
 
-        </div>
+            </div>
     </div>
 
     <script src="{{ asset('assets/dashboard/js/jquery.min.js') }}"></script>

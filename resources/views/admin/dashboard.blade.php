@@ -44,6 +44,25 @@
       width: 30%;
     }
 
+    @media screen and (max-width: 876px) {
+      .cards-container>.card {
+        min-width: 200px;
+      }
+
+      .cards-container {
+        flex-wrap: wrap;
+      }
+
+      .cards-container>.card {
+        width: 48%;
+        margin-bottom: 30px;
+      }
+
+      .cards-container:first-child {
+        margin-top: 0 !important;
+      }
+    }
+
     @media screen and (max-width: 576px) {
       .cards-container {
         flex-direction: column;
@@ -109,7 +128,7 @@
               </div>
               <div class="card-body d-flex flex-column align-items-center">
                 <i class="fa-solid fa-box" style="color: #f8b739; font-size: 40px;"></i>
-                <span class="my-2">12</span>
+                <span class="my-2">{{ $products_count }}</span>
               </div>
             </div>
 
@@ -119,7 +138,7 @@
               </div>
               <div class="card-body d-flex flex-column align-items-center">
                 <i class="fa-solid fa-boxes-stacked" style="color: #f8b739; font-size: 40px;"></i>
-                <span class="my-2">12</span>
+                <span class="my-2">{{ $categories_count }}</span>
               </div>
             </div>
 
@@ -129,7 +148,7 @@
               </div>
               <div class="card-body d-flex flex-column align-items-center">
                 <i class="fa-solid fa-eye" style="color: #f8b739; font-size: 40px;"></i>
-                <span class="my-2">12</span>
+                <span class="my-2">{{ $views[0] }}</span>
               </div>
             </div>
           </div>
@@ -186,16 +205,6 @@
             }, ],
           },
         });
-      </script>
-
-      <script>
-        $(document).ready(function() {
-          // css
-          $(".toggle-view").click(function() {
-            console.log(444);
-            $("#content").toggleClass("responsive-page");
-          });
-        })
       </script>
 
       <script src="{{ asset('assets/dashboard/js/jquery.min.js') }}"></script>

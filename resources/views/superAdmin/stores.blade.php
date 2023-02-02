@@ -70,27 +70,27 @@
                 </div>
 
                 <div class="d-flex">
-                        <form method="GET" action="{{ route('searchStores') }}" style="max-width: 300px;">
-                            @csrf
-                            <div class="form-group my-4 d-flex">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <button class="input-group-text" id="basic-addon1" type="submit">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="Search">
-                                    @if($type == 'search')
-                                    <div class="input-group-append">
-                                        <a class="input-group-text close-search" href="{{ route('superAdminStores') }}" id="basic-addon2" style="background-color: #dc3545;">
-                                            <i class="fa-solid fa-xmark"></i>
-                                        </a>
-                                    </div>
-                                    @endif
+                    <form method="GET" action="{{ route('searchStores') }}" style="max-width: 300px;">
+                        @csrf
+                        <div class="form-group my-4 d-flex">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button class="input-group-text" id="basic-addon1" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
                                 </div>
+                                <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="Search">
+                                @if($type == 'search')
+                                <div class="input-group-append">
+                                    <a class="input-group-text close-search" href="{{ route('superAdminStores') }}" id="basic-addon2" style="background-color: #dc3545;">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </a>
+                                </div>
+                                @endif
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
+                </div>
 
             </div>
 

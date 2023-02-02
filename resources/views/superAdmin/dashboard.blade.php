@@ -39,7 +39,7 @@
 <body>
 
   <div class="wrapper d-flex align-items-stretch">
-  <x-dashboard.super-admin-navbar active='Home'></x-dashboard.super-admin-navbar>
+    <x-dashboard.super-admin-navbar active='Home'></x-dashboard.super-admin-navbar>
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">

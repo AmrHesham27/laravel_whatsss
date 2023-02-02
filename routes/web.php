@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -77,4 +78,15 @@ Route::group(['middleware' => ['auth', 'notSuperAdmin']], function () {
     Route::post('/admin/products/storeProduct', [ProductController::class, 'store'])->name('adminStoreProduct');
     Route::get('/admin/products/toggleActivation/{id}', [ProductController::class, 'toggleActivation'])->name('toggleActivationProduct');
 
+ /*    Route::get('admin/coupons', [CouponController::class, 'index'])->name('adminCoupons');
+    Route::get('admin/coupons/createCoupon', [CouponController::class, 'create'])->name('adminCreateCoupon');
+    Route::post('admin/coupons/storeCoupon', [CouponController::class, 'store'])->name('adminStoreCoupon');
+    Route::get('admin/coupons/editCoupon', [CouponController::class, 'edit'])->name('adminEditCoupon');
+    Route::post('admin/coupons/updateCoupon', [CouponController::class, 'update'])->name('adminUpdateCoupon');
+    Route::post('admin/coupons/deleteCoupon', [CouponController::class, 'destroy'])->name('adminDeleteCoupon'); */
+
+    Route::resource('admin/coupons', CouponController::class, [
+        'as' => 'admin'
+    ]);
+    Route::post('admin/coupons/searchCoupons', [CouponController::class, 'searchCoupons'])->name('searchCoupons');
 });

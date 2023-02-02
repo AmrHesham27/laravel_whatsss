@@ -216,7 +216,6 @@
     <script src="{{ asset('assets/dashboard/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/dashboard/js/main.js') }}"></script>
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
 </body>
 
 </html>

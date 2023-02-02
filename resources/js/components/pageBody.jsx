@@ -58,7 +58,7 @@ function PageBody({ store }) {
                 >
                     <div className="d-flex">
                         <Cart />
-                        <div className="d-flex">
+                        <div className="d-flex main-body">
                             <Menu
                                 products={store["products"]}
                                 categories={store["categories"]}

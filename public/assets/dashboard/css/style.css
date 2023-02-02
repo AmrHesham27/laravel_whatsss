@@ -10904,7 +10904,7 @@ a[data-toggle="collapse"] {
     color: #f8b739 !important;
 }
 
-@media screen and (max-width: 576px) {
+/* @media screen and (max-width: 576px) {
     #sidebar.active {
         min-width: 100vw;
         min-height: 100vh;
@@ -10934,5 +10934,19 @@ a[data-toggle="collapse"] {
 @media screen and (max-width: 576px) {
     #content, .responsive-page {
         width: 100vw !important;
+    }
+} */
+
+#sidebar {
+    position: fixed;
+    min-height: 100vh;
+    z-index: 10000;
+}
+
+@media screen and (max-width: 576px) {
+    #sidebar.active {
+        min-width: 100vw;
+        min-height: 100vh;
+        z-index: 10000;
     }
 }

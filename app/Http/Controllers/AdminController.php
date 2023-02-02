@@ -44,7 +44,12 @@ class AdminController extends Controller
             ->where('store_id', '=', $store_id)
             ->where('created_at', '<=', Carbon::today()->subDays(6))
             ->count();
+
+        $categories_count = DB::table('products_categories')->where('store_id', '=', $store_id)->count();
+        $products_count = DB::table('products')->where('store_id', '=', $store_id)->count();
         return view('admin.dashboard', [
+            'categories_count' => $categories_count,
+            'products_count' => $products_count,
             'views' =>
             [
                 $views_today,
