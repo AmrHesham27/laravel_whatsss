@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import { modalsActions } from "../redux/modals";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 function SendToWhatsapp(props) {
     const color_1 = localStorage.getItem("color_1");
@@ -17,19 +19,33 @@ function SendToWhatsapp(props) {
     const [name, setName] = useState();
     const [notes, setNotes] = useState();
     const [exactAddress, setExactAddress] = useState();
+    const [couponCode, setCouponCode] = useState("");
+    const [coupon, setCoupon] = useState(null);
 
     const cart = useSelector((state) => state.cart);
 
-    const Enter = `%0a`
-    const Space = `%20`
+    const Enter = `%0a`;
+    const Space = `%20`;
     let items = "";
     Object.values(cart["items"]).forEach((item) => {
         items += `${item["name"]}${Space}*${Space}${item["qty"]}${Enter}`;
     });
-    const placeName = placeIndex && deliveryMethod == "delivery" ? props["places"][placeIndex]["name"] : "";
-    const exactAdressWhatsapp = exactAddress && deliveryMethod == "delivery" ? `${Enter}العنوان${Space}بالتفصيل:${Enter}${exactAddress}` : "";
-    const notesWhatsapp = notes ? `${Enter}📝${Space}ملاحظات:${Enter}${notes}` : '';
-    const methodsObject = {'dinIn': 'صالة', 'delivery': `توصيل`, 'pickUp': `استلام${Space}من${Space}المكان`}
+    const placeName =
+        placeIndex && deliveryMethod == "delivery"
+            ? props["places"][placeIndex]["name"]
+            : "";
+    const exactAdressWhatsapp =
+        exactAddress && deliveryMethod == "delivery"
+            ? `${Enter}العنوان${Space}بالتفصيل:${Enter}${exactAddress}`
+            : "";
+    const notesWhatsapp = notes
+        ? `${Enter}📝${Space}ملاحظات:${Enter}${notes}`
+        : "";
+    const methodsObject = {
+        dinIn: "صالة",
+        delivery: `توصيل`,
+        pickUp: `استلام${Space}من${Space}المكان`,
+    };
     const deliveryMethodWhatsapp = methodsObject[deliveryMethod];
 
     const href = `https://wa.me/${whatsapp}/?text=${`✅${Space}*طلب${Space}جديد*${Enter}${Enter}الإسم:${Enter}${name}${Enter}${Enter}📜${Space}الطلبات:${Enter}${items}${Enter}طريقة${Space}التوصيل:${Enter}${deliveryMethodWhatsapp}${Enter}${placeName}${Enter}${exactAdressWhatsapp}${Enter}${notesWhatsapp}`}`;
@@ -40,7 +56,40 @@ function SendToWhatsapp(props) {
     const handleForm = (e) => {
         e.preventDefault();
         window.location.href = href;
-    }
+    };
+
+    const applyCoupon = async () => {
+        if (couponCode == "") {
+            setCoupon(null);
+            return;
+        }
+        const token = document.head.querySelector(
+            'meta[name="csrf-token"]'
+        ).content;
+        const response = await fetch(`http://localhost:8000/applyCoupon`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": token,
+            },
+            body: JSON.stringify({
+                code: couponCode,
+                store_id: props["store_id"],
+            }),
+        });
+        const reposnseData = await response.json();
+
+        if (response.ok) {
+            if (reposnseData.status){
+                setCoupon(reposnseData.data)
+                setCouponCode("")
+            }
+            else {
+                setCoupon(null)
+            }
+            
+        }
+    };
 
     return (
         <Modal
@@ -68,7 +117,7 @@ function SendToWhatsapp(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="tex-right">
-                <form style={{textAlign: 'end'}} onSubmit={handleForm}>
+                <form style={{ textAlign: "end" }} onSubmit={handleForm}>
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">الاسم</label>
                         <input
@@ -78,7 +127,7 @@ function SendToWhatsapp(props) {
                             aria-describedby="emailHelp"
                             placeholder="ادخل اسمك"
                             onChange={(e) => setName(e.target.value)}
-                            style={{textAlign: 'end'}}
+                            style={{ textAlign: "end" }}
                             required
                         />
                     </div>
@@ -91,7 +140,7 @@ function SendToWhatsapp(props) {
                             aria-label="Default select example"
                             name="category_id"
                             onChange={(e) => setDeliveryMethod(e.target.value)}
-                            style={{textAlign: 'end'}}
+                            style={{ textAlign: "end" }}
                             required
                         >
                             <option
@@ -141,7 +190,7 @@ function SendToWhatsapp(props) {
                                     onChange={(e) => {
                                         setPlaceIndex(e.target.value);
                                     }}
-                                    style={{textAlign: 'end'}}
+                                    style={{ textAlign: "end" }}
                                     required
                                 >
                                     <option value="">مكان التوصيل</option>
@@ -169,11 +218,41 @@ function SendToWhatsapp(props) {
                                 onChange={(e) =>
                                     setExactAddress(e.target.value)
                                 }
-                                style={{textAlign: 'end'}}
+                                style={{ textAlign: "end" }}
                                 required
                             />
                         </div>
                     ) : undefined}
+
+                    <div className="input-group mt-4">
+                        <label htmlFor="exampleInputEmail1" style={{ width: "100%" }}>
+                            ادخل كوبون خصم اذا كنت تمتلك واحدا
+                        </label>
+                        {
+                            coupon ?
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                <FontAwesomeIcon
+                                    icon={faCheck}
+                                    size={"1x"}
+                                    style={{
+                                        color: "#28a745",
+                                        margin: "5px",
+                                    }}
+                                />
+                                </span>
+                            </div>: undefined
+                        }
+                        <input
+                            type="text"
+                            className="form-control text-right"
+                            placeholder="ادخل كوبون خصم"
+                            onChange={(e) =>
+                                setCouponCode(e.target.value.trim())
+                            }
+                            style={{ textAlign: "end" }}
+                        />
+                    </div>
 
                     <div className="form-group mt-4">
                         <label htmlFor="exampleInputEmail1">ملاحظات</label>
@@ -182,13 +261,20 @@ function SendToWhatsapp(props) {
                             id="exampleInputEmail1"
                             aria-describedby="emailHelp"
                             onChange={(e) => setNotes(e.target.value)}
-                            style={{textAlign: 'end'}}
+                            style={{ textAlign: "end" }}
                         ></textarea>
                     </div>
 
                     <div className="mt-3">
                         <span className="mx-2">السعر</span>
-                        <span>{cart.total}</span>
+                        <span>
+                            {!coupon
+                                ? cart.total
+                                : coupon["type"] == "flat"
+                                ? cart.total - coupon["amount"]
+                                : (cart.total * coupon["amount"]) / 100
+                            }
+                        </span>
                         <span className="mx-1">{currency}</span>
                     </div>
                     {delivery == "1" &&
@@ -205,23 +291,43 @@ function SendToWhatsapp(props) {
                             <div className="fw-bold">
                                 <span className="mx-2">الاجمالي</span>
                                 <span>
-                                    {props["places"][placeIndex]["price"] +
-                                        cart.total}
+                                    {coupon
+                                        ? props["places"][placeIndex]["price"] +
+                                          cart.total -
+                                          (coupon["type"] == "flat"
+                                              ? coupon["amount"]
+                                              : (cart.total * coupon["amount"]) / 100
+                                          )
+                                        : props["places"][placeIndex]["price"] +
+                                          cart.total}
                                 </span>
                                 <span className="mx-1">{currency}</span>
                             </div>
                         </>
                     ) : undefined}
 
-                    <div className="d-flex justify-content-center">
-                        <button
-                            className="btn btn-success px-3 my-3"
-                            style={{ backgroundColor: color_2 }}
-                            type='submit'
-                        >
-                            اطلب
-                        </button>
-                    </div>
+                    {couponCode == "" ? (
+                        <div className="d-flex justify-content-center mt-4">
+                            <button
+                                className="btn btn-success px-3 my-3"
+                                style={{ backgroundColor: color_2 }}
+                                type="submit"
+                            >
+                                اطلب
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="d-flex justify-content-center">
+                            <button
+                                className="btn btn-success px-3 my-3"
+                                style={{ backgroundColor: color_2 }}
+                                onClick={applyCoupon}
+                                type="button"
+                            >
+                                احصل علي الخصم
+                            </button>
+                        </div>
+                    )}
                 </form>
             </Modal.Body>
         </Modal>

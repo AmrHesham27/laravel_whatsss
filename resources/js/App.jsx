@@ -39,7 +39,7 @@ export default function App({ store }) {
                 <ModalCart />
             </div>
             <ResponsiveCart />
-            <SendToWhatsapp places={store["places"]} />
+            <SendToWhatsapp places={store["places"]} store_id={store['id']} />
         </Provider>
     );
 }

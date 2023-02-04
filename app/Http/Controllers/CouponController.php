@@ -76,7 +76,7 @@ class CouponController extends Controller
      */
     public function show($code)
     {
-        try {
+        /* try {
             $coupon = Coupon::where('code', $code)->get()[0];
             return response()->json([
                 "status" => true,
@@ -87,7 +87,7 @@ class CouponController extends Controller
                 "status" => false,
                 "message" => $e->getMessage()
             ]);
-        }
+        } */
     }
 
     /**
@@ -180,5 +180,28 @@ class CouponController extends Controller
         })->paginate(8);
             
         return view('admin.coupons', ['coupons' => $coupons, 'type' => 'search', 'search' => $search]);
+    }
+
+    public function applyCoupon(Request $request)
+    {
+        try {
+            $data = $this->validate($request, [
+                "store_id" => "required",
+                "code" => "required",
+            ]);
+            $coupon = Coupon::where('code', $data['code'])
+                ->where('store_id', $data['store_id'])->get()[0];
+            return response()->json([
+                "status" => true,
+                "data" => $coupon
+            ]);
+        }
+        catch (Exception $e)
+        {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage()
+            ]);
+        }
     }
 }

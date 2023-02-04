@@ -40,6 +40,7 @@ require __DIR__ . '/auth.php';
 
 // guest routes
 Route::get('/stores/{url}', [StoreController::class, 'show']);
+Route::post('/applyCoupon', [CouponController::class, 'applyCoupon']);
 
 
 // super Admin routes
