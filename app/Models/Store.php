@@ -26,7 +26,7 @@ class Store extends Model
         'is_susbended',
         'whatsapp',
         'currency',
-        'subdomain',
+        'domain',
         'displayCards',
         'dinIn',
         'pickUp',

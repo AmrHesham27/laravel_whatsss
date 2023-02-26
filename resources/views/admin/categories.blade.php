@@ -67,7 +67,7 @@
                 <!-- Content -->
                 <div class="d-flex flex-column">
                     <div>
-                        <a class="my-2 btn my-btn" href="{{ route('adminCreateCategory') }}">Add Category</a>
+                        <a class="my-2 btn my-btn" href="{{ route('admin.categories.create') }}">Add Category</a>
                     </div>
 
                     <div class="d-flex">
@@ -83,7 +83,7 @@
                                     <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="Search">
                                     @if($type == 'search')
                                     <div class="input-group-append">
-                                        <a class="input-group-text close-search" href="{{ route('adminCategories') }}" id="basic-addon2" style="background-color: #dc3545;">
+                                        <a class="input-group-text close-search" href="{{ route('admin.categories.index') }}" id="basic-addon2" style="background-color: #dc3545;">
                                             <i class="fa-solid fa-xmark"></i>
                                         </a>
                                     </div>
@@ -112,10 +112,10 @@
                                 <td>{{ $category['name'] }}</td>
 
                                 <td>
-                                    <button class="btn delete-btn" data-toggle="modal" data-target="#deleteModal" form-action="{{ route('deleteCategory', [ 'id' => $category['id'] ]) }}">
+                                    <button class="btn delete-btn" data-toggle="modal" data-target="#deleteModal" form-action="{{ route('admin.categories.destroy', [ 'category' => $category['id'] ]) }}">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
-                                    <button class="btn edit-btn" data-toggle="modal" data-target="#editModal" form-action="{{ route('adminUpdateCategory', [ 'id' => $category['id'] ]) }}">
+                                    <button class="btn edit-btn" data-toggle="modal" data-target="#editModal" form-action="{{ route('admin.categories.update', [ 'category' => $category['id'] ]) }}">
                                         <i class="fa-solid fa-pen"></i>
                                     </button>
                                 </td>
@@ -149,6 +149,7 @@
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <form id='delete-category-form' method="POST" action="">
                                     @csrf
+                                    @method('DELETE')
                                     <button class="btn btn-danger">
                                         Delete
                                     </button>
@@ -170,6 +171,7 @@
                             <div class="modal-body">
                                 <form method="POST" action="" id="edit-category-form">
                                     @csrf
+                                    @method('PATCH')
                                     <div class="form-group my-4">
                                         <label for="edit_category_name">Category Name</label>
                                         <input type="text" name="name" value="{{ old('name') }}" class="@error('name') is-invalid @enderror form-control" id="edit_category_name" aria-describedby="category name" placeholder="Enter New Category Name">

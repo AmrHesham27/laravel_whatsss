@@ -56,7 +56,7 @@
                 @if (session()->get('mssg'))
                 <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
                 @endif
-                <form method="POST" enctype="multipart/form-data" action="{{ route('adminStoreProduct') }}">
+                <form method="POST" enctype="multipart/form-data" action="{{ route('admin.products.store') }}">
                     @csrf
                     <div class="form-group my-4">
                         <label for="product_name">Product Name</label>

@@ -4,6 +4,8 @@ import Modal from "react-bootstrap/Modal";
 import { modalsActions } from "../redux/modals";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import WhatsappMessage from "../helpers/WhatsappMessage";
+import ApplyCoupon from "../helpers/ApplyCoupon";
 
 function SendToWhatsapp(props) {
     const color_1 = localStorage.getItem("color_1");
@@ -24,31 +26,15 @@ function SendToWhatsapp(props) {
 
     const cart = useSelector((state) => state.cart);
 
-    const Enter = `%0a`;
-    const Space = `%20`;
-    let items = "";
-    Object.values(cart["items"]).forEach((item) => {
-        items += `${item["name"]}${Space}*${Space}${item["qty"]}${Enter}`;
-    });
-    const placeName =
-        placeIndex && deliveryMethod == "delivery"
-            ? props["places"][placeIndex]["name"]
-            : "";
-    const exactAdressWhatsapp =
-        exactAddress && deliveryMethod == "delivery"
-            ? `${Enter}العنوان${Space}بالتفصيل:${Enter}${exactAddress}`
-            : "";
-    const notesWhatsapp = notes
-        ? `${Enter}📝${Space}ملاحظات:${Enter}${notes}`
-        : "";
-    const methodsObject = {
-        dinIn: "صالة",
-        delivery: `توصيل`,
-        pickUp: `استلام${Space}من${Space}المكان`,
-    };
-    const deliveryMethodWhatsapp = methodsObject[deliveryMethod];
-
-    const href = `https://wa.me/${whatsapp}/?text=${`✅${Space}*طلب${Space}جديد*${Enter}${Enter}الإسم:${Enter}${name}${Enter}${Enter}📜${Space}الطلبات:${Enter}${items}${Enter}طريقة${Space}التوصيل:${Enter}${deliveryMethodWhatsapp}${Enter}${placeName}${Enter}${exactAdressWhatsapp}${Enter}${notesWhatsapp}`}`;
+    const href = WhatsappMessage(
+        cart,
+        whatsapp,
+        name,
+        placeIndex,
+        deliveryMethod,
+        exactAddress,
+        notes
+    );
 
     const modals = useSelector((state) => state.modals);
     const dispatch = useDispatch();
@@ -58,37 +44,8 @@ function SendToWhatsapp(props) {
         window.location.href = href;
     };
 
-    const applyCoupon = async () => {
-        if (couponCode == "") {
-            setCoupon(null);
-            return;
-        }
-        const token = document.head.querySelector(
-            'meta[name="csrf-token"]'
-        ).content;
-        const response = await fetch(`http://localhost:8000/applyCoupon`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": token,
-            },
-            body: JSON.stringify({
-                code: couponCode,
-                store_id: props["store_id"],
-            }),
-        });
-        const reposnseData = await response.json();
-
-        if (response.ok) {
-            if (reposnseData.status){
-                setCoupon(reposnseData.data)
-                setCouponCode("")
-            }
-            else {
-                setCoupon(null)
-            }
-            
-        }
+    const applyCoupon = () => {
+        ApplyCoupon(couponCode, setCoupon, setCouponCode, props['store_id'])
     };
 
     return (
@@ -225,24 +182,29 @@ function SendToWhatsapp(props) {
                     ) : undefined}
 
                     <div className="input-group mt-4">
-                        <label htmlFor="exampleInputEmail1" style={{ width: "100%" }}>
+                        <label
+                            htmlFor="exampleInputEmail1"
+                            style={{ width: "100%" }}
+                        >
                             ادخل كوبون خصم اذا كنت تمتلك واحدا
                         </label>
-                        {
-                            coupon ?
+                        {coupon ? (
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">
-                                <FontAwesomeIcon
-                                    icon={faCheck}
-                                    size={"1x"}
-                                    style={{
-                                        color: "#28a745",
-                                        margin: "5px",
-                                    }}
-                                />
+                                <span
+                                    class="input-group-text"
+                                    id="basic-addon1"
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faCheck}
+                                        size={"1x"}
+                                        style={{
+                                            color: "#28a745",
+                                            margin: "5px",
+                                        }}
+                                    />
                                 </span>
-                            </div>: undefined
-                        }
+                            </div>
+                        ) : undefined}
                         <input
                             type="text"
                             className="form-control text-right"
@@ -272,8 +234,7 @@ function SendToWhatsapp(props) {
                                 ? cart.total
                                 : coupon["type"] == "flat"
                                 ? cart.total - coupon["amount"]
-                                : (cart.total * coupon["amount"]) / 100
-                            }
+                                : (cart.total * coupon["amount"]) / 100}
                         </span>
                         <span className="mx-1">{currency}</span>
                     </div>
@@ -296,8 +257,9 @@ function SendToWhatsapp(props) {
                                           cart.total -
                                           (coupon["type"] == "flat"
                                               ? coupon["amount"]
-                                              : (cart.total * coupon["amount"]) / 100
-                                          )
+                                              : (cart.total *
+                                                    coupon["amount"]) /
+                                                100)
                                         : props["places"][placeIndex]["price"] +
                                           cart.total}
                                 </span>

@@ -18,7 +18,7 @@
                 </li>
 
                 <li class="<?php if($active == 'Add Category') echo 'active'; ?>">
-                    <a href="/admin/categories/createCategory">Add Category</a>
+                    <a href="/admin/categories/create">Add Category</a>
                 </li>
 
                 <li class="<?php if($active == 'Products') echo 'active'; ?>">
@@ -26,11 +26,11 @@
                 </li>
 
                 <li class="<?php if($active == 'Add Product') echo 'active'; ?>">
-                    <a href="/admin/products/createProduct">Add Product</a>
+                    <a href="/admin/products/create">Add Product</a>
                 </li>
 
                 <li class="<?php if($active == 'Coupons') echo 'active'; ?>">
-                    <a href="/admin/coupons/">Coupons</a>
+                    <a href="/admin/coupons">Coupons</a>
                 </li>
 
                 <li class="<?php if($active == 'Add Coupon') echo 'active'; ?>">

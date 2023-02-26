@@ -42,7 +42,6 @@ p {
 }
 
 .pos-f-t {
-  position: -webkit-sticky !important;
   position: sticky !important;
   top: 0 !important;
   z-index: 100 !important;
@@ -151,8 +150,8 @@ p {
 .cart {
   margin-right: 10px;
   width: 500px;
+  max-width: 30.2%;
   float: left;
-  position: -webkit-sticky;
   position: sticky;
   top: 110px;
   align-self: flex-start;
@@ -267,7 +266,6 @@ p {
   text-align: end;
   width: 190px;
   margin-left: 10px;
-  position: -webkit-sticky;
   position: sticky;
   top: 110px;
   align-self: flex-start;

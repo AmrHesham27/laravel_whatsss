@@ -230,6 +230,54 @@ class StoreController extends Controller
         return view('superAdmin.stores', ['stores' => $stores, 'type' => 'search', 'search' => $search]);
     }
 
+    public function editCustomDomain(Request $request)
+    {
+        try {
+            $data = $this->validate($request, [
+                "domain"  => "required|string",
+                "store_id" => "required|numeric"
+            ]);
+
+            
+            $store = Store::findOrFail($data['store_id']);
+
+            
+            $store->update(['domain' => $data['domain']]);
+
+            return redirect('superAdmin/stores');
+        }
+
+        catch(Exception $e)
+        {
+            $this->message($e->getMessage(), 'alert-danger');
+            return redirect('superAdmin/stores');
+        }
+    }
+
+    public function showCustomDomain(Request $request)
+    {
+        try{
+            $host = request()->getHost();
+            if ($host == env('APP_HOST')){
+                dd('welcome');
+            }
+            else {
+                $store = Store::with('places')->with('products')->with('categories')
+                    ->where('domain', $host)->get()[0];
+                if ($store['is_suspended']) abort(404);
+
+                $view = new View;
+                $view['store_id'] = $store['id'];
+                $view ->save();
+
+                return view('customer', ['store' => $store]);
+            }
+        }
+        catch(Exception $e) {
+            return abort(500);
+        }
+    }
+
     /** API to check valid url */
     public function checkURL($url)
     {

@@ -76,18 +76,7 @@ class CouponController extends Controller
      */
     public function show($code)
     {
-        /* try {
-            $coupon = Coupon::where('code', $code)->get()[0];
-            return response()->json([
-                "status" => true,
-                "data" => $coupon
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage()
-            ]);
-        } */
+        //
     }
 
     /**

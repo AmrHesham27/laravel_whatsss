@@ -56,8 +56,9 @@
                 @if (session()->get('mssg'))
                 <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
                 @endif
-                <form method="POST" enctype="multipart/form-data" action="{{ route('adminUpdateProduct', ['id' => $product['id']]) }}">
+                <form method="POST" enctype="multipart/form-data" action="{{ route('admin.products.update', ['product' => $product['id']]) }}">
                     @csrf
+                    @method('PATCH')
                     <div class="form-group my-4">
                         <label for="product_name">Product Name</label>
                         <input value="{{ $product['name'] }}" type="text" name="name" class="@error('name') is-invalid @enderror form-control" id="product_name" aria-describedby="product name" placeholder="Enter Product Name">

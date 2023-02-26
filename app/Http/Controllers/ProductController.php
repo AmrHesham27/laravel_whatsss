@@ -149,7 +149,7 @@ class ProductController extends Controller
 
         $this->message('Your Product was edited successfully', 'alert-success');
 
-        return redirect()->route('adminProducts', [
+        return redirect()->route('admin.products.index', [
             'products' => $products, 
             'type' => 'data', 
             'search' => ''
@@ -170,6 +170,7 @@ class ProductController extends Controller
         $this->checkAdminOwnProduct($product, $store);
 
         $product->delete();
+        $this->message("Product was deleted successfully", 'alert-danger');
 
         return redirect()->back();
     }

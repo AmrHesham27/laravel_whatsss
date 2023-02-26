@@ -64,6 +64,9 @@
                 </div>
             </nav>
             <!-- Content -->
+            @if (session()->get('mssg'))
+            <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
+            @endif
             <div class="d-flex flex-column">
                 <div>
                     <a class="my-2 btn my-btn" href="/superAdmin/stores/add">Add Store</a>
@@ -102,7 +105,7 @@
                             <th scope="col">Store Name</th>
                             <th scope="col">WhatsappNumber</th>
                             <th scope="col">URL</th>
-                            <th scope="col">Subdomain</th>
+                            <th scope="col">Custom Domain</th>
                             <th scope="col">Is Suspended</th>
                             <th scope="col">Actions</th>
                         </tr>
@@ -114,11 +117,15 @@
                             <td>{{ $store['name'] }}</td>
                             <td>{{ $store['whatsapp'] }}</td>
                             <td>{{ $store['url'] }}</td>
-                            <td>{{ $store['subdomain'] }}</td>
+                            <td class="d-flex">{{ $store['domain'] }}
+                                <a class="btn edit-domain-btn" store_id="{{ $store['id'] }}" store_domain="{{ $store['domain'] }}" data-toggle="modal" data-target="#eidtCustomDomain">
+                                    <i class="fa-solid fa-pen-to-square" style="cursor: pointer;"></i>
+                                </a>
+                            </td>
                             <td>{{ $store['is_suspended'] ? 'Suspended' : '' }}</td>
                             <td class="d-flex">
                                 <a class="btn delete-store-btn" form-action="{{ route('deleteStore', ['id' => $store['id']]) }}" data-toggle="modal" data-target="#exampleModal">
-                                    <i class="fa-solid fa-trash"></i>
+                                    <i class="fa-solid fa-trash" style="cursor: pointer;"></i>
                                 </a>
                                 @if ( !$store['is_suspended'] )
                                 <form method="POST" action="{{ route('suspendStore', ['id' => $store['id']]) }}">
@@ -167,6 +174,32 @@
                 </div>
             </div>
 
+            <div class="modal fade" id="eidtCustomDomain" tabindex="-1" role="dialog" aria-labelledby="eidtCustomDomain" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Enter Custom Domain</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer">
+                            <form id='edit-domain-form' class="w-100" method="POST" action="{{ route('editCustomDomain') }}">
+                                <div class="form-group my-4">
+                                    <label for="code">Custom Domain</label>
+                                    <input type="text" id="domain_input" name="domain" value="{{ old('domain') }}" class="@error('domain') is-invalid @enderror form-control" id="code" aria-describedby="custom domain input">
+                                    <input hidden name="store_id" id="domain_id_input">
+                                </div>
+                                @csrf
+                                <button class="btn btn-success">
+                                    Edit Domain
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -175,6 +208,15 @@
             $('.delete-store-btn').click(function() {
                 var formAction = this.getAttribute("form-action");
                 $('#delete-store-form').attr('action', formAction);
+            });
+        });
+
+        $(document).ready(function() {
+            $('.edit-domain-btn').click(function() {
+                var store_id = this.getAttribute("store_id");
+                var store_domain = this.getAttribute("store_domain")
+                $('#domain_id_input').attr('value', store_id);
+                $('#domain_input').attr('value', store_domain);
             });
         });
     </script>

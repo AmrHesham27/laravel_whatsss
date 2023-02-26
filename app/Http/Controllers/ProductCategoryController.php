@@ -115,7 +115,7 @@ class ProductCategoryController extends Controller
         $store = Store::where('user_id', Auth::user()->id)->get()[0];
         $categories = ProductCategory::where('store_id', $store['id'])->paginate(8);
 
-        return redirect()->route('adminCategories', [
+        return redirect()->route('admin.categories.index', [
             'categories' => $categories,
             'type' => 'data',
             'search' => ''
