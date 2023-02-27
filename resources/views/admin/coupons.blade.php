@@ -107,10 +107,10 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Coupon Code</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Amount/Percent</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col">كود الكوبون</th>
+                                <th scope="col">نوع الكوبون</th>
+                                <th scope="col">قيمة الكوبون</th>
+                                <th scope="col">خيارات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -141,18 +141,18 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Are you sure ?</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <h5 class="modal-title mx-0 my-auto" id="exampleModalLabel">هل تريد حذف هذا الكوبون؟</h5>
+                                <button style="margin: 0;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <div class="modal-footer d-flex flex-row-reverse">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
                                 <form id='delete-coupon-form' method="POST" action="">
                                     @method('DELETE')
                                     @csrf 
                                     <button class="btn btn-danger">
-                                        Delete
+                                        حذف
                                     </button>
                                 </form>
                             </div>

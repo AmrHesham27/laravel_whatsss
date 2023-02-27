@@ -2,14 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Store;
-use App\Models\User;
-use App\Models\View;
-use Exception;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
@@ -30,6 +22,11 @@ class SuperAdminController extends Controller
             ->count();
         $views_six_days = DB::table('views')->where('created_at', '<=', Carbon::today()->subDays(6))
             ->count();
+
+        $products_count = DB::table('products')->count();
+        $stores_count = DB::table('stores')->count();
+
+
         return view('superAdmin.dashboard', [
             'views' =>
             [
@@ -40,7 +37,9 @@ class SuperAdminController extends Controller
                 $views_four_days,
                 $views_five_days,
                 $views_six_days
-            ]
+            ],
+            'products_count' => $products_count,
+            'stores_count' => $stores_count
         ]);
     }
 }

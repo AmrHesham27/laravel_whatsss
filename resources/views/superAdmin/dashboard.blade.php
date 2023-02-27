@@ -33,6 +33,51 @@
       font-family: "Verdana", sans-serif;
       font-size: 1rem;
     }
+
+    .cards-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 50px;
+    }
+
+    .cards-container>.card {
+      width: 30%;
+    }
+
+    @media screen and (max-width: 876px) {
+      .cards-container>.card {
+        min-width: 200px;
+      }
+
+      .cards-container {
+        flex-wrap: wrap;
+      }
+
+      .cards-container>.card {
+        width: 48%;
+        margin-bottom: 30px;
+      }
+
+      .cards-container:first-child {
+        margin-top: 0 !important;
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      .cards-container {
+        flex-direction: column;
+      }
+
+      .cards-container>.card {
+        width: 100%;
+        margin-bottom: 30px;
+      }
+
+      .cards-container:first-child {
+        margin-top: 0 !important;
+      }
+    }
   </style>
 </head>
 
@@ -77,6 +122,38 @@
         </div>
       </nav>
       <!-- Content -->
+      <div class="cards-container">
+            <div class="card">
+              <div class="card-header">
+                <h2>المتاجر</h2>
+              </div>
+              <div class="card-body d-flex flex-column align-items-center">
+                <i class="fa-solid fa-box" style="color: #f8b739; font-size: 40px;"></i>
+                <span class="my-2">{{ $stores_count }}</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h2>المنتجات</h2>
+              </div>
+              <div class="card-body d-flex flex-column align-items-center">
+                <i class="fa-solid fa-boxes-stacked" style="color: #f8b739; font-size: 40px;"></i>
+                <span class="my-2">{{ $products_count }}</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h2>المشاهدات</h2>
+              </div>
+              <div class="card-body d-flex flex-column align-items-center">
+                <i class="fa-solid fa-eye" style="color: #f8b739; font-size: 40px;"></i>
+                <span class="my-2">{{ $views[0] }}</span>
+              </div>
+            </div>
+          </div>
+
       <div class="container">
         <h2>المشاهدات</h2>
         <div>
@@ -88,8 +165,6 @@
   </div>
 
   <script>
-    var views = <?php echo $views[0] ?>;
-
     var ctx = document.getElementById("myChart").getContext("2d");
     var myChart = new Chart(ctx, {
       type: "line",

@@ -143,23 +143,23 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Are you sure ?</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <h5 class="modal-title my-auto mx-0" id="exampleModalLabel">هل تريد حذف هذا التصنيف؟</h5>
+                                <button style="margin: 0;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p>All the products in this category will be deleted.</p>
+                                <p class="text-right">كل المنتجات الموجودة في هذا التصنيف سيتم حذفها</p>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <div class="modal-footer d-flex flex-row-reverse">
                                 <form id='delete-category-form' method="POST" action="">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger">
-                                        Delete
+                                        حذف
                                     </button>
                                 </form>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
                             </div>
                         </div>
                     </div>
@@ -169,28 +169,28 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <h5 class="modal-title mx-0 my-auto" id="exampleModalLabel">عدل التصنيف</h5>
+                                <button style="margin: 0;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form method="POST" action="" id="edit-category-form">
+                                <form method="POST" action="" id="edit-category-form" class="text-right">
                                     @csrf
                                     @method('PATCH')
                                     <div class="form-group my-4">
-                                        <label for="edit_category_name">Category Name</label>
-                                        <input type="text" name="name" value="{{ old('name') }}" class="@error('name') is-invalid @enderror form-control" id="edit_category_name" aria-describedby="category name" placeholder="Enter New Category Name">
+                                        <label for="edit_category_name">اسم التصنيف</label>
+                                        <input type="text" name="name" value="{{ old('name') }}" class="@error('name') is-invalid @enderror form-control" id="edit_category_name" aria-describedby="category name">
                                         @error('name')
                                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <div class="modal-footer d-flex flex-row-reverse">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
                                 <button class="btn my-btn" type="submit" form="edit-category-form">
-                                    Edit
+                                    عدل
                                 </button>
                             </div>
                         </div>

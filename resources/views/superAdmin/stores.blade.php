@@ -21,10 +21,13 @@
             align-items: center;
             justify-content: center
         }
+
         input.form-control {
-          border-radius: 0;
+            border-radius: 0;
         }
-        th, td {
+
+        th,
+        td {
             text-align: center;
         }
     </style>
@@ -106,7 +109,7 @@
             <div class="d-flex table-responsive">
                 <table class="table table-bordered">
                     <thead class="thead-dark">
-                        <tr >
+                        <tr>
                             <th scope="col">#</th>
                             <th scope="col">اسم المتجر</th>
                             <th scope="col">رقم الواتساب</th>
@@ -162,19 +165,19 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Are you sure ?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <h5 class="modal-title my-auto mx-0" id="exampleModalLabel">هل تريد حذف هذا المتجر؟</h5>
+                            <button style="margin: 0;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <div class="modal-footer d-flex flex-row-reverse">
                             <form id='delete-store-form' method="POST" action="">
                                 @csrf
                                 <button class="btn btn-danger">
-                                    Delete
+                                    حذف
                                 </button>
                             </form>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
                         </div>
                     </div>
                 </div>
@@ -184,22 +187,24 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Enter Custom Domain</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <h5 class="modal-title my-auto mx-0">أدخل اسم الدومين</h5>
+                            <button style="margin: 0;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer text-right">
                             <form id='edit-domain-form' class="w-100" method="POST" action="{{ route('editCustomDomain') }}">
                                 <div class="form-group my-4">
-                                    <label for="code">Custom Domain</label>
+                                    <label for="code">اسم الدومين</label>
                                     <input type="text" id="domain_input" name="domain" value="{{ old('domain') }}" class="@error('domain') is-invalid @enderror form-control" id="code" aria-describedby="custom domain input">
                                     <input hidden name="store_id" id="domain_id_input">
                                 </div>
                                 @csrf
-                                <button class="btn btn-success">
-                                    Edit Domain
-                                </button>
+                                <div class="d-flex justify-content-start">
+                                    <button class="btn btn-success">
+                                        عدل الدومين
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>

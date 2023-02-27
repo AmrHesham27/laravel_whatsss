@@ -69,8 +69,8 @@
 
                     <label for="type">نوع الكوبون</label>
                     <select class="form-control form-select" id="type" aria-label="Default select example" name="type" required> 
-                        <option <?php if($coupon['type'] == 'percent') echo 'selected' ?> value="percent">Percent</option>
-                        <option <?php if($coupon['type'] == 'flat') echo 'selected' ?> value="flat">Flat</option>
+                        <option <?php if($coupon['type'] == 'percent') echo 'selected' ?> value="percent">نسبة مئوية</option>
+                        <option <?php if($coupon['type'] == 'flat') echo 'selected' ?> value="flat">قيمة ثابتة</option>
                     </select>
 
                     <div class="form-group my-4">
