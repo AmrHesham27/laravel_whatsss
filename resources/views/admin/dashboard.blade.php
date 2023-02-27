@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
   <title>Sidebar 01</title>
@@ -83,7 +83,7 @@
 <body>
 
   <div class="wrapper d-flex align-items-stretch">
-    <x-dashboard.admin-navbar active='Home'></x-admin-navbar>
+    <x-dashboard.admin-navbar active='الصفحة الرئيسية'></x-admin-navbar>
 
       <!-- Page Content  -->
       <div id="content" class="p-4 p-md-5 responsive-page">
@@ -95,7 +95,7 @@
               <i class="fa fa-bars"></i>
               <span class="sr-only">Toggle Menu</span>
             </button>
-            <button class="btn btn-dark d-inline-block d-lg-none ml-auto toggle-view" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="btn btn-dark d-inline-block d-lg-none mr-auto toggle-view" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <i class="fa fa-bars"></i>
             </button>
 
@@ -106,13 +106,13 @@
                     @csrf
                     <a class="nav-link" href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                      {{ __('Log Out') }}
+                      {{ __('تسجيل الخروج') }}
                     </a>
                   </form>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('profile.edit') }}">
-                    {{ __('Profile') }}
+                    {{ __('الملف الشخصي') }}
                   </a>
                 </li>
               </ul>
@@ -124,7 +124,7 @@
           <div class="cards-container">
             <div class="card">
               <div class="card-header">
-                <h2>Products</h2>
+                <h2>المنتجات</h2>
               </div>
               <div class="card-body d-flex flex-column align-items-center">
                 <i class="fa-solid fa-box" style="color: #f8b739; font-size: 40px;"></i>
@@ -134,7 +134,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h2>Categories</h2>
+                <h2>التصنيفات</h2>
               </div>
               <div class="card-body d-flex flex-column align-items-center">
                 <i class="fa-solid fa-boxes-stacked" style="color: #f8b739; font-size: 40px;"></i>
@@ -144,7 +144,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h2>Views</h2>
+                <h2>المشاهدات</h2>
               </div>
               <div class="card-body d-flex flex-column align-items-center">
                 <i class="fa-solid fa-eye" style="color: #f8b739; font-size: 40px;"></i>
@@ -155,7 +155,7 @@
 
           <div class="card mt-5">
             <div class="card-header">
-              <h2>Store Views</h2>
+              <h2>مشاهدات المتجر</h2>
             </div>
 
             <div class="card-body">
@@ -165,7 +165,7 @@
 
           <div class="card mt-5">
             <div class="card-header">
-              <h2>Store Qr</h2>
+              <h2>QR</h2>
             </div>
             <div class="card-body d-flex justify-content-center">
               {!! QrCode::size(300)->generate($store_url) !!}
@@ -191,7 +191,7 @@
               new Date().toJSON().slice(5, 10).replace(/-/g, '/'),
             ],
             datasets: [{
-              label: "Total Views Count",
+              label: "عدد المشاهدات",
               data: [
                 <?php echo $views[6] ?>,
                 <?php echo $views[5] ?>,

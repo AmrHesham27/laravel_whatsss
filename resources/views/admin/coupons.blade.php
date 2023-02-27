@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <title>Admin Dasboard</title>
@@ -21,13 +21,19 @@
             align-items: center;
             justify-content: center
         }
+        input.form-control {
+          border-radius: 0;
+        }
+        th, td {
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="wrapper d-flex align-items-stretch">
-        <x-dashboard.admin-navbar active='Coupons'></x-admin-navbar>
+        <x-dashboard.admin-navbar active='الكوبونات'></x-admin-navbar>
 
             <!-- Page Content  -->
             <div id="content" class="p-4 p-md-5">
@@ -39,7 +45,7 @@
                             <i class="fa fa-bars"></i>
                             <span class="sr-only">Toggle Menu</span>
                         </button>
-                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="btn btn-dark d-inline-block d-lg-none mr-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <i class="fa fa-bars"></i>
                         </button>
 
@@ -50,13 +56,13 @@
                                         @csrf
                                         <a class="nav-link" href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                            {{ __('Log Out') }}
+                                            {{ __('تسجيل الخروج') }}
                                         </a>
                                     </form>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('profile.edit') }}">
-                                        {{ __('Profile') }}
+                                        {{ __('الملف الشخصي') }}
                                     </a>
                                 </li>
                             </ul>
@@ -68,8 +74,8 @@
                     @if (session()->get('mssg'))
                     <div class="alert {{session()->get('alert')}}" role="alert">{{session()->get('mssg')}}</div>
                     @endif
-                    <div>
-                        <a class="my-2 btn my-btn" href="{{ route('admin.coupons.create') }}">Add Coupon</a>
+                    <div class="d-flex">
+                        <a class="my-2 btn my-btn" href="{{ route('admin.coupons.create') }}">أضف كوبون</a>
                     </div>
 
                     <div class="d-flex">
@@ -77,14 +83,14 @@
                             @csrf
                             <div class="form-group my-4 d-flex">
                                 <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
+                                    <div class="input-group-append">
                                         <button class="input-group-text" id="basic-addon1" type="submit">
                                             <i class="fas fa-search"></i>
                                         </button>
                                     </div>
-                                    <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="Search">
+                                    <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="ابحث">
                                     @if($type == 'search')
-                                    <div class="input-group-append">
+                                    <div class="input-group-prepend">
                                         <a class="input-group-text close-search" href="{{ route('admin.coupons.index') }}" id="basic-addon2" style="background-color: #dc3545;">
                                             <i class="fa-solid fa-xmark"></i>
                                         </a>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <title>Sidebar 01</title>
@@ -21,13 +21,19 @@
             align-items: center;
             justify-content: center
         }
+        input.form-control {
+          border-radius: 0;
+        }
+        th, td {
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="wrapper d-flex align-items-stretch">
-        <x-dashboard.super-admin-navbar active='Stores'></x-dashboard.super-admin-navbar>
+        <x-dashboard.super-admin-navbar active='المتاجر'></x-dashboard.super-admin-navbar>
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
@@ -39,7 +45,7 @@
                         <i class="fa fa-bars"></i>
                         <span class="sr-only">Toggle Menu</span>
                     </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="btn btn-dark d-inline-block d-lg-none mr-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
                     </button>
 
@@ -50,13 +56,13 @@
                                     @csrf
                                     <a class="nav-link" href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                        {{ __('Log Out') }}
+                                        {{ __('تسجيل الخروج') }}
                                     </a>
                                 </form>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    {{ __('Profile') }}
+                                    {{ __('الملف الشخصي') }}
                                 </a>
                             </li>
                         </ul>
@@ -68,8 +74,8 @@
             <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
             @endif
             <div class="d-flex flex-column">
-                <div>
-                    <a class="my-2 btn my-btn" href="/superAdmin/stores/add">Add Store</a>
+                <div class="d-flex">
+                    <a class="my-2 btn my-btn" href="/superAdmin/stores/add">أضف متجر</a>
                 </div>
 
                 <div class="d-flex">
@@ -77,14 +83,14 @@
                         @csrf
                         <div class="form-group my-4 d-flex">
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">
+                                <div class="input-group-append">
                                     <button class="input-group-text" id="basic-addon1" type="submit">
                                         <i class="fas fa-search"></i>
                                     </button>
                                 </div>
-                                <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="Search">
+                                <input type="text" name="search" value="{{ $search }}" class="form-control" id="search" aria-describedby="store name" placeholder="ابحث">
                                 @if($type == 'search')
-                                <div class="input-group-append">
+                                <div class="input-group-prepend">
                                     <a class="input-group-text close-search" href="{{ route('superAdminStores') }}" id="basic-addon2" style="background-color: #dc3545;">
                                         <i class="fa-solid fa-xmark"></i>
                                     </a>
@@ -100,14 +106,14 @@
             <div class="d-flex table-responsive">
                 <table class="table table-bordered">
                     <thead class="thead-dark">
-                        <tr>
+                        <tr >
                             <th scope="col">#</th>
-                            <th scope="col">Store Name</th>
-                            <th scope="col">WhatsappNumber</th>
-                            <th scope="col">URL</th>
-                            <th scope="col">Custom Domain</th>
-                            <th scope="col">Is Suspended</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col">اسم المتجر</th>
+                            <th scope="col">رقم الواتساب</th>
+                            <th scope="col">رابط المتجر</th>
+                            <th scope="col">الدومين الخارجي</th>
+                            <th scope="col">معطل</th>
+                            <th scope="col">خيارات</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,7 +128,7 @@
                                     <i class="fa-solid fa-pen-to-square" style="cursor: pointer;"></i>
                                 </a>
                             </td>
-                            <td>{{ $store['is_suspended'] ? 'Suspended' : '' }}</td>
+                            <td>{{ $store['is_suspended'] ? 'معطل' : '' }}</td>
                             <td class="d-flex">
                                 <a class="btn delete-store-btn" form-action="{{ route('deleteStore', ['id' => $store['id']]) }}" data-toggle="modal" data-target="#exampleModal">
                                     <i class="fa-solid fa-trash" style="cursor: pointer;"></i>
@@ -201,6 +207,7 @@
             </div>
 
         </div>
+
     </div>
 
     <script>

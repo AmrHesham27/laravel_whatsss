@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <title>Sidebar 01</title>
@@ -16,8 +16,7 @@
 <body>
 
     <div class="wrapper d-flex align-items-stretch">
-        <x-dashboard.super-admin-navbar active='Add Store'></x-dashboard.super-admin-navbar>
-
+        <x-dashboard.super-admin-navbar active='أضف متجر'></x-dashboard.super-admin-navbar>
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
 
@@ -39,13 +38,13 @@
                                     @csrf
                                     <a class="nav-link" href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                        {{ __('Log Out') }}
+                                        {{ __('تسجيل الخروج') }}
                                     </a>
                                 </form>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    {{ __('Profile') }}
+                                    {{ __('الملف الشخصي') }}
                                 </a>
                             </li>
                         </ul>
@@ -56,44 +55,44 @@
             @if (session()->get('mssg'))
             <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
             @endif
-            <form method="POST" action="{{ route('createStore') }}">
+            <form method="POST" action="{{ route('createStore') }}" class="text-right">
                 @csrf
                 <div class="form-group my-4">
-                    <label for="store_name">Store Name</label>
-                    <input type="text" name="name" value="{{ old('name') }}" class="@error('name') is-invalid @enderror form-control" id="store_name" aria-describedby="store name" placeholder="Enter Store Name">
+                    <label for="store_name">اسم المتجر</label>
+                    <input type="text" name="name" value="{{ old('name') }}" class="@error('name') is-invalid @enderror form-control" id="store_name" aria-describedby="store name">
                     @error('name')
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group my-4">
-                    <label for="store_name">Store URL</label>
-                    <input type="text" name="url" value="{{ old('url') }}" class="@error('url') is-invalid @enderror form-control" id="url" aria-describedby="store url" placeholder="Enter Store URL">
+                    <label for="store_name">رابط المتجر</label>
+                    <input type="text" name="url" value="{{ old('url') }}" class="@error('url') is-invalid @enderror form-control" id="url" aria-describedby="store url">
                     @error('url')
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group my-4">
-                    <label for="whatsapp">Whatsapp Number</label>
-                    <input type="text" name="whatsapp" value="{{ old('whatsapp') }}" class="@error('whatsapp') is-invalid @enderror form-control" id="whatsapp" aria-describedby="whatsapp" placeholder="Enter Whatsapp Number">
+                    <label for="whatsapp">رقم الواتساب</label>
+                    <input type="text" name="whatsapp" value="{{ old('whatsapp') }}" class="@error('whatsapp') is-invalid @enderror form-control" id="whatsapp" aria-describedby="whatsapp">
                     @error('whatsapp')
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group my-4">
-                    <label for="email">User Email address</label>
-                    <input type="email" name="email" value="{{ old('email') }}" class="@error('email') is-invalid @enderror form-control" id="email" aria-describedby="email" placeholder="Enter email">
+                    <label for="email">ايميل أدمن المتجر</label>
+                    <input type="email" name="email" value="{{ old('email') }}" class="@error('email') is-invalid @enderror form-control" id="email" aria-describedby="email">
                     @error('email')
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group my-4">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" class="@error('password') is-invalid @enderror form-control" id="password" placeholder="Password">
+                    <label for="password">كلمة السر</label>
+                    <input type="password" name="password" class="@error('password') is-invalid @enderror form-control" id="password">
                     @error('password')
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
                 </div>
-                <button type="submit" class="btn my-btn">Add Store</button>
+                <button type="submit" class="btn my-btn mt-3">أضف المتجر</button>
             </form>
 
         </div>

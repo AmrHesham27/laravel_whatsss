@@ -223,7 +223,7 @@ class StoreController extends Controller
         $stores = Store::where('id', '=', $search)
             ->orWhere('name', 'LIKE', "%{$search}%")
             ->orWhere('url', 'LIKE', "%{$search}%")
-            ->orWhere('subdomain', 'LIKE', "%{$search}%")
+            ->orWhere('domain', 'LIKE', "%{$search}%")
             ->orWhere('whatsapp', 'LIKE', "%{$search}%")
             ->paginate(8);
 

@@ -10781,7 +10781,7 @@ h5,
 }
 
 #sidebar.active {
-    margin-left: -300px;
+    margin-right: -300px;
 }
 #sidebar .logo {
     display: block;
@@ -10819,10 +10819,10 @@ h5,
 }
 @media (max-width: 991.98px) {
     #sidebar {
-        margin-left: -300px;
+        right: 0;
     }
     #sidebar.active {
-        margin-left: 0;
+        right: 0;
     }
 }
 
@@ -10925,6 +10925,11 @@ a[data-toggle="collapse"] {
         min-width: 100vw;
         min-height: 100vh;
         z-index: 10000;
+        margin-right: 0;
+        
+    }
+    #sidebar {
+        margin-right: -100%;
     }
 }
 

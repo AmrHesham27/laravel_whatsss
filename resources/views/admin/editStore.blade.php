@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <title>Sidebar 01</title>
@@ -27,7 +27,7 @@
 <body>
 
     <div class="wrapper d-flex align-items-stretch">
-        <x-dashboard.admin-navbar active='Edit Store'></x-admin-navbar>
+        <x-dashboard.admin-navbar active='عدل متجرك'></x-admin-navbar>
 
             <!-- Page Content  -->
             <div id="content" class="p-4 p-md-5">
@@ -39,7 +39,7 @@
                             <i class="fa fa-bars"></i>
                             <span class="sr-only">Toggle Menu</span>
                         </button>
-                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="btn btn-dark d-inline-block d-lg-none mr-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <i class="fa fa-bars"></i>
                         </button>
 
@@ -50,13 +50,13 @@
                                         @csrf
                                         <a class="nav-link" href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                            {{ __('Log Out') }}
+                                            {{ __('تسجيل الخروج') }}
                                         </a>
                                     </form>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('profile.edit') }}">
-                                        {{ __('Profile') }}
+                                        {{ __('الملف الشخصي') }}
                                     </a>
                                 </li>
                             </ul>
@@ -67,18 +67,18 @@
                 @if (session()->get('mssg'))
                 <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
                 @endif
-                <h6>Edit your store</h6>
-                <form enctype="multipart/form-data" method="POST" action="{{ route('adminUpdateStore') }}">
+                <h5 class="text-right">تحكم في متجرك</h5>
+                <form class="text-right" enctype="multipart/form-data" method="POST" action="{{ route('adminUpdateStore') }}">
                     @csrf
                     <div class="form-group my-4">
-                        <label for="store_name">Store Name</label>
+                        <label for="store_name">اسم المتجر</label>
                         <input type="text" name="name" value="{{ $store['name'] }}" class="@error('name') is-invalid @enderror form-control" id="store_name" aria-describedby="store name" placeholder="Enter Store Name">
                         @error('name')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group my-4">
-                        <label for="url">URL</label>
+                        <label for="url">رابط المتجر</label>
                         <input type="text" name="url" value="{{ $store['url'] }}" class="@error('name') is-invalid @enderror form-control" id="url" aria-describedby="url" placeholder="Enter Store URL">
                         @error('url')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
@@ -87,7 +87,7 @@
                         <div id="url-message-success" class="alert alert-success mt-1 mb-1 d-none"></div>
                     </div>
                     <div class="form-group my-4">
-                        <label for="whatsapp">Whatsapp Number</label>
+                        <label for="whatsapp">رقم الواتساب</label>
                         <input type="text" name="whatsapp" value="{{ $store['whatsapp'] }}" class="@error('name') is-invalid @enderror form-control" id="whatsapp" aria-describedby="store name" placeholder="Enter Store Name">
                         @error('whatsapp')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
@@ -95,14 +95,14 @@
                     </div>
                     <div class="d-flex flex-sm-row flex-column justify-content-between">
                         <div class="form-group my-4 col-sm-6 input-x" style="padding-left: 0;">
-                            <label for="color_1">Color 1</label>
+                            <label for="color_1">لون القالب الرئيسي</label>
                             <input type="text" id="color_1" name="color_1" value="{{ $store['color_1'] }}" class="@error('color_1') is-invalid @enderror colorpicker form-control" id="whatsapp" aria-describedby="color 1">
                             @error('color_1')
                             <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group my-4 col-sm-6 input-x" style="padding-right: 0;">
-                            <label for="color_2">Color 2</label>
+                            <label for="color_2">لون القالب الثانوي</label>
                             <input type="text" id="color_3" name="color_2" value="{{ $store['color_2'] }}" class="@error('color_2') is-invalid @enderror colorpicker form-control" id="whatsapp" aria-describedby="color 1">
                             @error('color_2')
                             <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
@@ -112,21 +112,21 @@
 
                     <div class="d-flex flex-sm-row flex-column justify-content-between">
                         <div class="form-group my-4 col-sm-6 input-x" style="padding-left: 0;">
-                            <label for="start_time">Start Time</label>
+                            <label for="start_time">توقيت افتتاح المتجر</label>
                             <input type="time" id="start_time" name="start_time" value="{{ $store['start_time'] }}" class="@error('start_time') is-invalid @enderror form-control" id="start_time" aria-describedby="start_time">
                             @error('color_1')
                             <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group my-4 col-sm-6 input-x" style="padding-right: 0;">
-                            <label for="color_2">End Time</label>
+                            <label for="color_2">توقيت اغلاق المتجر</label>
                             <input type="time" id="end_time" name="end_time" value="{{ $store['end_time'] }}" class="@error('end_time') is-invalid @enderror form-control" id="end_time" aria-describedby="end_time">
                             @error('end_time')
                             <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
-                    <label for="currency">Currency</label>
+                    <label for="currency">العملة</label>
                     <select id="currency" name="currency" class="form-select form-control" aria-label="Choose currency">
                         <option value="ج.م" <?php if ($store['currency'] == "ج.م") echo 'selected' ?>>ج.م</option>
                         <option value="$" <?php if ($store['currency'] == "$") echo 'selected' ?>>$</option>
@@ -135,7 +135,7 @@
 
                     <div class="d-flex flex-sm-row flex-column justify-content-between">
                         <div class="form-grou d-flex flex-column my-4 col-sm-6 input-x" style="padding-left: 0;">
-                            <label for="whatsapp">Store Logo</label>
+                            <label for="whatsapp">شعار المتجر</label>
                             <input type="file" name="logo">
                             @error('logo')
                             <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
@@ -149,58 +149,56 @@
                     </div>
 
                     <div class="d-flex flex-column my-4">
-                        <label>Delivery Options</label>
+                        <label>خيارات التوصيل</label>
                         <div class="d-flex">
-                            <div class="form-check mr-5">
+                            <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="flexCheckChecked" name="dinIn" <?php if ($store['dinIn']) echo "checked" ?>>
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    Din In
+                                <label class="form-check-label mr-3" for="flexCheckChecked">
+                                    حجز طاولة
                                 </label>
                             </div>
 
                             <div class="form-check mx-5">
                                 <input class="form-check-input" type="checkbox" id="flexCheckChecked" name="pickUp" <?php if ($store['pickUp']) echo "checked" ?>>
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    Pick up
+                                <label class="form-check-label mr-3" for="flexCheckChecked">
+                                    استلام من المكان
                                 </label>
                             </div>
 
                             <div class="form-check mx-5">
                                 <input class="form-check-input" type="checkbox" id="flexCheckChecked" name="delivery" <?php if ($store['delivery']) echo "checked" ?>>
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    Delivery
+                                <label class="form-check-label mr-3" for="flexCheckChecked">
+                                    توصيل
                                 </label>
                             </div>
                         </div>
                     </div>
 
-
-                    <label>Check this input if you want to display products as cards.</label>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="flexCheckChecked" name="displayCards" <?php if ($store['displayCards']) echo "checked" ?>>
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Display cards
+                        <label class="form-check-label mr-3" for="flexCheckChecked">
+                            أظهر المنتجات علي شكل بطاقات
                         </label>
                     </div>
-                    <button type="submit" class="btn my-btn my-5">Edit Store</button>
+                    <button type="submit" class="btn my-btn my-5">عدل المتجر</button>
 
                 </form>
 
                 @if ($store['delivery'])
                 <form method="POST" class="my-5" action="{{ route('adminAddPlace') }}">
                     @csrf
-                    <h6>Edit OR Add New Delivery Place</h6>
-                    <div class="d-flex flex-sm-row flex-column justify-content-between">
+                    <h6 class="text-right">عدل أو أضف مكان توصيل</h6>
+                    <div class="d-flex flex-sm-row flex-column justify-content-between text-right">
                         <div class="form-group my-4 col-sm-6 input-x" style="padding-left: 0;">
-                            <label for="deliveryPlaceName">Name</label>
+                            <label for="deliveryPlaceName">الاسم</label>
                             <input type="text" id="deliveryPlaceName" name="placeName" class="form-control">
                         </div>
                         <div class="form-group my-4 col-sm-6 input-x" style="padding-left: 0;">
-                            <label for="deliveryPlacePrice">Price</label>
+                            <label for="deliveryPlacePrice">السعر</label>
                             <input type="number" id="deliveryPlacePrice" name="placePrice" class="form-control">
                         </div>
                     </div>
-                    <button class="btn btn-secondary">Enter</button>
+                    <button style="float: right;" class="mr-3 btn btn-secondary">أدخل</button>
                 </form>
                 @endif
 
@@ -209,9 +207,9 @@
                     <table class="table table-bordered ">
                         <thead class="thead-dark">
                             <tr>
-                                <th scope="col">Place Name</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col">اسم المكان</th>
+                                <th scope="col">السعر</th>
+                                <th scope="col">خيارات</th>
                             </tr>
                         </thead>
                         <tbody>

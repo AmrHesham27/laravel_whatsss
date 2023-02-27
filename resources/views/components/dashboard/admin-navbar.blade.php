@@ -5,36 +5,36 @@
         </button>
         <div class="p-4 pt-5 nav-body">
             <ul class="list-unstyled components mb-5">
-                <li class="<?php if($active == 'Home') echo 'active'; ?>">
-                    <a href="/admin">Home</a>
+                <li class="text-right <?php if($active == 'الصفحة الرئيسية') echo 'active'; ?>">
+                    <a href="/admin">الصفحة الرئيسية</a>
                 </li>
 
-                <li class="<?php if($active == 'Edit Store') echo 'active'; ?>">
-                    <a href="/admin/editStore">Edit Store</a>
+                <li class="text-right <?php if($active == 'عدل متجرك') echo 'active'; ?>">
+                    <a href="/admin/editStore">عدل متجرك</a>
                 </li>
 
-                <li class="<?php if($active == 'Categories') echo 'active'; ?>">
-                    <a href="/admin/categories">Categories</a>
+                <li class="text-right <?php if($active == 'التصنيفات') echo 'active'; ?>">
+                    <a href="/admin/categories">التصنيفات</a>
                 </li>
 
-                <li class="<?php if($active == 'Add Category') echo 'active'; ?>">
-                    <a href="/admin/categories/create">Add Category</a>
+                <li class="text-right <?php if($active == 'أضف تصنيف') echo 'active'; ?>">
+                    <a href="/admin/categories/create">أضف تصنيف</a>
                 </li>
 
-                <li class="<?php if($active == 'Products') echo 'active'; ?>">
-                    <a href="/admin/products">Products</a>
+                <li class="text-right <?php if($active == 'المنتجات') echo 'active'; ?>">
+                    <a href="/admin/products">المنتجات</a>
                 </li>
 
-                <li class="<?php if($active == 'Add Product') echo 'active'; ?>">
-                    <a href="/admin/products/create">Add Product</a>
+                <li class="text-right <?php if($active == 'أضف منتج') echo 'active'; ?>">
+                    <a href="/admin/products/create">أضف منتج</a>
                 </li>
 
-                <li class="<?php if($active == 'Coupons') echo 'active'; ?>">
-                    <a href="/admin/coupons">Coupons</a>
+                <li class="text-right <?php if($active == 'الكوبونات') echo 'active'; ?>">
+                    <a href="/admin/coupons">الكوبونات</a>
                 </li>
 
-                <li class="<?php if($active == 'Add Coupon') echo 'active'; ?>">
-                    <a href="/admin/coupons/create">Add Coupon</a>
+                <li class="text-right <?php if($active == 'أضف كوبون') echo 'active'; ?>">
+                    <a href="/admin/coupons/create">أضف كوبون</a>
                 </li>
             </ul>
         </div>

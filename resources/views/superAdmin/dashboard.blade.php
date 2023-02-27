@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
   <title>Sidebar 01</title>
@@ -39,7 +39,8 @@
 <body>
 
   <div class="wrapper d-flex align-items-stretch">
-    <x-dashboard.super-admin-navbar active='Home'></x-dashboard.super-admin-navbar>
+    <x-dashboard.super-admin-navbar active='الصفحة الرئيسية'></x-dashboard.super-admin-navbar>
+
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
@@ -62,13 +63,13 @@
                   @csrf
                   <a class="nav-link" href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                    {{ __('Log Out') }}
+                    {{ __('تسجيل الخروج') }}
                   </a>
                 </form>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('profile.edit') }}">
-                  {{ __('Profile') }}
+                  {{ __('الملف الشخصي') }}
                 </a>
               </li>
             </ul>
@@ -77,12 +78,13 @@
       </nav>
       <!-- Content -->
       <div class="container">
-        <h2>Views</h2>
+        <h2>المشاهدات</h2>
         <div>
           <canvas id="myChart"></canvas>
         </div>
       </div>
     </div>
+
   </div>
 
   <script>
@@ -102,7 +104,7 @@
           new Date().toJSON().slice(5, 10).replace(/-/g, '/'),
         ],
         datasets: [{
-          label: "Total Views Count",
+          label: "مشاهدات كل المتاجر",
           data: [
             <?php echo $views[6] ?>,
             <?php echo $views[5] ?>,

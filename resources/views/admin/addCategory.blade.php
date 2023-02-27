@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <title>Sidebar 01</title>
@@ -16,7 +16,7 @@
 <body>
 
     <div class="wrapper d-flex align-items-stretch">
-        <x-dashboard.admin-navbar active='Add Category'></x-admin-navbar>
+        <x-dashboard.admin-navbar active='أضف تصنيف'></x-admin-navbar>
 
             <!-- Page Content  -->
             <div id="content" class="p-4 p-md-5">
@@ -28,7 +28,7 @@
                             <i class="fa fa-bars"></i>
                             <span class="sr-only">Toggle Menu</span>
                         </button>
-                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="btn btn-dark d-inline-block d-lg-none mr-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <i class="fa fa-bars"></i>
                         </button>
 
@@ -39,13 +39,13 @@
                                         @csrf
                                         <a class="nav-link" href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                            {{ __('Log Out') }}
+                                            {{ __('تسجيل الخروج') }}
                                         </a>
                                     </form>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('profile.edit') }}">
-                                        {{ __('Profile') }}
+                                        {{ __('الملف الشخصي') }}
                                     </a>
                                 </li>
                             </ul>
@@ -56,16 +56,16 @@
                 @if (session()->get('mssg'))
                 <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
                 @endif
-                <form method="POST" action="{{ route('admin.categories.store') }}">
+                <form class="text-right" method="POST" action="{{ route('admin.categories.store') }}">
                     @csrf
                     <div class="form-group my-4">
-                        <label for="store_name">Category Name</label>
-                        <input type="text" name="name" value="{{ old('name') }}" class="@error('name') is-invalid @enderror form-control" id="store_name" aria-describedby="store name" placeholder="Enter Category Name">
+                        <label for="store_name">اسم التصنيف</label>
+                        <input type="text" name="name" value="{{ old('name') }}" class="@error('name') is-invalid @enderror form-control" id="store_name" aria-describedby="store name">
                         @error('name')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn my-btn">Add Category</button>
+                    <button type="submit" class="btn my-btn">أضف تصنيف</button>
                 </form>
 
             </div>

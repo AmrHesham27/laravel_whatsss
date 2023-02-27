@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <title>Sidebar 01</title>
@@ -28,7 +28,7 @@
                             <i class="fa fa-bars"></i>
                             <span class="sr-only">Toggle Menu</span>
                         </button>
-                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="btn btn-dark d-inline-block d-lg-none mr-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <i class="fa fa-bars"></i>
                         </button>
 
@@ -39,13 +39,13 @@
                                         @csrf
                                         <a class="nav-link" href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                            {{ __('Log Out') }}
+                                            {{ __('تسجيل الخروج') }}
                                         </a>
                                     </form>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('profile.edit') }}">
-                                        {{ __('Profile') }}
+                                        {{ __('الملف الشخصي') }}
                                     </a>
                                 </li>
                             </ul>
@@ -56,32 +56,32 @@
                 @if (session()->get('mssg'))
                 <div class="alert {{session()->get('alert')}} my-5" role="alert">{{session()->get('mssg')}}</div>
                 @endif
-                <form method="POST" action="{{ route('admin.coupons.store') }}">
+                <form class="text-right" method="POST" action="{{ route('admin.coupons.store') }}">
                     @csrf
                     <div class="form-group my-4">
-                        <label for="code">Coupon Code</label>
+                        <label for="code">كود الكوبون</label>
                         <input type="text" name="code" value="{{ old('code') }}"  class="@error('code') is-invalid @enderror form-control" id="code" aria-describedby="coupon code">
                         @error('code')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <label for="type">Coupon Type</label>
+                    <label for="type">نوع الكوبون</label>
                     <select class="form-control form-select" id="type" aria-label="Default select example" name="type" required>
-                        <option value="">-- Choose Type</option>
+                        <option value="">اختر النوع</option>
                         <option value="percent">Percent</option>
                         <option value="flat">Flat</option>
                     </select>
 
                     <div class="form-group my-4">
-                        <label for="amount">Coupon Amount</label>
+                        <label for="amount">قيمة الكوبون</label>
                         <input value="{{ old('amount') }}" type="number" name="amount" class="@error('amount') is-invalid @enderror form-control" id="amount" aria-describedby="coupon amount">
                         @error('amount')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn my-btn my-5">Add Coupon</button>
+                    <button type="submit" class="btn my-btn my-5">أضف كوبون</button>
                 </form>
             </div>
     </div>
