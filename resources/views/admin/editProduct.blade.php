@@ -60,21 +60,21 @@
                     @csrf
                     @method('PATCH')
                     <div class="form-group my-4">
-                        <label for="product_name">Product Name</label>
+                        <label for="product_name">اسم المنتج</label>
                         <input value="{{ $product['name'] }}" type="text" name="name" class="@error('name') is-invalid @enderror form-control" id="product_name" aria-describedby="product name" placeholder="Enter Product Name">
                         @error('name')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group my-4">
-                        <label for="product_description">Product Description</label>
+                        <label for="product_description">وصف المنتج</label>
                         <input value="{{ $product['desc'] }}" type="text" name="desc" class="@error('desc') is-invalid @enderror form-control" id="product_description" aria-describedby="product description" placeholder="Enter Product Description">
                         @error('desc')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group my-4">
-                        <label for="product_price">Product Price</label>
+                        <label for="product_price">السعر</label>
                         <input value="{{ $product['price'] }}" type="number" name="price" class="@error('price') is-invalid @enderror form-control" id="product_price" aria-describedby="product price" placeholder="Enter Product Price">
                         @error('price')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
@@ -83,7 +83,7 @@
 
                     <div class="d-flex flex-sm-row flex-column justify-content-between">
                         <div class="form-grou d-flex flex-column my-4 col-sm-6 input-x" style="padding-left: 0;">
-                            <label for="image">Product Image</label>
+                            <label for="image">صورة المنتج</label>
                             <input type="file" name="image">
                             @error('image')
                             <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
@@ -94,7 +94,7 @@
                         </div>
                     </div>
 
-                    <label for="product_description">Product Category</label>
+                    <label for="product_description">تصنيف المنتج</label>
                     <select class="form-control form-select" aria-label="Default select example" name="category_id">
                         @foreach($categories as $category)
                         @if ($category['id'] == $product['category_id'])
@@ -106,7 +106,7 @@
                     </select>
 
 
-                    <button type="submit" class="btn my-btn my-5">Edit Product</button>
+                    <button type="submit" class="btn my-btn my-5">عدل المنتج</button>
                 </form>
 
             </div>
