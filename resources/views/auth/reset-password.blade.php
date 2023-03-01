@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-guest-layout title="Otogoto - تغيير كلمة السر">
     <form method="POST" action="{{ route('password.store') }}">
         @csrf
 

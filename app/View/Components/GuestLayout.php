@@ -14,4 +14,11 @@ class GuestLayout extends Component
     {
         return view('layouts.guest');
     }
+
+
+    public $title;
+    public function __construct($title)
+    {
+        $this->title = $title;
+    }
 }
