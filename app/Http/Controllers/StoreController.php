@@ -100,7 +100,12 @@ class StoreController extends Controller
 
             $seo = json_decode($store['seo'], true);
 
-            return view('customer', ['store' => $store, 'title' => $seo['title'], 'description' => $seo['description']]);
+            return view('customer', [
+                'store' => $store, 
+                'title' => $seo['title'], 
+                'description' => $seo['description'], 
+                'metas' => $seo['meta']
+            ]);
         }
         catch(Exception $e) {
             return abort(500);

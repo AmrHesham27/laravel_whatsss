@@ -7,6 +7,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content='{{ $description }}'>
     <title>{{ $title }}</title>
+    <?php
+        foreach($metas as $meta){
+            echo "<meta name=" . $meta['name'] . " content=" . $meta['content'] . ">";
+        } 
+    ?>
     
     <link href="{{ asset('assets/css/store.css')}}" rel="stylesheet" />
 
