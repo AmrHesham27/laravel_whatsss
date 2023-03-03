@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Place;
-use App\Models\ProductCategory;
 use App\Models\View;
 use Illuminate\Support\Facades\File;
 
@@ -99,7 +98,9 @@ class StoreController extends Controller
             $view['store_id'] = $store['id'];
             $view ->save();
 
-            return view('customer', ['store' => $store]);
+            $seo = json_decode($store['seo'], true);
+
+            return view('customer', ['store' => $store, 'title' => $seo['title'], 'description' => $seo['description']]);
         }
         catch(Exception $e) {
             return abort(500);

@@ -203,7 +203,7 @@
                 @endif
 
                 @if (count($places))
-                <div class="d-flex table-responsive">
+                <div class="d-flex table-responsive text-center">
                     <table class="table table-bordered ">
                         <thead class="thead-dark">
                             <tr>

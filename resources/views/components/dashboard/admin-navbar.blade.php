@@ -36,6 +36,9 @@
                 <li class="text-right <?php if($active == 'أضف كوبون') echo 'active'; ?>">
                     <a href="/admin/coupons/create">أضف كوبون</a>
                 </li>
+                <li class="text-right <?php if($active == 'محركات البحث') echo 'active'; ?>">
+                    <a href="/admin/editSEO">محركات البحث</a>
+                </li>
             </ul>
         </div>
     </div>

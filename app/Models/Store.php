@@ -31,7 +31,8 @@ class Store extends Model
         'dinIn',
         'pickUp',
         'delivery',
-        'displayCards'
+        'displayCards',
+        'seo'
     ];
 
     public function products()

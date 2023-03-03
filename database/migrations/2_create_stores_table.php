@@ -35,6 +35,7 @@ return new class extends Migration
             $table->boolean('dinIn')->default(false);
             $table->boolean('pickUp')->default(false);
             $table->json('delivery')->nullable();
+            $table->json('seo')->default('{"title": "otogoto", "description": "", "meta": {} }');
         });
     }
 
