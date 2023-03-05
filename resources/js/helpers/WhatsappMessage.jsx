@@ -5,7 +5,8 @@ const WhatsappMessage = (
     placeIndex,
     deliveryMethod,
     exactAddress,
-    notes
+    notes,
+    places
 ) => {
     const Enter = `%0a`;
     const Space = `%20`;
@@ -15,7 +16,7 @@ const WhatsappMessage = (
     });
     const placeName =
         placeIndex && deliveryMethod == "delivery"
-            ? props["places"][placeIndex]["name"]
+            ? places[placeIndex]["name"]
             : "";
     const exactAdressWhatsapp =
         exactAddress && deliveryMethod == "delivery"

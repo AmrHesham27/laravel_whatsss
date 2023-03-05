@@ -33,7 +33,8 @@ function SendToWhatsapp(props) {
         placeIndex,
         deliveryMethod,
         exactAddress,
-        notes
+        notes,
+        props['places']
     );
 
     const modals = useSelector((state) => state.modals);
