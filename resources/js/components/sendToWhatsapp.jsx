@@ -182,40 +182,53 @@ function SendToWhatsapp(props) {
                         </div>
                     ) : undefined}
 
-                    <div className="input-group mt-4">
-                        <label
-                            htmlFor="exampleInputEmail1"
-                            style={{ width: "100%" }}
-                        >
-                            ادخل كوبون خصم اذا كنت تمتلك واحدا
-                        </label>
-                        {coupon ? (
-                            <div class="input-group-prepend">
-                                <span
-                                    class="input-group-text"
-                                    id="basic-addon1"
-                                >
-                                    <FontAwesomeIcon
-                                        icon={faCheck}
-                                        size={"1x"}
-                                        style={{
-                                            color: "#28a745",
-                                            margin: "5px",
-                                        }}
-                                    />
-                                </span>
-                            </div>
-                        ) : undefined}
-                        <input
-                            type="text"
-                            className="form-control text-right"
-                            placeholder="ادخل كوبون خصم"
-                            onChange={(e) =>
-                                setCouponCode(e.target.value.trim())
-                            }
-                            style={{ textAlign: "end" }}
-                        />
+                    <div className="d-flex my-3 flex-row-reverse">
+                        <div className="input-group mt-4">
+                            <label
+                                htmlFor="exampleInputEmail1"
+                                style={{ width: "100%" }}
+                            >
+                                ادخل كوبون خصم اذا كنت تمتلك واحدا
+                            </label>
+                            {coupon ? (
+                                <div class="input-group-prepend">
+                                    <span
+                                        class="input-group-text"
+                                        id="basic-addon1"
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faCheck}
+                                            size={"1x"}
+                                            style={{
+                                                color: "#28a745",
+                                                margin: "5px",
+                                            }}
+                                        />
+                                    </span>
+                                </div>
+                            ) : undefined}
+                            <input
+                                type="text"
+                                className="form-control text-right"
+                                placeholder="ادخل كوبون خصم"
+                                onChange={(e) =>
+                                    setCouponCode(e.target.value.trim())
+                                }
+                                style={{ textAlign: "end" }}
+                            />
+                        </div>
+                        <div className="d-flex justify-content-center coupon-btn">
+                            <button
+                                className="btn btn-success"
+                                style={{ backgroundColor: color_2 }}
+                                onClick={applyCoupon}
+                                type="button"
+                            >
+                                ادخل
+                            </button>
+                        </div>
                     </div>
+
 
                     <div className="form-group mt-4">
                         <label htmlFor="exampleInputEmail1">ملاحظات</label>
@@ -234,14 +247,14 @@ function SendToWhatsapp(props) {
                             {!coupon
                                 ? cart.total
                                 : coupon["type"] == "flat"
-                                ? cart.total - coupon["amount"]
-                                : (cart.total * coupon["amount"]) / 100}
+                                    ? cart.total - coupon["amount"]
+                                    : (cart.total * coupon["amount"]) / 100}
                         </span>
                         <span className="mx-1">{currency}</span>
                     </div>
                     {delivery == "1" &&
-                    deliveryMethod == "delivery" &&
-                    placeIndex ? (
+                        deliveryMethod == "delivery" &&
+                        placeIndex ? (
                         <>
                             <div>
                                 <span className="mx-2">رسوم التوصيل</span>
@@ -255,42 +268,31 @@ function SendToWhatsapp(props) {
                                 <span>
                                     {coupon
                                         ? props["places"][placeIndex]["price"] +
-                                          cart.total -
-                                          (coupon["type"] == "flat"
-                                              ? coupon["amount"]
-                                              : (cart.total *
-                                                    coupon["amount"]) /
-                                                100)
+                                        cart.total -
+                                        (coupon["type"] == "flat"
+                                            ? coupon["amount"]
+                                            : (cart.total *
+                                                coupon["amount"]) /
+                                            100)
                                         : props["places"][placeIndex]["price"] +
-                                          cart.total}
+                                        cart.total}
                                 </span>
                                 <span className="mx-1">{currency}</span>
                             </div>
                         </>
                     ) : undefined}
 
-                    {couponCode == "" ? (
-                        <div className="d-flex justify-content-center mt-4">
-                            <button
-                                className="btn btn-success px-3 my-3"
-                                style={{ backgroundColor: color_2 }}
-                                type="submit"
-                            >
-                                اطلب
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="d-flex justify-content-center">
-                            <button
-                                className="btn btn-success px-3 my-3"
-                                style={{ backgroundColor: color_2 }}
-                                onClick={applyCoupon}
-                                type="button"
-                            >
-                                احصل علي الخصم
-                            </button>
-                        </div>
-                    )}
+
+                    <div className="d-flex justify-content-center mt-4">
+                        <button
+                            className="btn btn-success px-3 my-3"
+                            style={{ backgroundColor: color_2 }}
+                            type="submit"
+                        >
+                            اطلب
+                        </button>
+                    </div>
+
                 </form>
             </Modal.Body>
         </Modal>

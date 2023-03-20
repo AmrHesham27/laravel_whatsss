@@ -452,6 +452,14 @@ p {
   justify-content: end;
 }
 
+.coupon-btn {
+  margin-right: 15px;
+  margin-bottom: 0;
+  margin-top: auto;
+  font-size: 14px;
+  height: 46.6px;
+}
+
 @media screen and (max-width: 1000px) {
   .page-container {
     width: 100vw;
@@ -546,4 +554,4 @@ p {
   .nav-tabs .nav-link {
     font-size: 16px !important;
   }
-}
+}/*# sourceMappingURL=store.css.map */

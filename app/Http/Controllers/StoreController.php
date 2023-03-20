@@ -265,7 +265,7 @@ class StoreController extends Controller
         try{
             $host = request()->getHost();
             if ($host == env('APP_HOST')){
-                dd('welcome');
+                return view('home');
             }
             else {
                 $store = Store::with('places')->with('products')->with('categories')
