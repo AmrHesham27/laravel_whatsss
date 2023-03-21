@@ -98,13 +98,8 @@ class StoreController extends Controller
             $view['store_id'] = $store['id'];
             $view ->save();
 
-            $seo = json_decode($store['seo'], true);
-
             return view('customer', [
-                'store' => $store, 
-                'title' => $seo['title'], 
-                'description' => $seo['description'], 
-                'metas' => $seo['meta']
+                'store' => $store
             ]);
         }
         catch(Exception $e) {
@@ -140,6 +135,7 @@ class StoreController extends Controller
 
         $data = $this->validate($request, [
             "name"  => "required|string|max:60",
+            "description" => "required|string|max:200",
             "whatsapp" => "required|string|max:60",
             "url" => "required|string|max:60",
             "color_1" => "required",
@@ -151,7 +147,8 @@ class StoreController extends Controller
             "pickUp" => "nullable",
             "delivery" => "nullable",
             'logo' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
-            "displayCards" => "nullable"
+            "displayCards" => "nullable",
+            "seo" => "json"
         ]);
 
         foreach(['dinIn', 'pickUp', 'delivery', 'displayCards'] as $variable)

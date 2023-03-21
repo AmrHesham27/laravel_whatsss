@@ -69,8 +69,8 @@
                     <label for="type">نوع الكوبون</label>
                     <select class="form-control form-select" id="type" aria-label="Default select example" name="type" required>
                         <option value="">اختر النوع</option>
-                        <option value="percent">Percent</option>
-                        <option value="flat">Flat</option>
+                        <option value="percent">نسبة مئوية</option>
+                        <option value="flat">رقم ثابت</option>
                     </select>
 
                     <div class="form-group my-4">

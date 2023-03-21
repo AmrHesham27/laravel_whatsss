@@ -118,7 +118,7 @@
                             <tr>
                                 <th scope="row">{{ $coupon['id'] }}</th>
                                 <td>{{ $coupon['code'] }}</td>
-                                <td>{{ $coupon['type'] }}</td>
+                                <td><?php if($coupon['type'] == "flat")  echo 'رقم ثابت';  else  echo 'نسبة مئوية'; ?></td>
                                 <td>{{ $coupon['amount'] }}</td>
                                 <td>
                                     <button class="btn delete-btn" data-toggle="modal" data-target="#deleteModal" form-action="{{ route('admin.coupons.destroy', [ 'coupon' => $coupon['id'] ]) }}">

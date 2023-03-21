@@ -98,69 +98,24 @@ class AdminController extends Controller
     }
 
     /** SEO of the store */
-    public function showEditSEO(){
-        $store = Store::where('user_id', Auth::user()->id)->get()[0];
-        $seo = json_decode($store['seo'], true);
-
-        //dd($seo['meta']);
-
-        return view('admin.editSEO', [
-            'title' => $seo['title'], 
-            'description' => $seo['description'],
-            'metas' => $seo['meta']
-        ]);
-    }
-
-    public function editSEO (Request $request){
-        try {
-            $data = $this->validate($request, [
-                "title"  => "required|string",
-                "description" => "required|string"
-            ]);
-            $store = Store::where('user_id', Auth::user()->id)->get()[0];
-            $seo = json_decode($store['seo'], true);
-            $seo['title'] = $data['title'];
-            $seo['description'] = $data['description'];
-            $store->update(['seo' => json_encode($seo)]);
-            $this->message('SEO of your website was edited successfully', 'alert-success');
-
-            return redirect()->route('showEditSEO', [
-                'title' => $seo['title'], 
-                'description' => $seo['description'],
-                'metas' => $seo['meta'],
-            ]);
-        }
-        
-
-        catch(Exception $e) {
-            $this->message($e->getMessage(), 'alert-danger');
-        }
-    }
-
     public function addMeta(Request $request)
     {
         try {
             $data = $this->validate($request, [
                 "name"  => "required|string",
-                "content" => "required|string"
             ]);
             $store = Store::where('user_id', Auth::user()->id)->get()[0];
             $seo = json_decode($store['seo'], true);
 
-            $seo['meta'][$data['name']] = ['name' => $data['name'], 'content' => $data['content']];
-
-            //dd($seo);
+            $seo[$data['name']] = ['name' => $data['name']];
 
             $store->update(['seo' => json_encode($seo)]);
             $this->message('Meta tag was added successfully', 'alert-success');
-            return redirect()->route('showEditSEO', [
-                'title' => $seo['title'], 
-                'description' => $seo['description'],
-                'metas' => $seo['meta']
-            ]);
+            return redirect()->back();
         }
         catch (Exception $e){
             $this->message($e->getMessage(), 'alert-danger');
+            return redirect()->back();
         }
     }
 
@@ -173,17 +128,13 @@ class AdminController extends Controller
             $store = Store::where('user_id', Auth::user()->id)->get()[0];
             $seo = json_decode($store['seo'], true);
 
-            if (isset($seo['meta'][$data['name']])){
-                unset($seo['meta'][$data['name']]);
+            if (isset($seo[$data['name']])){
+                unset($seo[$data['name']]);
             };
             
             $store->update(['seo' => json_encode($seo)]);
             $this->message('Meta tag was deleted successfully', 'alert-success');
-            return redirect()->route('showEditSEO', [
-                'title' => $seo['title'], 
-                'description' => $seo['description'],
-                'metas' => $seo['meta']
-            ]);
+            return redirect()->back();
         }
         catch (Exception $e){
             $this->message($e->getMessage(), 'alert-danger');

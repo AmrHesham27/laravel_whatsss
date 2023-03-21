@@ -59,8 +59,6 @@ Route::group(['middleware' => ['auth', 'notSuperAdmin']], function () {
     Route::post('/admin/addDeliveryPlace', [AdminController::class, 'addDeliveryPlace'])->name('adminAddPlace');
     Route::post('/admin/deleteDeliveryPlace/{id}', [AdminController::class, 'deleteDeliveryPlace'])->name('adminDeletePlace');
 
-    Route::get('/admin/editSEO', [AdminController::class, 'showEditSEO'])->name('showEditSEO');
-    Route::post('/admin/editSEO', [AdminController::class, 'editSEO'])->name('editSEO');
     Route::post('/admin/addMeta', [AdminController::class, 'addMeta'])->name('adminAddMeta');
     Route::post('/admin/deleteMeta', [AdminController::class, 'deleteMeta'])->name('adminDeleteMeta');
 

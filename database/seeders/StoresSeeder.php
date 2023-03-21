@@ -18,6 +18,7 @@ class StoresSeeder extends Seeder
     {
         DB::table('stores')->insert([
             'name' => 'كوك دوور',
+            'description' => 'متجر كوك دوور لبيع الوجبات الجاهزة',
             'user_id' => 2, 
             'url' => 'cook_door',
             'logo' => 'woodmart-building-supplies-logo.svg',  

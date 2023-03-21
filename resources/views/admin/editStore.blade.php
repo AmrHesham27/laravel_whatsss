@@ -78,6 +78,13 @@
                         @enderror
                     </div>
                     <div class="form-group my-4">
+                        <label for="store_name">وصف المتجر</label>
+                        <input type="text" name="description" value="{{ $store['description'] }}" class="@error('description') is-invalid @enderror form-control" id="store_name" aria-describedby="store description" placeholder="Enter Store Description">
+                        @error('description')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group my-4">
                         <label for="url">رابط المتجر</label>
                         <input type="text" name="url" value="{{ $store['url'] }}" class="@error('name') is-invalid @enderror form-control" id="url" aria-describedby="url" placeholder="Enter Store URL">
                         @error('url')
@@ -220,6 +227,47 @@
                                 <td class="d-flex">
                                     <form method="POST" action="{{ route('adminDeletePlace', ['id' => $place['id']]) }}">
                                         @csrf
+                                        <button class="btn delete-store-btn">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @endif
+
+                <form method="POST" class="pt-5 text-right" action="{{ route('adminAddMeta') }}">
+                    @csrf
+                    <h6 class="text-right">عدل أو أضف  Meta Tag</h6>
+                    <div class="form-group my-4 col-sm-6 input-x" style="padding-left: 0;">
+                        <label for="name">الاسم</label>
+                        <input type="text" id="name" name="name" class="form-control">
+                    </div>
+                        
+                    <button style="float: right;" class="mr-3 btn btn-secondary">أدخل</button>
+                </form>
+
+
+                @if (json_decode($store['seo'], true))
+                <div class="d-flex table-responsive text-center pt-5">
+                    <table class="table table-bordered ">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">الاسم</th>
+                                <th scope="col">خيارات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (json_decode($store['seo'], true) as $meta)
+                            <tr>
+                                <td>{{ $meta['name'] }}</td>
+                                <td class="d-flex">
+                                    <form method="POST" action="{{ route('adminDeleteMeta') }}">
+                                        @csrf
+                                        <input type="hidden" name="name" value="{{ $meta['name'] }}" />
                                         <button class="btn delete-store-btn">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')
                 ->onDelete('cascade')->onUpdate('cascade');
             $table->string('name', 60);
+            $table->string('description', 200)->default('');
             $table->string('url', 60)->unique();
             $table->string('logo', 200)->nullable();
             $table->string('color_1', 60)->default('rgb(246, 246, 246)');
@@ -35,7 +36,7 @@ return new class extends Migration
             $table->boolean('dinIn')->default(false);
             $table->boolean('pickUp')->default(false);
             $table->json('delivery')->nullable();
-            $table->json('seo')->default('{"title": "otogoto", "description": "", "meta": {} }');
+            $table->json('seo')->default('{}');
         });
     }
 
