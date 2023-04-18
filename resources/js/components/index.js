@@ -8,6 +8,7 @@ export { default as Menu } from './Menu';
 export { default as MenuItem } from './MenuItem';
 export { default as ModalCart } from './ModalCart';
 export { default as PageBody } from './PageBody';
-export { default as PageHeader } from './PageHeader';
+export { default as PageHeader } from './pageHeader';
 export { default as ResponsiveCart } from './ResponsiveCart';
 export { default as SendToWhatsapp } from './SendToWhatsapp';
+export { default as Footer } from './footer';

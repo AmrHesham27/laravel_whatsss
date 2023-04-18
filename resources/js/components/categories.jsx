@@ -6,7 +6,7 @@ function Categories({ categories }) {
     }
     return (
         <div className="categories">
-            <div className="mb-4 categories-header">فئات قائمة الطعام</div>
+            <div className="mb-4 categories-header">التصنيفات</div>
             {categories.map((category, index) => {
                 return <div onClick={() => scroll(`category_${category.id}`)} key={index}>{category["name"]}</div>;
             })}

@@ -15,9 +15,9 @@ function ModalCart() {
     const dispatch = useDispatch();
     const modals = useSelector((state) => state.modals);
 
-    useEffect(() => {
+    /* useEffect(() => {
         if(modals.cartModal && !cart.itemsCount) dispatch(modalsActions.toggleCartModal())
-    }, [modals, cart, dispatch])
+    }, [modals, cart, dispatch]) */
 
     return (
         <Modal
@@ -37,30 +37,35 @@ function ModalCart() {
             </Modal.Header>
 
             <Modal.Body className="tex-right">
-                {cart["itemsCount"] &&
-                    Object.values(cart["items"]).map((item) => (
-                        <CartItem key={item.name} name={item.name} />
-                    ))}
+                {cart.itemsCount ?
+                    <>
+                        {cart["itemsCount"] &&
+                            Object.values(cart["items"]).map((item) => (
+                                <CartItem key={item.name} name={item.name} />
+                            ))}
 
-                <div className="cart-info">
-                    <div>
-                        <span>السعر</span>
-                        <div className="d-flex flex-row-reverse">
-                            <span>{cart.total}</span>
-                            <span className="mx-1">{currency}</span>
+                        <div className="cart-info">
+                            <div>
+                                <span>السعر</span>
+                                <div className="d-flex flex-row-reverse">
+                                    <span>{cart.total}</span>
+                                    <span className="mx-1">{currency}</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div
-                    className="order-now"
-                    onClick={() =>
-                        dispatch(modalsActions.toggleSendToWhatsapp())
-                    }
-                >
-                    <button style={{ backgroundColor: color_2 }}>
-                        اطلب الان
-                    </button>
-                </div>
+                        <div
+                            className="order-now"
+                            onClick={() =>
+                                dispatch(modalsActions.toggleSendToWhatsapp())
+                            }
+                        >
+                            <button style={{ backgroundColor: color_2 }}>
+                                اطلب الان
+                            </button>
+                        </div>
+                    </>
+                    :
+                    <p className="text-center">لا يوجد مشتريات</p>}
             </Modal.Body>
         </Modal>
     );

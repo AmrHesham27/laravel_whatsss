@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { modalsActions } from "../redux/modals";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 function ResponsiveCart() {
     const { total } = useSelector((state) => state.cart);
@@ -16,15 +18,16 @@ function ResponsiveCart() {
             total ?
             <div
                 className="responsive-cart"
-                style={{ backgroundColor: color_1 }}
+                style={{ '--color1': color_1 }}
                 onClick={ () => dispatch(modalsActions.toggleCartModal()) }
             >
                 <div className="d-flex">
-                    <span className="d-flex flex-row mx-2">
+                    <FontAwesomeIcon icon={faCartShopping} />
+                    <span className="d-flex flex-row ms-4">
                         <span>{currency}</span>
-                        <span className="mx-1">{total}</span>
+                        <span className="mx-1 fw-bolder">{total}</span>
+                        <span className="mx-1">اطلب الآن</span>
                     </span>
-                    <span>اطلب الان</span>
                 </div>
             </div>
             : undefined}

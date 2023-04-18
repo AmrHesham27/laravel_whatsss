@@ -47,9 +47,9 @@ function Menu({ products, categories }) {
                 </div>
             </div>
             {searchItems.length && showSearch && displayCards == "1"
-                ? searchItems.map((product, index) => (
+                ? <div className="products-cards-container">{searchItems.map((product, index) => (
                       <CardProduct key={index} product={product} />
-                  ))
+                  ))}</div>
                 : undefined}
             {searchItems.length && showSearch && displayCards != "1"
                 ? searchItems.map((product, index) => (

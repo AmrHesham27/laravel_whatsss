@@ -8,6 +8,7 @@ import {
     SendToWhatsapp,
     ResponsiveCart,
     ModalCart,
+    Footer
 } from "./components/index";
 
 // redux
@@ -16,7 +17,6 @@ import reduxStore from "./redux/store";
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 export default function App({ store }) {
     localStorage.setItem("color_1", store["color_1"]);
@@ -33,13 +33,14 @@ export default function App({ store }) {
 
     return (
         <Provider store={reduxStore}>
-            <PageHeader image={store["logo"]} />
+            <PageHeader store={store} />
             <div className="page-container">
                 <PageBody store={store} />
                 <ModalCart />
             </div>
             <ResponsiveCart />
             <SendToWhatsapp places={store["places"]} store_id={store['id']} />
+            <Footer store={store} />
         </Provider>
     );
 }

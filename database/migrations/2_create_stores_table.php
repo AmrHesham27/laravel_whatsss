@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('description', 200)->default('');
             $table->string('url', 60)->unique();
             $table->string('logo', 200)->nullable();
+            $table->string('cover', 200)->nullable();
+            $table->string('google_maps', 1000)->nullable();
+
             $table->string('color_1', 60)->default('rgb(246, 246, 246)');
             $table->string('color_2', 60)->default('rgb(0, 152, 0)');
             $table->time('start_time')->nullable();
@@ -37,6 +40,12 @@ return new class extends Migration
             $table->boolean('pickUp')->default(false);
             $table->json('delivery')->nullable();
             $table->json('seo')->default('{}');
+
+            $table->string('youtube')->default(null)->nullable();
+            $table->string('facebook')->default(null)->nullable();
+            $table->string('twitter')->default(null)->nullable();
+            $table->string('instagram')->default(null)->nullable();
+            $table->string('tiktok')->default(null)->nullable();
         });
     }
 

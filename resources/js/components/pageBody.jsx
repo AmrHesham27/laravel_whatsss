@@ -35,7 +35,7 @@ function PageBody({ store }) {
                 >
                     <div className="d-flex">
                         <Cart />
-                        <Info />
+                        <Info store={store} />
                     </div>
                 </Tab>
                 <Tab

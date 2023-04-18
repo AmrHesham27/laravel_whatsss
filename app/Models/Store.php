@@ -17,6 +17,7 @@ class Store extends Model
         'description',
         'url',
         'logo',
+        'cover',
         'color_1',
         'color_2',
         'min_order',
@@ -33,7 +34,13 @@ class Store extends Model
         'pickUp',
         'delivery',
         'displayCards',
-        'seo'
+        'seo',
+        'google_maps',
+        'youtube',
+        'facebook',
+        'twitter',
+        'instagram',
+        'tiktok'
     ];
 
     public function products()

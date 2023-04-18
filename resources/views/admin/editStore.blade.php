@@ -100,6 +100,13 @@
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="form-group my-4">
+                        <label for="google_maps">موقع جوجل</label>
+                        <input type="text" name="google_maps" value="{{ $store['google_maps'] }}" class="@error('google_maps') is-invalid @enderror form-control" id="google_maps" aria-describedby="google map" placeholder="Enter Google map">
+                        @error('google_maps')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="d-flex flex-sm-row flex-column justify-content-between">
                         <div class="form-group my-4 col-sm-6 input-x" style="padding-left: 0;">
                             <label for="color_1">لون القالب الرئيسي</label>
@@ -135,7 +142,7 @@
                     </div>
                     <label for="currency">العملة</label>
                     <select id="currency" name="currency" class="form-select form-control" aria-label="Choose currency">
-                        <option value="ج.م" <?php if ($store['currency'] == "ج.م") echo 'selected' ?>>ج.م</option>
+                        <option value="جنية" <?php if ($store['currency'] == "جنية") echo 'selected' ?>>جنية</option>
                         <option value="$" <?php if ($store['currency'] == "$") echo 'selected' ?>>$</option>
                         <option value="€" <?php if ($store['currency'] == "€") echo 'selected' ?>>€</option>
                     </select>
@@ -151,6 +158,21 @@
                         <div class="form-group my-4 col-sm-6 input-x" style="padding-right: 0;">
                             @if($store['logo'])
                             <img style="max-height: 150px;" alt="logo" src="/images/{{ $store['logo'] }}" />
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-sm-row flex-column justify-content-between">
+                        <div class="form-grou d-flex flex-column my-4 col-sm-6 input-x" style="padding-left: 0;">
+                            <label for="whatsapp">خلفية المتجر</label>
+                            <input type="file" name="cover">
+                            @error('cover')
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group my-4 col-sm-6 input-x" style="padding-right: 0;">
+                            @if($store['cover'])
+                            <img style="max-height: 150px;" alt="cover" src="/images/{{ $store['cover'] }}" />
                             @endif
                         </div>
                     </div>
@@ -187,6 +209,47 @@
                             أظهر المنتجات علي شكل بطاقات
                         </label>
                     </div>
+
+                    <div class="form-group my-4">
+                        <label for="youtube"> رابط صفحة اليوتيوب</label>
+                        <input type="text" name="youtube" value="{{ $store['youtube'] }}" class="@error('youtube') is-invalid @enderror form-control" id="youtube" aria-describedby="youtube link">
+                        @error('youtube')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group my-4">
+                        <label for="facebook"> رابط صفحة الفيسبوك</label>
+                        <input type="text" name="facebook" value="{{ $store['facebook'] }}" class="@error('facebook') is-invalid @enderror form-control" id="facebook" aria-describedby="facebook link">
+                        @error('facebook')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group my-4">
+                        <label for="twitter"> رابط صفحة تويتر</label>
+                        <input type="text" name="twitter" value="{{ $store['twitter'] }}" class="@error('twitter') is-invalid @enderror form-control" id="twitter" aria-describedby="twitter link">
+                        @error('twitter')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group my-4">
+                        <label for="instagram"> رابط صفحة انستجرام</label>
+                        <input type="text" name="instagram" value="{{ $store['instagram'] }}" class="@error('instagram') is-invalid @enderror form-control" id="instagram" aria-describedby="instagram link">
+                        @error('instagram')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group my-4">
+                        <label for="tiktok"> رابط صفحة تيك توك</label>
+                        <input type="text" name="tiktok" value="{{ $store['tiktok'] }}" class="@error('tiktok') is-invalid @enderror form-control" id="tiktok" aria-describedby="tiktok link">
+                        @error('tiktok')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <button type="submit" class="btn my-btn my-5">عدل المتجر</button>
 
                 </form>

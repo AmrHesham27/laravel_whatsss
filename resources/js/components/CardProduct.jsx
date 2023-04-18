@@ -27,14 +27,14 @@ const CardProduct = ({ product }) => {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <Modal.Body style={{padding: '0', display: 'flex', justifyContent: 'center'}}>
-                    <img 
-                        style={{maxWidth: '100vw', maxHeight: 'calc(100vh - 71px)'}} 
-                        src={`/images/${product["image"]}`} alt="product" 
+                <Modal.Body style={{ padding: '0', display: 'flex', justifyContent: 'center' }}>
+                    <img
+                        style={{ maxWidth: '100vw', maxHeight: 'calc(100vh - 71px)' }}
+                        src={`/images/${product["image"]}`} alt="product"
                     />
                 </Modal.Body>
-                <Modal.Footer style={{display: 'flex', justifyContent: 'center'}}>
-                    <Button style={{backgroundColor: color_2}} onClick={props.onHide}>إغلاق</Button>
+                <Modal.Footer style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button style={{ backgroundColor: color_2 }} onClick={props.onHide}>إغلاق</Button>
                 </Modal.Footer>
             </Modal>
         );
@@ -48,18 +48,19 @@ const CardProduct = ({ product }) => {
                 onClick={() => setModalShow(true)}
                 style={{ cursor: 'pointer' }}
             />
-            <h5 className="mt-2">{product["name"]}</h5>
-            <div className="d-flex fw-bold justify-content-center">
-                <div className="mx-1">{currency}</div>
-                <div>{product['price']}</div>
-            </div>
-            <p>{product["desc"]}</p>
+            <p style={{textAlign: 'right', paddingRight: '10px'}} className="mt-2 card-product-title text-right">{product["name"]}</p>
+
+            <p style={{textAlign: 'right', paddingRight: '10px'}}>{product["desc"]}</p>
             <button
-                className="w-100 p-2 mt-2"
+                className="w-100 p-2 mt-2 add-cart-button"
                 style={{ backgroundColor: color_1 }}
                 onClick={addTocart}
             >
                 <FontAwesomeIcon icon={faCartShopping} />
+                <div className="d-flex justify-content-center">
+                    <div className="mx-1">{currency}</div>
+                    <div className="fw-bold">{product['price']}</div>
+                </div>
             </button>
 
             <ImageModal

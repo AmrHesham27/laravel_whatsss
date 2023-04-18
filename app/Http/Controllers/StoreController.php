@@ -133,6 +133,8 @@ class StoreController extends Controller
         $store = Store::where('user_id', Auth::user()->id)->get()[0];
         $this->checkAdminOwnStore($store);
 
+        //dd($request);
+
         $data = $this->validate($request, [
             "name"  => "required|string|max:60",
             "description" => "required|string|max:200",
@@ -147,14 +149,34 @@ class StoreController extends Controller
             "pickUp" => "nullable",
             "delivery" => "nullable",
             'logo' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
+            'cover' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
             "displayCards" => "nullable",
-            "seo" => "json"
+            "seo" => "json",
+            "youtube" => "string|nullable|max:2048",
+            "facebook" => "string|nullable|max:2048",
+            "twitter" => "string|nullable|max:2048",
+            "instagram" => "string|nullable|max:2048",
+            "tiktok" => "string|nullable|max:2048",
+            "google_maps" => "string|nullable|max:1000",
         ]);
+
+        //dd($data);
 
         foreach(['dinIn', 'pickUp', 'delivery', 'displayCards'] as $variable)
         {
             if(isset($data[$variable])) $data[$variable] = 1;
             else $data[$variable] = 0;
+        }
+
+        if(isset($data['cover'])) {
+            $myimage = time() . $request->cover->getClientOriginalName();
+            $request->cover->move(public_path('images'), $myimage);
+            $data['cover'] = $myimage;
+
+            // update first then delete old image
+            $file_path = public_path('images/' . $store['cover']);
+            $store->update($data);
+            File::delete($file_path);
         }
 
         if(isset($data['logo'])) {
@@ -167,9 +189,9 @@ class StoreController extends Controller
             $store->update($data);
             File::delete($file_path);
         }
-        else {
-            $store->update($data);
-        }
+
+        $store->update($data);
+        
 
         $places = Place::where('store_id', $store['id'])->get();
 

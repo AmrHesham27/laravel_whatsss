@@ -29,7 +29,7 @@ function CollapseCategory({ category }) {
             <Collapse in={open}>
                 <div id={`category_${category["id"]}`}>
                     {displayCards == "1" ? (
-                        <div className="d-flex" style={{ flexWrap: "wrap" }}>
+                        <div className="products-cards-container">
                             {category["products"].map((product, index) => (
                                 <CardProduct key={index} product={product} />
                             ))}

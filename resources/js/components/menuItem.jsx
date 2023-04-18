@@ -41,9 +41,9 @@ function MenuItem({ product }) {
     const currency = localStorage.getItem('currency');
 
     return (
-        <div className="menu-item">
+        <div className="menu-item text-end">
             <div className="d-flex">
-                <div style={{ textAlign: "end" }} className="mx-2">
+                <div className="me-2">
                     <p className="f-15 font-weight-bold">{product["name"]}</p>
                     <p className="f-12">{product["desc"]}</p>
                 </div>
