@@ -20,6 +20,6 @@ class RedirectToSuperAdmin
         if (env('SUPER_ADMIN_EMAIL') === Auth::user()->email) {
             return redirect()->route("superAdminDashboard");
         }
-        return; 
+        return $next($request);
     }
 }
