@@ -284,7 +284,7 @@ class StoreController extends Controller
         try{
             $host = request()->getHost();
             if ($host == env('APP_HOST')){
-                return view('admin.dashboard');
+                return view('auth.login');
             }
             else {
                 $store = Store::with('places')->with('products')->with('categories')
