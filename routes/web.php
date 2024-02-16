@@ -41,7 +41,7 @@ Route::post('/applyCoupon', [CouponController::class, 'applyCoupon']);
 
 // super Admin routes
 Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
-    Route::get('/superAdmin', [SuperAdminController::class, 'showDashboard']);
+    Route::get('/superAdmin', [SuperAdminController::class, 'showDashboard'])->name('superAdminDashboard');
     Route::get('/superAdmin/stores', [StoreController::class, 'index'])->name('superAdminStores');
     Route::post('/superAdmin/stores/suspend/{id}', [StoreController::class, 'suspendStore'])->name('suspendStore');
     Route::post('/superAdmin/stores/unSuspend/{id}', [StoreController::class, 'unSuspendStore'])->name('unSuspendStore');
@@ -53,7 +53,7 @@ Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'notSuperAdmin']], function () {
-    Route::get('/admin', [AdminController::class, 'showDashboard']);
+    Route::get('/admin', [AdminController::class, 'showDashboard'])->middleware("redirectToSuperAdmin");
     Route::get('/admin/editStore', [StoreController::class, 'edit'])->name('adminEditStore');
     Route::post('/admin/updateStore', [StoreController::class, 'update'])->name('adminUpdateStore');
     Route::post('/admin/addDeliveryPlace', [AdminController::class, 'addDeliveryPlace'])->name('adminAddPlace');
